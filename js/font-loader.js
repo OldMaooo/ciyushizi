@@ -27,21 +27,33 @@
                         'SimKai'
                     ];
                     
-                    Promise.all(kaitiFonts.map(fontName => {
-                        return document.fonts.check(`12px "${fontName}"`);
-                    })).then(results => {
-                        const hasSystemFont = results.some(result => result === true);
-                        
-                        if (typeof Debug !== 'undefined' && Debug.isEnabled) {
-                            Debug.log('FontLoader.checkSystemFont (FontFace API)', {
-                                results: results,
-                                hasSystemKaiTi: hasSystemFont
-                            });
-                        }
-                        
-                        resolve(hasSystemFont);
+                    // 等待字体加载完成
+                    document.fonts.ready.then(() => {
+                        Promise.all(kaitiFonts.map(fontName => {
+                            return document.fonts.check(`12px "${fontName}"`);
+                        })).then(results => {
+                            const hasSystemFont = results.some(result => result === true);
+                            
+                            if (typeof Debug !== 'undefined' && Debug.isEnabled) {
+                                Debug.log('FontLoader.checkSystemFont (FontFace API)', {
+                                    results: results,
+                                    hasSystemKaiTi: hasSystemFont
+                                });
+                            }
+                            
+                            // 如果检测到系统字体，再使用 Canvas 方法验证一次（更可靠）
+                            if (hasSystemFont) {
+                                const canvasResult = this.checkSystemFontFallback();
+                                resolve(canvasResult);
+                            } else {
+                                resolve(false);
+                            }
+                        }).catch(() => {
+                            // FontFace API 失败，使用备用方法
+                            resolve(this.checkSystemFontFallback());
+                        });
                     }).catch(() => {
-                        // FontFace API 失败，使用备用方法
+                        // fonts.ready 失败，使用备用方法
                         resolve(this.checkSystemFontFallback());
                     });
                 } else {
@@ -58,29 +70,45 @@
             try {
                 const canvas = document.createElement('canvas');
                 const ctx = canvas.getContext('2d');
-                if (!ctx) return false;
+                if (!ctx) {
+                    console.log('[FontLoader] Canvas 不可用，将加载本地字体');
+                    return false;
+                }
                 
-                // 测试字符（楷体特有的字形特征）
-                const testChar = '永';
+                // 测试多个字符，提高检测准确性
+                const testChars = ['永', '水', '火', '木', '金'];
                 const testFonts = [
                     'KaiTi, "楷体", "Kaiti SC", "STKaiti", "STKaiti SC", "SimKai", serif',
                     'serif'
                 ];
                 
-                const widths = testFonts.map(font => {
-                    ctx.font = `16px ${font}`;
-                    return ctx.measureText(testChar).width;
+                // 测量每个字符在不同字体下的宽度
+                const differences = testChars.map(char => {
+                    const widths = testFonts.map(font => {
+                        ctx.font = `20px ${font}`;
+                        return ctx.measureText(char).width;
+                    });
+                    return Math.abs(widths[0] - widths[1]);
                 });
                 
-                // 如果楷体字体的宽度与 serif 不同，说明系统有楷体
-                const hasSystemFont = Math.abs(widths[0] - widths[1]) > 0.1;
+                // 如果至少有一个字符的宽度差异大于阈值，说明系统可能有楷体
+                // 但为了更保守，我们要求至少3个字符有明显差异
+                const significantDiffs = differences.filter(diff => diff > 0.5);
+                const hasSystemFont = significantDiffs.length >= 3;
                 
                 if (typeof Debug !== 'undefined' && Debug.isEnabled) {
                     Debug.log('FontLoader.checkSystemFontFallback (Canvas)', {
-                        widths: widths,
+                        differences: differences,
+                        significantDiffs: significantDiffs.length,
                         hasSystemKaiTi: hasSystemFont
                     });
                 }
+                
+                console.log('[FontLoader] 字体检测结果:', {
+                    hasSystemFont: hasSystemFont,
+                    significantDiffs: significantDiffs.length,
+                    differences: differences
+                });
                 
                 return hasSystemFont;
             } catch (err) {
@@ -182,22 +210,30 @@
          * 初始化字体加载
          */
         async init() {
+            console.log('[FontLoader] 开始初始化字体加载器...');
+            
             // 检查系统字体
             const hasSystemFont = await this.checkSystemFont();
             
             if (hasSystemFont) {
+                console.log('[FontLoader] 检测到系统已有楷体字体，无需加载');
                 if (typeof Debug !== 'undefined' && Debug.isEnabled) {
                     Debug.log('FontLoader.init', { 
                         message: '系统已有楷体字体，无需加载',
                         hasSystemFont: true 
                     });
                 }
+                // 即使检测到系统字体，也设置 CSS 变量以确保字体栈正确
+                document.documentElement.style.setProperty('--kaiti-font-family', this.fontFamily);
                 return;
             }
+            
+            console.log('[FontLoader] 未检测到系统楷体，开始加载本地字体...');
             
             // 尝试从缓存加载
             const cached = await this.loadFromCache();
             if (cached) {
+                console.log('[FontLoader] 从缓存加载字体成功');
                 if (typeof Debug !== 'undefined' && Debug.isEnabled) {
                     Debug.log('FontLoader.init', { 
                         message: '从缓存加载字体成功',
@@ -207,9 +243,12 @@
                 return;
             }
             
+            console.log('[FontLoader] 缓存中无字体，开始下载...');
+            
             // 下载并缓存
             const downloaded = await this.downloadAndCache();
             if (downloaded) {
+                console.log('[FontLoader] 下载并缓存字体成功');
                 if (typeof Debug !== 'undefined' && Debug.isEnabled) {
                     Debug.log('FontLoader.init', { 
                         message: '下载并缓存字体成功',
@@ -217,7 +256,9 @@
                     });
                 }
             } else {
-                console.warn('[FontLoader] 字体加载失败，将使用系统默认字体');
+                console.error('[FontLoader] 字体加载失败，将使用系统默认字体');
+                // 即使下载失败，也设置 CSS 变量，使用系统字体栈
+                document.documentElement.style.setProperty('--kaiti-font-family', this.fontFamily);
             }
         }
     };
