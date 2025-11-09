@@ -84,11 +84,12 @@
                                             <span class="input-group-text">个</span>
                                         </div>
                                         <div class="d-flex gap-2 flex-wrap">
-                                            <button type="button" class="btn btn-sm btn-outline-secondary words-per-page-quick" data-value="1">1</button>
-                                            <button type="button" class="btn btn-sm btn-outline-secondary words-per-page-quick" data-value="2">2</button>
-                                            <button type="button" class="btn btn-sm btn-outline-secondary words-per-page-quick" data-value="3">3</button>
-                                            <button type="button" class="btn btn-sm btn-outline-secondary words-per-page-quick" data-value="4">4</button>
                                             <button type="button" class="btn btn-sm btn-outline-secondary words-per-page-quick" data-value="5">5</button>
+                                            <button type="button" class="btn btn-sm btn-outline-secondary words-per-page-quick" data-value="10">10</button>
+                                            <button type="button" class="btn btn-sm btn-outline-secondary words-per-page-quick" data-value="15">15</button>
+                                            <button type="button" class="btn btn-sm btn-outline-secondary words-per-page-quick" data-value="20">20</button>
+                                            <button type="button" class="btn btn-sm btn-outline-secondary words-per-page-quick" data-value="30">30</button>
+                                            <button type="button" class="btn btn-sm btn-outline-secondary words-per-page-quick" data-value="50">50</button>
                                         </div>
                                         <div class="form-text">可直接输入或点击快捷选项</div>
                                     </div>
@@ -443,11 +444,12 @@
                                 <span class="input-group-text">个</span>
                             </div>
                             <div class="d-flex gap-2 flex-wrap">
-                                <button type="button" class="btn btn-sm btn-outline-secondary words-per-page-quick-modal" data-value="1">1</button>
-                                <button type="button" class="btn btn-sm btn-outline-secondary words-per-page-quick-modal" data-value="2">2</button>
-                                <button type="button" class="btn btn-sm btn-outline-secondary words-per-page-quick-modal" data-value="3">3</button>
-                                <button type="button" class="btn btn-sm btn-outline-secondary words-per-page-quick-modal" data-value="4">4</button>
                                 <button type="button" class="btn btn-sm btn-outline-secondary words-per-page-quick-modal" data-value="5">5</button>
+                                <button type="button" class="btn btn-sm btn-outline-secondary words-per-page-quick-modal" data-value="10">10</button>
+                                <button type="button" class="btn btn-sm btn-outline-secondary words-per-page-quick-modal" data-value="15">15</button>
+                                <button type="button" class="btn btn-sm btn-outline-secondary words-per-page-quick-modal" data-value="20">20</button>
+                                <button type="button" class="btn btn-sm btn-outline-secondary words-per-page-quick-modal" data-value="30">30</button>
+                                <button type="button" class="btn btn-sm btn-outline-secondary words-per-page-quick-modal" data-value="50">50</button>
                             </div>
                         </div>
                     </div>
@@ -576,5 +578,12 @@
     <script src="js/practice.js"></script>
     <script src="js/errorbook.js"></script>
     <script src="js/main.js"></script>
+    
+    <!-- 清除缓存按钮 -->
+    <div class="position-fixed bottom-0 start-0 end-0 p-2 text-center" style="z-index: 1000; background-color: transparent;">
+        <button type="button" class="btn btn-link text-muted text-decoration-none p-0" id="clear-cache-btn" style="font-size: 0.85rem; opacity: 0.6;">
+            清除缓存
+        </button>
+    </div>
 </body>
 </html>

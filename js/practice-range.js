@@ -246,7 +246,9 @@
             const countEl = container.querySelector('[data-selected-count]');
             if (countEl) {
                 countEl.textContent = `已选择: ${totalCount} 个词语`;
-                countEl.className = totalCount > 0 ? 'ms-3 text-success fw-bold' : 'ms-3 text-muted';
+                countEl.className = totalCount > 0 ? 'ms-auto text-success fw-bold' : 'ms-auto text-muted fw-bold';
+                countEl.style.fontSize = '1.1rem';
+                countEl.style.textAlign = 'right';
                 countEl.dataset.selectedCount = totalCount; // 存储选中数量，供动态按钮使用
             }
             
