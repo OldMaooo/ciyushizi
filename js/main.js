@@ -97,6 +97,18 @@
                     this.showPage(hash);
                 });
             });
+            
+            // 处理页面刷新时的hash路由
+            window.addEventListener('hashchange', () => {
+                const hash = window.location.hash.substring(1) || 'home';
+                this.showPage(hash);
+            });
+            
+            // 初始化时也检查hash
+            const hash = window.location.hash.substring(1) || 'home';
+            if (hash !== 'home') {
+                setTimeout(() => this.showPage(hash), 100);
+            }
 
             const refreshBtn = document.getElementById('refresh-stats-btn');
             if (refreshBtn) refreshBtn.addEventListener('click', () => this.restoreStats());
@@ -111,9 +123,32 @@
 
             const retryBtn = document.getElementById('results-retry-btn');
             if (retryBtn) retryBtn.addEventListener('click', () => Practice.retry());
+            
+            const practiceModeBtn = document.getElementById('results-practice-mode-btn');
+            if (practiceModeBtn) {
+                practiceModeBtn.addEventListener('click', () => {
+                    if (global.Practice && Practice.log && Practice.log.id) {
+                        if (global.ErrorBook) {
+                            ErrorBook.enterPracticeModeForRound(Practice.log.id);
+                        } else {
+                            console.error('ErrorBook未初始化');
+                        }
+                    } else {
+                        console.error('Practice.log不存在或未初始化');
+                    }
+                });
+            }
         },
 
         showPage(pageId) {
+            // 如果从结果页离开，自动保存
+            const resultsPage = document.getElementById('results');
+            if (resultsPage && resultsPage.classList.contains('active')) {
+                if (global.Practice && Practice.log && Practice.log.id) {
+                    Practice.autoSaveResults();
+                }
+            }
+            
             // 隐藏所有页面
             document.querySelectorAll('.page-section').forEach(section => {
                 section.classList.add('d-none');
@@ -142,6 +177,10 @@
             } else if (pageId === 'wordbank') {
                 if (global.WordBank) {
                     WordBank.refresh();
+                    // 更新调试按钮可见性
+                    if (WordBank.updateDebugButtonVisibility) {
+                        WordBank.updateDebugButtonVisibility();
+                    }
                 }
             }
         },
@@ -169,11 +208,23 @@
         },
 
         restoreStats() {
-            const logs = Storage.getPracticeLogs();
+            // 获取调试模式状态
+            const isDebugMode = typeof Debug !== 'undefined' && Debug.isEnabled;
+            
+            // 获取数据并根据调试模式过滤
+            let logs = Storage.getPracticeLogs();
+            let errorWords = Storage.getErrorWords();
+            
+            // 如果不在调试模式下，过滤掉调试模式的记录
+            if (!isDebugMode) {
+                logs = logs.filter(log => !log.debugMode);
+                errorWords = errorWords.filter(item => !item.debugMode);
+            }
+            
             const stats = {
                 totalRounds: logs.length,
                 totalWords: logs.reduce((sum, log) => sum + (log.totalWords || 0), 0),
-                errorWords: Storage.getErrorWords().length,
+                errorWords: errorWords.length,
                 lastPractice: logs.length ? new Date(logs[logs.length - 1].date).toLocaleString('zh-CN') : '-'
             };
 

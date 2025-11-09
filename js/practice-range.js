@@ -104,7 +104,8 @@
             const grouped = {};
             
             wordBank.forEach(word => {
-                const unit = word.unit || '未分类';
+                // unit 现在是整数，需要转换为字符串作为 key
+                const unit = word.unit != null ? String(word.unit) : '未分类';
                 
                 if (!grouped[unit]) {
                     grouped[unit] = [];

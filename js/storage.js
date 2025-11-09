@@ -49,7 +49,7 @@
             if (idx >= 0) {
                 existing[idx] = log;
             } else {
-                existing.push(log);
+            existing.push(log);
             }
             try {
                 localStorage.setItem(this._key('practice_logs'), JSON.stringify(existing));

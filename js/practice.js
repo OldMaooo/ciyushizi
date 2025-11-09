@@ -19,6 +19,26 @@
         init() {
             this.bindEvents();
             this.restoreSettings();
+            this.bindAutoSave();
+        },
+        
+        /**
+         * 绑定自动保存事件（页面离开或刷新时）
+         */
+        bindAutoSave() {
+            // 页面刷新或关闭前保存
+            window.addEventListener('beforeunload', () => {
+                if (this.log && this.log.id && document.getElementById('results')?.classList.contains('active')) {
+                    this.autoSaveResults();
+                }
+            });
+            
+            // 页面隐藏时保存（移动端）
+            document.addEventListener('visibilitychange', () => {
+                if (document.hidden && this.log && this.log.id && document.getElementById('results')?.classList.contains('active')) {
+                    this.autoSaveResults();
+                }
+            });
         },
 
         bindEvents() {
@@ -173,22 +193,20 @@
             container.innerHTML = group.map((wordObj, idx) => {
                 const id = wordObj.id || `word_${this.currentIndex}_${idx}`;
                 const checked = this.currentGroupMarked.get(id);
-                const showPinyin = checked ? `<div class="practice-pinyin">${wordObj.pinyin || ''}</div>` : '';
-                const markedClass = checked ? 'marked-wrong' : '';
-                const wordLength = (wordObj.word || '').length;
-                return `
-                    <div class="practice-card ${markedClass}" data-id="${id}" data-index="${idx}" data-word-length="${wordLength}">
-                        <label class="practice-toggle">
-                            <input type="checkbox" class="practice-checkbox" ${checked ? 'checked' : ''} />
-                        </label>
-                        ${showPinyin}
-                        <div class="practice-word" style="font-size: ${this.calculateFontSize(wordLength)}px;">${wordObj.word || ''}</div>
-                    </div>
-                `;
+                return CardComponent.render({
+                    word: wordObj.word || '',
+                    pinyin: wordObj.pinyin || '',
+                    showPinyin: checked,
+                    markedWrong: checked,
+                    dataId: id,
+                    dataGroupIndex: idx,
+                    showCheckbox: true,
+                    checkboxChecked: checked
+                });
             }).join('');
-            
+
             // 调整字体大小以适应卡片
-            this.adjustCardFontSizes(container);
+            CardComponent.adjustCardFontSizes(container);
 
             // 绑定卡片点击事件
             container.querySelectorAll('.practice-card').forEach((card) => {
@@ -223,53 +241,6 @@
             this.startCountdown();
         },
 
-        calculateFontSize(wordLength) {
-            // 根据字符数计算字体大小
-            const baseSize = 72; // 基础字体大小（2个字）
-            if (wordLength <= 2) return baseSize;
-            if (wordLength === 3) return baseSize * 0.75; // 3个字缩小到75%
-            if (wordLength === 4) return baseSize * 0.6; // 4个字缩小到60%
-            return baseSize * 0.5; // 5个字及以上缩小到50%
-        },
-
-        adjustCardFontSizes(container) {
-            // 动态调整卡片字体大小以适应内容
-            container.querySelectorAll('.practice-card').forEach(card => {
-                const wordEl = card.querySelector('.practice-word');
-                if (!wordEl) return;
-                
-                const word = wordEl.textContent.trim();
-                const wordLength = word.length;
-                const cardWidth = card.offsetWidth;
-                const cardHeight = card.offsetHeight;
-                const padding = 40; // 卡片内边距
-                const availableWidth = cardWidth - padding;
-                const availableHeight = cardHeight - padding;
-                
-                // 初始字体大小
-                let fontSize = this.calculateFontSize(wordLength);
-                
-                // 创建临时元素测量文字宽度
-                const measureEl = document.createElement('span');
-                measureEl.style.visibility = 'hidden';
-                measureEl.style.position = 'absolute';
-                measureEl.style.fontSize = fontSize + 'px';
-                measureEl.style.fontFamily = getComputedStyle(wordEl).fontFamily;
-                measureEl.style.fontWeight = getComputedStyle(wordEl).fontWeight;
-                measureEl.textContent = word;
-                document.body.appendChild(measureEl);
-                
-                // 如果文字超出，逐步缩小字体
-                while (measureEl.offsetWidth > availableWidth || measureEl.offsetHeight > availableHeight) {
-                    fontSize -= 2;
-                    if (fontSize < 20) break; // 最小字体20px
-                    measureEl.style.fontSize = fontSize + 'px';
-                }
-                
-                document.body.removeChild(measureEl);
-                wordEl.style.fontSize = fontSize + 'px';
-            });
-        },
 
         updateCard(card, wordObj, checked) {
             const pinyinEl = card.querySelector('.practice-pinyin');
@@ -285,12 +256,12 @@
                 card.classList.add('marked-wrong');
             } else {
                 if (pinyinEl) {
-                    pinyinEl.remove();
-                }
+                pinyinEl.remove();
+            }
                 card.classList.remove('marked-wrong');
             }
             // 重新调整字体大小
-            this.adjustCardFontSizes(card.parentElement);
+            CardComponent.adjustCardFontSizes(card.parentElement);
         },
 
         toggleCardMark(card) {
@@ -371,18 +342,26 @@
             if (!countdownEl) return;
             
             const totalTime = this.wordsPerPage * this.speedPerWord;
-            let remaining = totalTime;
+            let elapsed = 0;
             
             const update = () => {
                 if (this.isPaused) return;
-                if (remaining <= 0) {
-                    countdownEl.textContent = '倒计时: 0';
-                    clearInterval(this.countdownTimer);
-                    return;
+                elapsed++;
+                const isOvertime = elapsed > totalTime;
+                
+                // 超时时变红色，但继续计时
+                if (isOvertime) {
+                    countdownEl.className = 'badge bg-danger-subtle text-danger ms-2';
+                    countdownEl.textContent = `已超时: +${elapsed - totalTime}s`;
+                } else {
+                    countdownEl.className = 'badge bg-warning-subtle text-warning ms-2';
+                    countdownEl.textContent = `正计时: ${elapsed}s`;
                 }
-                countdownEl.textContent = `倒计时: ${remaining}s`;
-                remaining--;
             };
+            
+            // 重置样式
+            countdownEl.className = 'badge bg-warning-subtle text-warning ms-2';
+            countdownEl.textContent = `正计时: 0s`;
             
             update();
             this.countdownTimer = setInterval(update, 1000);
@@ -455,10 +434,10 @@
                     ? (prev?.markedAt || now)
                     : null;
                 return {
-                    id: word.id,
-                    word: word.word,
-                    pinyin: word.pinyin,
-                    unit: word.unit,
+                id: word.id,
+                word: word.word,
+                pinyin: word.pinyin,
+                unit: word.unit,
                     markedWrong,
                     markedAt
                 };
@@ -485,7 +464,20 @@
             clearInterval(this.countdownTimer);
             this.log.duration = Math.round((Date.now() - this.startTime) / 1000);
 
+            // 检查是否在调试模式下
+            const isDebugMode = typeof Debug !== 'undefined' && Debug.isEnabled;
+            if (isDebugMode) {
+                this.log.debugMode = true;
+            }
+
             const errorWords = this.collectErrorRecords();
+            // 为错题记录添加调试模式标识
+            if (isDebugMode) {
+                errorWords.forEach(item => {
+                    item.debugMode = true;
+                });
+            }
+            
             this.log.errorWords = errorWords;
             Storage.savePracticeLog(this.log);
             Storage.saveErrorWordsForRound(this.log.id, errorWords);
@@ -551,25 +543,30 @@
                 container.innerHTML = this.log.groups.map(group => {
                     return group.words.map(word => {
                         const checked = word.markedWrong;
-                        const markedClass = checked ? 'marked-wrong' : '';
-                        return `
-                            <div class="practice-card ${markedClass}" data-id="${word.id}">
-                                <label class="practice-toggle">
-                                    <input type="checkbox" class="practice-checkbox result-toggle" ${checked ? 'checked' : ''} />
-                                </label>
-                                ${checked ? `<div class="practice-pinyin">${word.pinyin || ''}</div>` : ''}
-                                <div class="practice-word">${word.word || ''}</div>
-                            </div>
-                        `;
+                        return CardComponent.render({
+                            word: word.word || '',
+                            pinyin: word.pinyin || '',
+                            showPinyin: checked,
+                            markedWrong: checked,
+                            dataId: word.id,
+                            showCheckbox: true,
+                            checkboxChecked: checked,
+                            additionalClasses: 'result-card'
+                        });
                     }).join('');
                 }).join('');
+
+                // 调整字体大小以适应卡片（使用setTimeout确保DOM已渲染）
+                setTimeout(() => {
+                    CardComponent.adjustCardFontSizes(container);
+                }, 50);
 
                 // 绑定卡片点击事件
                 container.querySelectorAll('.practice-card').forEach((card) => {
                     card.addEventListener('click', (e) => {
                         // 如果点击的是复选框，不处理
                         if (e.target.closest('.practice-toggle')) return;
-                        const checkbox = card.querySelector('.result-toggle');
+                        const checkbox = card.querySelector('.practice-checkbox');
                         if (checkbox) {
                             checkbox.checked = !checkbox.checked;
                             const id = card.dataset.id;
@@ -579,7 +576,7 @@
                 });
 
                 // 绑定复选框事件
-                container.querySelectorAll('.result-toggle').forEach((checkbox) => {
+                container.querySelectorAll('.practice-checkbox').forEach((checkbox) => {
                     checkbox.addEventListener('change', (e) => {
                         e.stopPropagation();
                         const card = e.currentTarget.closest('.practice-card');
@@ -611,6 +608,14 @@
                         } else {
                             card.querySelector('.practice-pinyin')?.remove();
                             card.classList.remove('marked-wrong');
+                        }
+                        
+                        // 重新调整字体大小（因为拼音显示可能会影响布局）
+                        const container = card.closest('#results-card-container');
+                        if (container) {
+                            setTimeout(() => {
+                                CardComponent.adjustCardFontSizes(container);
+                            }, 50);
                         }
                     }
                 });
@@ -665,7 +670,7 @@
                     section.classList.add('d-none');
                     section.classList.remove('active');
                 });
-                const target = document.getElementById(pageId);
+            const target = document.getElementById(pageId);
                 if (target) {
                     target.classList.remove('d-none');
                     target.classList.add('active');
@@ -674,13 +679,60 @@
         },
 
         confirmResults() {
+            if (!this.log || !this.log.id) return;
+            
+            // 检查是否在调试模式下
+            const isDebugMode = typeof Debug !== 'undefined' && Debug.isEnabled;
+            if (isDebugMode) {
+                this.log.debugMode = true;
+            }
+            
             const errorWords = this.collectErrorRecords();
+            // 为错题记录添加调试模式标识
+            if (isDebugMode) {
+                errorWords.forEach(item => {
+                    item.debugMode = true;
+                });
+            }
+            
             this.log.errorWords = errorWords;
             Storage.savePracticeLog(this.log);
             Storage.saveErrorWordsForRound(this.log.id, errorWords);
             this.toggleResultsDirty(false);
-            global.ErrorBook?.render?.();
+            
+            // 刷新错题集显示
+            if (global.ErrorBook) {
+                ErrorBook.render();
+            }
             global.Main?.restoreStats?.();
+        },
+        
+        /**
+         * 自动保存当前结果（用于页面离开或刷新时）
+         */
+        autoSaveResults() {
+            if (!this.log || !this.log.id) return;
+            
+            // 检查是否在调试模式下
+            const isDebugMode = typeof Debug !== 'undefined' && Debug.isEnabled;
+            if (isDebugMode) {
+                this.log.debugMode = true;
+            }
+            
+            // 收集当前所有标记为错误的词语
+            const errorWords = this.collectErrorRecords();
+            // 为错题记录添加调试模式标识
+            if (isDebugMode) {
+                errorWords.forEach(item => {
+                    item.debugMode = true;
+                });
+            }
+            
+            this.log.errorWords = errorWords;
+            
+            // 保存练习记录和错题
+            Storage.savePracticeLog(this.log);
+            Storage.saveErrorWordsForRound(this.log.id, errorWords);
         },
 
         retry() {

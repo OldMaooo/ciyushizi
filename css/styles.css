@@ -112,12 +112,20 @@
     border: 1px solid var(--bs-border-color);
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
     padding: 1.25rem;
     position: relative;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     overflow: hidden;
+}
+
+/* 确保拼音在词语上方，靠近词语 */
+.practice-card .practice-pinyin {
+    order: -1 !important;
+    flex-shrink: 0;
+    margin-bottom: 0 !important;
+    padding-bottom: 0.25rem;
 }
 
 .practice-card:hover {
@@ -132,8 +140,8 @@
     font-family: 'KaiTi', 'Kaiti SC', '楷体', 'STKaiti', 'STKaiti SC', 'SimKai', 'Ma Shan Zheng', 'FangSong', 'FangSong SC', '仿宋', serif;
     transition: color 0.2s ease, font-size 0.2s ease;
     white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    overflow: visible;
+    text-overflow: clip;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -141,6 +149,8 @@
     height: 100%;
     /* 初始字体大小，JavaScript会根据字符数动态调整 */
     font-size: clamp(2.5rem, 5vw, 3.75rem);
+    word-break: keep-all;
+    max-width: 100%;
 }
 
 .practice-card.marked-wrong .practice-word {
@@ -148,10 +158,19 @@
 }
 
 .practice-pinyin {
-    font-size: 1.5rem;
+    font-size: 2.5rem;
     color: var(--bs-danger);
-    margin-bottom: 0.75rem;
+    margin-bottom: 0 !important;
+    margin-top: auto;
     font-weight: 500;
+    white-space: nowrap;
+    overflow: visible;
+    text-overflow: clip;
+    width: 100%;
+    text-align: center;
+    padding-bottom: 0.5rem;
+    word-break: keep-all;
+    min-width: 0;
 }
 
 .practice-card.active {
@@ -256,4 +275,97 @@
 [data-bs-theme="dark"] .practice-range-toolbar {
     background-color: var(--bs-dark, #212529) !important;
     border-bottom-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* 导入预览相关样式 */
+.import-preview .unit-preview-card {
+    transition: all 0.2s ease;
+}
+
+.import-preview .unit-preview-card:hover {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.import-preview .word-item {
+    cursor: move;
+    transition: opacity 0.2s ease;
+}
+
+.import-preview .word-item.dragging {
+    opacity: 0.5;
+}
+
+.import-preview .unit-words-container.drag-over {
+    background-color: rgba(13, 110, 253, 0.1);
+    border: 2px dashed #0d6efd;
+    border-radius: 4px;
+    min-height: 50px;
+}
+
+.import-preview .unit-insert-zone {
+    transition: background-color 0.2s ease;
+    cursor: pointer;
+}
+
+.import-preview .unit-insert-zone:hover {
+    background-color: rgba(13, 110, 253, 0.1);
+}
+
+.import-preview .word-select-checkbox {
+    margin-right: 4px;
+    cursor: pointer;
+}
+
+[data-bs-theme="dark"] .import-preview .unit-words-container.drag-over {
+    background-color: rgba(13, 110, 253, 0.2);
+    border-color: #0d6efd;
+}
+
+[data-bs-theme="dark"] .import-preview .unit-insert-zone:hover {
+    background-color: rgba(13, 110, 253, 0.2);
+}
+
+/* 词语库单元卡片样式 */
+.wordbank-units-container {
+    padding: 0.5rem;
+}
+
+.wordbank-unit-card {
+    transition: all 0.2s ease;
+}
+
+.wordbank-unit-card:hover {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.wordbank-word-item {
+    transition: all 0.15s ease;
+}
+
+.wordbank-word-item.selected {
+    background-color: rgba(13, 110, 253, 0.1);
+    border-color: var(--bs-primary) !important;
+}
+
+.wordbank-word-item:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.wordbank-words-container .wordbank-word-item .border {
+    border-width: 1px !important;
+    border-color: var(--bs-border-color) !important;
+}
+
+.wordbank-words-container .wordbank-word-item.selected .border {
+    border-color: var(--bs-primary) !important;
+    border-width: 2px !important;
+}
+
+[data-bs-theme="dark"] .wordbank-word-item.selected {
+    background-color: rgba(13, 110, 253, 0.2);
+}
+
+[data-bs-theme="dark"] .wordbank-unit-card:hover {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
 }
