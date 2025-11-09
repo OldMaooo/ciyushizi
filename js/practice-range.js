@@ -75,14 +75,15 @@
             
             units.forEach(unit => {
                 const words = grouped[unit];
-                const unitId = unit.replace(/\s+/g, '-');
+                const unitId = (unit || '未分类').replace(/\s+/g, '-');
+                const unitDisplayName = unit || '未分类';
                 html += `
                     <div class="unit-item mb-2 d-flex align-items-center" data-unit-row="${unitId}">
                         <input type="checkbox" class="form-check-input unit-checkbox" 
-                               data-unit="${unit}" 
+                               data-unit="${unit || ''}" 
                                id="unit-${unitId}">
                         <label for="unit-${unitId}" class="form-check-label ms-2 flex-shrink-0">
-                            ${unit} (${words.length}个)
+                            ${unitDisplayName} (${words.length}个)
                         </label>
                         <span class="text-muted ms-2 small flex-grow-1 text-truncate" style="min-width: 0;">
                             ${words.map(w => w.word).join('、')}
@@ -105,8 +106,13 @@
             const grouped = {};
             
             wordBank.forEach(word => {
-                // unit 现在是整数，需要转换为字符串作为 key
-                const unit = word.unit != null ? String(word.unit) : '未分类';
+                // unit 可能是整数、字符串或空字符串
+                let unit = '未分类';
+                if (word.unit != null && word.unit !== '') {
+                    unit = String(word.unit);
+                } else if (word.unit === '') {
+                    unit = '未分类';
+                }
                 
                 if (!grouped[unit]) {
                     grouped[unit] = [];

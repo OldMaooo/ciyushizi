@@ -59,6 +59,7 @@
     border: none !important;
     border-radius: 4px;
     transition: background-color 0.2s ease;
+    width: 100%;
 }
 
 .unit-item:hover {
@@ -67,6 +68,12 @@
 
 [data-bs-theme="dark"] .unit-item:hover {
     background-color: rgba(255,255,255,0.08);
+}
+
+.unit-item .text-truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .unit-checkbox, .semester-checkbox {
