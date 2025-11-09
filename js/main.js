@@ -22,8 +22,41 @@
                     homeSection.classList.add('active');
                 }
                 this.showPage('home');
-                this.restoreStats();
-            } catch (err) {
+            this.restoreStats();
+            
+            // 清除缓存按钮
+            const clearCacheBtn = document.getElementById('clear-cache-btn');
+            if (clearCacheBtn) {
+                clearCacheBtn.addEventListener('click', () => {
+                    if (confirm('确定要清除所有缓存数据吗？这将清除：\n- 词语库\n- 练习记录\n- 错题集\n- 用户设置\n\n此操作不可恢复！')) {
+                        // 清除所有 localStorage 数据
+                        const prefix = 'word_recognition_';
+                        const keysToRemove = [];
+                        for (let i = 0; i < localStorage.length; i++) {
+                            const key = localStorage.key(i);
+                            if (key && key.startsWith(prefix)) {
+                                keysToRemove.push(key);
+                            }
+                        }
+                        keysToRemove.forEach(key => localStorage.removeItem(key));
+                        
+                        // 清除 Cache API 缓存（字体缓存）
+                        if ('caches' in window) {
+                            caches.keys().then(names => {
+                                names.forEach(name => {
+                                    if (name.includes('font')) {
+                                        caches.delete(name);
+                                    }
+                                });
+                            });
+                        }
+                        
+                        alert('缓存已清除！页面将刷新。');
+                        location.reload();
+                    }
+                });
+            }
+        } catch (err) {
                 console.error('初始化失败', err);
                 if (global.Debug) {
                     Debug.log('error', '初始化失败: ' + err.message, 'init', err);
