@@ -641,7 +641,12 @@
             this.resultsDirty = !!isDirty;
             const confirmBtn = document.getElementById('results-confirm-btn');
             if (confirmBtn) {
-                confirmBtn.disabled = !isDirty;
+                // 有改动时显示，无改动时隐藏
+                if (isDirty) {
+                    confirmBtn.classList.remove('d-none');
+                } else {
+                    confirmBtn.classList.add('d-none');
+                }
             }
         },
 

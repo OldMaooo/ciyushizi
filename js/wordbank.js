@@ -93,6 +93,9 @@
             const undoBtn = document.getElementById('wordbank-undo-btn');
             const debugFillBtn1 = document.getElementById('wordbank-debug-fill-btn-1');
             const debugFillBtn2 = document.getElementById('wordbank-debug-fill-btn-2');
+            const cloudSyncBtn = document.getElementById('wordbank-cloud-sync-btn');
+            const cloudDownloadBtn = document.getElementById('wordbank-cloud-download-btn');
+            const cloudConfigBtn = document.getElementById('wordbank-cloud-config-btn');
 
             if (importBtn) {
                 importBtn.addEventListener('click', () => this.handleImport());
@@ -142,6 +145,23 @@
             const previewConfirmBtn = document.getElementById('import-preview-confirm-btn');
             if (previewConfirmBtn) {
                 previewConfirmBtn.addEventListener('click', () => this.confirmImport());
+            }
+            
+            // 云端同步相关事件
+            if (cloudSyncBtn) {
+                cloudSyncBtn.addEventListener('click', () => this.handleCloudSync());
+            }
+            if (cloudDownloadBtn) {
+                cloudDownloadBtn.addEventListener('click', () => this.handleCloudDownload());
+            }
+            if (cloudConfigBtn) {
+                cloudConfigBtn.addEventListener('click', () => this.showCloudConfig());
+            }
+            
+            // 云端配置保存按钮
+            const cloudConfigSaveBtn = document.getElementById('cloud-config-save-btn');
+            if (cloudConfigSaveBtn) {
+                cloudConfigSaveBtn.addEventListener('click', () => this.saveCloudConfig());
             }
             
             // 监听调试模式变化，显示/隐藏调试按钮
@@ -1363,6 +1383,147 @@
             
             // 清空待导入数据
             this.pendingImportData = null;
+        },
+        
+        /**
+         * 显示云端配置模态框
+         */
+        showCloudConfig() {
+            const tokenInput = document.getElementById('cloud-token-input');
+            const gistIdInput = document.getElementById('cloud-gist-id-input');
+            const successAlert = document.getElementById('cloud-config-success');
+            
+            if (tokenInput) {
+                tokenInput.value = CloudSync.getToken() || '';
+            }
+            if (gistIdInput) {
+                gistIdInput.value = CloudSync.getGistId() || '';
+            }
+            if (successAlert) {
+                successAlert.classList.add('d-none');
+            }
+            
+            const modal = new bootstrap.Modal(document.getElementById('cloud-config-modal'));
+            modal.show();
+        },
+        
+        /**
+         * 保存云端配置
+         */
+        saveCloudConfig() {
+            const tokenInput = document.getElementById('cloud-token-input');
+            const gistIdInput = document.getElementById('cloud-gist-id-input');
+            const successAlert = document.getElementById('cloud-config-success');
+            
+            const token = tokenInput?.value?.trim();
+            const gistId = gistIdInput?.value?.trim();
+            
+            if (!token) {
+                alert('请输入 GitHub Token');
+                return;
+            }
+            
+            CloudSync.saveToken(token);
+            if (gistId) {
+                CloudSync.saveGistId(gistId);
+            }
+            
+            if (successAlert) {
+                successAlert.classList.remove('d-none');
+                setTimeout(() => {
+                    successAlert.classList.add('d-none');
+                }, 2000);
+            }
+            
+            const modal = bootstrap.Modal.getInstance(document.getElementById('cloud-config-modal'));
+            if (modal) {
+                setTimeout(() => modal.hide(), 500);
+            }
+        },
+        
+        /**
+         * 同步到云端
+         */
+        async handleCloudSync() {
+            if (!CloudSync.isConfigured()) {
+                alert('请先配置云端同步（点击"配置"按钮）');
+                this.showCloudConfig();
+                return;
+            }
+            
+            const btn = document.getElementById('wordbank-cloud-sync-btn');
+            if (btn) {
+                btn.disabled = true;
+                btn.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span>同步中...';
+            }
+            
+            try {
+                const result = await CloudSync.uploadWordBank(this.data);
+                
+                if (result.success) {
+                    alert(`✅ ${result.message}\n\nGist ID: ${result.gistId}\n\n现在可以在其他设备上使用"云端下载"功能同步词语库了！`);
+                } else {
+                    alert(`❌ 同步失败：${result.message}`);
+                }
+            } catch (error) {
+                console.error('同步失败', error);
+                alert(`❌ 同步失败：${error.message}`);
+            } finally {
+                if (btn) {
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="bi bi-cloud-upload"></i> 同步云端';
+                }
+            }
+        },
+        
+        /**
+         * 从云端下载
+         */
+        async handleCloudDownload() {
+            if (!CloudSync.isConfigured()) {
+                alert('请先配置云端同步（点击"配置"按钮）');
+                this.showCloudConfig();
+                return;
+            }
+            
+            const confirmDownload = confirm('从云端下载会替换当前的词语库，是否继续？\n\n建议先导出当前词语库作为备份。');
+            if (!confirmDownload) return;
+            
+            const btn = document.getElementById('wordbank-cloud-download-btn');
+            if (btn) {
+                btn.disabled = true;
+                btn.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span>下载中...';
+            }
+            
+            try {
+                const result = await CloudSync.downloadWordBank();
+                
+                if (result.success) {
+                    // 保存到本地
+                    Storage.saveWordBank(result.data);
+                    // 更新数据
+                    this.data = result.data;
+                    this.filtered = [...this.data];
+                    this.renderTable();
+                    
+                    // 刷新练习范围选择器
+                    if (global.PracticeRange) {
+                        PracticeRange.init();
+                    }
+                    
+                    alert(`✅ ${result.message}\n\n已加载 ${result.data.length} 个词语`);
+                } else {
+                    alert(`❌ 下载失败：${result.message}`);
+                }
+            } catch (error) {
+                console.error('下载失败', error);
+                alert(`❌ 下载失败：${error.message}`);
+            } finally {
+                if (btn) {
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="bi bi-cloud-download"></i> 云端下载';
+                }
+            }
         }
     };
 

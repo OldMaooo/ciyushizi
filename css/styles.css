@@ -267,6 +267,16 @@
     border-top-color: rgba(255, 255, 255, 0.1) !important;
 }
 
+/* 练习页头部样式 */
+.practice-header {
+    background-color: var(--bs-body-bg, #fff) !important;
+}
+
+[data-bs-theme="dark"] .practice-header {
+    background-color: var(--bs-body-bg, #212529) !important;
+    border-bottom-color: var(--bs-border-color, rgba(255, 255, 255, 0.1)) !important;
+}
+
 /* 练习范围工具栏置顶 */
 .practice-range-toolbar {
     background-color: var(--bs-body-bg, #fff) !important;

@@ -120,6 +120,8 @@
                 tabSummary.addEventListener('click', () => {
                     this.currentTab = 'summary';
                     this.selectedKeys.clear();
+                    // 切换到汇总查看时，清除 currentRoundErrorWords，确保显示所有错题
+                    this.currentRoundErrorWords = null;
                     this.render();
                 });
             }
@@ -130,6 +132,10 @@
                 tabList.addEventListener('shown.bs.tab', (e) => {
                     // 延迟一下确保标签切换完成
                     setTimeout(() => {
+                        // 切换到汇总查看时，清除 currentRoundErrorWords，确保显示所有错题
+                        if (e.target.id === 'tab-errorbook-summary') {
+                            this.currentRoundErrorWords = null;
+                        }
                         this.render();
                     }, 100);
                 });
@@ -280,8 +286,8 @@
                     if (!errorWords.length) {
                         summaryContainer.innerHTML = '<div class="text-muted text-center py-4">暂无错题</div>';
                     } else {
-                        // 如果指定了当前轮次的错题，优先使用
-                        let practiceWords = this.currentRoundErrorWords || errorWords;
+                        // 汇总查看：始终显示所有错题（不使用 currentRoundErrorWords）
+                        let practiceWords = errorWords;
                         
                         // 根据"隐藏拼音"开关决定初始显示状态
                         const initialShowPinyin = !this.hidePinyin;
@@ -1016,32 +1022,7 @@
             // 使用更可靠的下载方法
             const fileName = `yuwenrenzi_errorbook_${new Date().toISOString().split('T')[0]}.json`;
             
-            // 先尝试自动下载
-            try {
-                const link = document.createElement('a');
-                link.href = url;
-                link.download = fileName;
-                link.setAttribute('download', fileName);
-                link.style.display = 'none';
-                
-                document.body.appendChild(link);
-                
-                // 立即触发点击（在用户点击事件的上下文中）
-                link.click();
-                console.log('[ErrorBook.handleExport] 自动下载已触发');
-                
-                // 立即移除链接
-                setTimeout(() => {
-                    if (link.parentNode) {
-                        document.body.removeChild(link);
-                    }
-                }, 100);
-            } catch (e) {
-                console.error('[ErrorBook.handleExport] 自动下载失败:', e);
-            }
-            
-            // 无论自动下载是否成功，都显示备用下载按钮（因为很多浏览器会阻止自动下载）
-            // 这样用户总是有一个明确的下载方式
+            // 直接显示下载按钮，因为自动下载经常被浏览器阻止
             this.fallbackDownload(blob, fileName, url);
             
             // 记录成功日志
