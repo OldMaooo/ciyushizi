@@ -51,10 +51,14 @@
             });
 
             const prevBtn = document.getElementById('practice-prev-btn');
+            const prevHotzone = document.getElementById('practice-prev-hotzone');
             if (prevBtn) prevBtn.addEventListener('click', () => this.prevGroup());
+            if (prevHotzone) prevHotzone.addEventListener('click', () => this.prevGroup());
 
             const nextBtn = document.getElementById('practice-next-btn');
+            const nextHotzone = document.getElementById('practice-next-hotzone');
             if (nextBtn) nextBtn.addEventListener('click', () => this.nextGroup());
+            if (nextHotzone) nextHotzone.addEventListener('click', () => this.nextGroup());
 
             const endBtn = document.getElementById('practice-end-btn');
             if (endBtn) endBtn.addEventListener('click', () => this.finish());

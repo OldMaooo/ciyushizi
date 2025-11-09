@@ -75,16 +75,17 @@
             
             units.forEach(unit => {
                 const words = grouped[unit];
+                const unitId = unit.replace(/\s+/g, '-');
                 html += `
-                    <div class="unit-item mb-2">
+                    <div class="unit-item mb-2 d-flex align-items-center" data-unit-row="${unitId}">
                         <input type="checkbox" class="form-check-input unit-checkbox" 
                                data-unit="${unit}" 
-                               id="unit-${unit.replace(/\s+/g, '-')}">
-                        <label for="unit-${unit.replace(/\s+/g, '-')}" class="form-check-label ms-2">
-                            ${unit} (${words.length}个词语)
+                               id="unit-${unitId}">
+                        <label for="unit-${unitId}" class="form-check-label ms-2 flex-shrink-0">
+                            ${unit} (${words.length}个)
                         </label>
-                        <span class="text-muted ms-2 small">
-                            ${words.slice(0, 5).map(w => w.word).join('、')}${words.length > 5 ? '...' : ''}
+                        <span class="text-muted ms-2 small flex-grow-1 text-truncate" style="min-width: 0;">
+                            ${words.map(w => w.word).join('、')}
                         </span>
                     </div>
                 `;
@@ -130,8 +131,22 @@
                 btn.addEventListener('click', () => this.deselectAll(container));
             });
             
-            // 单元复选框
-            container.querySelectorAll('.unit-checkbox').forEach(checkbox => {
+            // 单元复选框和整行点击
+            container.querySelectorAll('.unit-item').forEach(item => {
+                const checkbox = item.querySelector('.unit-checkbox');
+                if (!checkbox) return;
+                
+                // 整行点击切换
+                item.addEventListener('click', (e) => {
+                    // 如果点击的是复选框本身，不处理（让默认行为处理）
+                    if (e.target === checkbox || e.target.closest('.form-check-input')) {
+                        return;
+                    }
+                    // 点击整行，切换复选框状态
+                    checkbox.checked = !checkbox.checked;
+                    checkbox.dispatchEvent(new Event('change'));
+                });
+                
                 checkbox.addEventListener('change', () => {
                     this.updateSelectedCount(container);
                 });
@@ -226,7 +241,54 @@
             if (countEl) {
                 countEl.textContent = `已选择: ${totalCount} 个词语`;
                 countEl.className = totalCount > 0 ? 'ms-3 text-success fw-bold' : 'ms-3 text-muted';
+                countEl.dataset.selectedCount = totalCount; // 存储选中数量，供动态按钮使用
             }
+            
+            // 更新动态题目数量按钮
+            this.updateDynamicCountButton(totalCount);
+        },
+        
+        /**
+         * 更新动态题目数量按钮
+         */
+        updateDynamicCountButton(count) {
+            // 移除旧的动态按钮
+            const oldBtn = document.getElementById('word-count-quick-dynamic');
+            if (oldBtn) {
+                oldBtn.remove();
+            }
+            
+            // 如果数量为0，不显示按钮
+            if (count === 0) return;
+            
+            // 查找最后一个快捷按钮（50的按钮）
+            const quickButtons = document.querySelectorAll('.word-count-quick');
+            if (quickButtons.length === 0) return;
+            
+            const lastButton = quickButtons[quickButtons.length - 1];
+            const dynamicBtn = document.createElement('button');
+            dynamicBtn.type = 'button';
+            dynamicBtn.className = 'btn btn-sm btn-outline-primary word-count-quick';
+            dynamicBtn.id = 'word-count-quick-dynamic';
+            dynamicBtn.dataset.value = count;
+            dynamicBtn.textContent = count;
+            dynamicBtn.title = `使用已选择的 ${count} 个词语`;
+            
+            // 插入到最后一个按钮后面
+            lastButton.parentNode.insertBefore(dynamicBtn, lastButton.nextSibling);
+            
+            // 绑定点击事件
+            dynamicBtn.addEventListener('click', () => {
+                const input = document.getElementById('word-count-input-home');
+                if (input) {
+                    input.value = count;
+                    input.focus();
+                }
+                // 同步到弹窗
+                if (typeof Main !== 'undefined' && Main.syncSettingsToModal) {
+                    Main.syncSettingsToModal();
+                }
+            });
         },
         
         /**

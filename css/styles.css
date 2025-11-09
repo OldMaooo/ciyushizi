@@ -54,15 +54,15 @@
 }
 
 .unit-item {
-    padding: 5px 0;
+    padding: 8px 12px;
     cursor: pointer;
     border: none !important;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
 }
 
 .unit-item:hover {
     background-color: #f8f9fa;
-    border-radius: 4px;
-    padding-left: 5px;
 }
 
 [data-bs-theme="dark"] .unit-item:hover {
@@ -137,7 +137,7 @@
     font-weight: 600;
     line-height: 1.2;
     /* 优先使用系统楷体，fallback到Google Fonts */
-    font-family: 'KaiTi', 'Kaiti SC', '楷体', 'STKaiti', 'STKaiti SC', 'SimKai', 'Ma Shan Zheng', 'FangSong', 'FangSong SC', '仿宋', serif;
+    font-family: var(--kaiti-font-family, 'KaiTi_GB2312', 'KaiTi', 'Kaiti SC', '楷体', 'STKaiti', 'STKaiti SC', 'SimKai', serif);
     transition: color 0.2s ease, font-size 0.2s ease;
     white-space: nowrap;
     overflow: visible;
@@ -285,6 +285,36 @@
 [data-bs-theme="dark"] .practice-range-toolbar {
     background-color: var(--bs-dark, #212529) !important;
     border-bottom-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* 练习页导航按钮样式 */
+.practice-navigation-container {
+    position: relative;
+}
+
+.practice-nav-hotzone {
+    min-width: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 0.5rem;
+    transition: background-color 0.2s ease;
+}
+
+.practice-nav-hotzone:hover {
+    background-color: rgba(0, 0, 0, 0.02);
+}
+
+[data-bs-theme="dark"] .practice-nav-hotzone:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.practice-nav-btn {
+    min-width: auto;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    white-space: nowrap;
 }
 
 /* 导入预览相关样式 */

@@ -9,10 +9,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" />
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" />
-    <!-- 楷体字体 - 在线加载并缓存 -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
+    <!-- 楷体字体 - 本地加载并缓存 -->
+    <script src="js/font-loader.js"></script>
     <!-- App styles -->
     <link rel="stylesheet" href="css/styles.css" />
 </head>
@@ -22,7 +20,7 @@
             <a class="navbar-brand d-flex align-items-center" href="#home">
                 <i class="bi bi-book"></i>
                 <span class="ms-2 fw-semibold">YUWENRENZI</span>
-                <span class="ms-2 small text-muted" id="app-version">v0.4.2</span>
+                <span class="ms-2 small text-muted" id="app-version">v0.4.8</span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -166,18 +164,22 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <div class="d-flex align-items-center justify-content-center gap-3">
-                        <button class="btn btn-outline-secondary" id="practice-prev-btn">
-                            <i class="bi bi-arrow-left"></i> 上一组
-                        </button>
+                    <div class="d-flex align-items-center justify-content-center gap-2 practice-navigation-container">
+                        <div class="practice-nav-hotzone practice-nav-hotzone-left" id="practice-prev-hotzone">
+                            <button class="btn btn-outline-secondary practice-nav-btn" id="practice-prev-btn">
+                                <i class="bi bi-arrow-left"></i> 上一组
+                            </button>
+                        </div>
                         <div id="practice-card-container" class="d-flex flex-wrap gap-3 justify-content-center" style="flex: 1; min-width: 0;">
                             <div class="text-muted py-5" id="practice-placeholder">
                                 <i class="bi bi-hourglass-split"></i> 等待开始练习...
                             </div>
                         </div>
-                        <button class="btn btn-outline-secondary" id="practice-next-btn">
-                            下一组 <i class="bi bi-arrow-right"></i>
-                        </button>
+                        <div class="practice-nav-hotzone practice-nav-hotzone-right" id="practice-next-hotzone">
+                            <button class="btn btn-outline-secondary practice-nav-btn" id="practice-next-btn">
+                                下一组 <i class="bi bi-arrow-right"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -238,13 +240,15 @@
                         <i class="bi bi-journal-x"></i> 错题集
                     </div>
                     <div class="d-flex gap-2 align-items-center flex-wrap" id="errorbook-admin-bar">
-                        <div class="form-check form-switch m-0">
-                            <input class="form-check-input" type="checkbox" id="errorbook-practice-toggle" />
-                            <label class="form-check-label" for="errorbook-practice-toggle">练习模式</label>
-                        </div>
-                        <div class="form-check form-switch m-0">
-                            <input class="form-check-input" type="checkbox" id="errorbook-admin-toggle" />
-                            <label class="form-check-label" for="errorbook-admin-toggle">管理模式</label>
+                        <div class="btn-group" role="group" aria-label="模式选择">
+                            <input type="radio" class="btn-check" name="errorbook-mode" id="errorbook-mode-normal" value="normal" checked />
+                            <label class="btn btn-outline-secondary btn-sm" for="errorbook-mode-normal">正常模式</label>
+                            
+                            <input type="radio" class="btn-check" name="errorbook-mode" id="errorbook-mode-practice" value="practice" />
+                            <label class="btn btn-outline-secondary btn-sm" for="errorbook-mode-practice">练习模式</label>
+                            
+                            <input type="radio" class="btn-check" name="errorbook-mode" id="errorbook-mode-admin" value="admin" />
+                            <label class="btn btn-outline-secondary btn-sm" for="errorbook-mode-admin">管理模式</label>
                         </div>
                         <button class="btn btn-sm btn-outline-secondary" id="errorbook-export-btn">
                             <i class="bi bi-download"></i> 导出
@@ -264,9 +268,12 @@
                                 <button class="nav-link" id="tab-errorbook-summary" data-bs-toggle="pill" data-bs-target="#errorbook-summary" type="button" role="tab">汇总查看</button>
                             </li>
                         </ul>
-                        <div class="form-check form-switch m-0 d-none" id="errorbook-hide-pinyin-switch">
-                            <input class="form-check-input" type="checkbox" id="errorbook-hide-pinyin-toggle" />
-                            <label class="form-check-label" for="errorbook-hide-pinyin-toggle">隐藏拼音</label>
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="text-muted small d-none" id="errorbook-summary-count">共 0 个错题</span>
+                            <div class="form-check form-switch m-0 d-none" id="errorbook-hide-pinyin-switch">
+                                <input class="form-check-input" type="checkbox" id="errorbook-hide-pinyin-toggle" />
+                                <label class="form-check-label" for="errorbook-hide-pinyin-toggle">隐藏拼音</label>
+                            </div>
                         </div>
                     </div>
                     <div class="tab-content">

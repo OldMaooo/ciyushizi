@@ -25,6 +25,7 @@
         adminMode: false,
         onlyWrong: false,
         practiceMode: false,
+        // 初始化时确保模式状态与UI同步
         hidePinyin: false,
         selectedKeys: new Set(),
         lastSelectedIndex: -1, // 用于 shift 多选
@@ -39,16 +40,31 @@
         },
 
         bindEvents() {
-            const adminToggle = document.getElementById('errorbook-admin-toggle');
-            if (adminToggle) {
-                adminToggle.addEventListener('change', (e) => {
-                    this.adminMode = e.target.checked;
+            // 模式选择（单选，互斥）
+            const modeRadios = document.querySelectorAll('input[name="errorbook-mode"]');
+            modeRadios.forEach(radio => {
+                radio.addEventListener('change', (e) => {
+                    const mode = e.target.value;
+                    this.practiceMode = mode === 'practice';
+                    this.adminMode = mode === 'admin';
+                    
+                    // 更新UI状态
+                    const hidePinyinSwitch = document.getElementById('errorbook-hide-pinyin-switch');
+                    const startBtn = document.getElementById('errorbook-start-practice-btn');
+                    const startBtnBottom = document.getElementById('errorbook-start-practice-btn-bottom');
+                    const bottomBar = document.getElementById('errorbook-bottom-bar');
+                    
+                    if (hidePinyinSwitch) hidePinyinSwitch.classList.toggle('d-none', !this.practiceMode);
+                    if (startBtn) startBtn.classList.toggle('d-none', !this.practiceMode);
+                    if (startBtnBottom) startBtnBottom.classList.toggle('d-none', !this.practiceMode);
+                    if (bottomBar) bottomBar.classList.toggle('d-none', !this.practiceMode);
+                    
                     this.selectedKeys.clear();
                     this.lastSelectedIndex = -1;
                     this.updateAdminBottomBar();
                     this.render();
                 });
-            }
+            });
             
             // 管理模式下的批量操作按钮
             const selectAllBtn = document.getElementById('errorbook-select-all-btn');
@@ -64,24 +80,6 @@
             const batchDeleteBtn = document.getElementById('errorbook-batch-delete-btn');
             if (batchDeleteBtn) {
                 batchDeleteBtn.addEventListener('click', () => this.batchDelete());
-            }
-
-            // 移除只看错题功能
-
-            const practiceToggle = document.getElementById('errorbook-practice-toggle');
-            if (practiceToggle) {
-                practiceToggle.addEventListener('change', (e) => {
-                    this.practiceMode = e.target.checked;
-                    const hidePinyinSwitch = document.getElementById('errorbook-hide-pinyin-switch');
-                    const startBtn = document.getElementById('errorbook-start-practice-btn');
-                    const startBtnBottom = document.getElementById('errorbook-start-practice-btn-bottom');
-                    const bottomBar = document.getElementById('errorbook-bottom-bar');
-                    if (hidePinyinSwitch) hidePinyinSwitch.classList.toggle('d-none', !this.practiceMode);
-                    if (startBtn) startBtn.classList.toggle('d-none', !this.practiceMode);
-                    if (startBtnBottom) startBtnBottom.classList.toggle('d-none', !this.practiceMode);
-                    if (bottomBar) bottomBar.classList.toggle('d-none', !this.practiceMode);
-                    this.render();
-                });
             }
 
             const hidePinyinToggle = document.getElementById('errorbook-hide-pinyin-toggle');
@@ -123,6 +121,11 @@
                     // 切换到汇总查看时，清除 currentRoundErrorWords，确保显示所有错题
                     this.currentRoundErrorWords = null;
                     this.render();
+                    // 更新总数显示
+                    setTimeout(() => {
+                        const errorWords = Storage.getErrorWords();
+                        this.updateSummaryCount(errorWords);
+                    }, 100);
                 });
             }
             
@@ -135,6 +138,13 @@
                         // 切换到汇总查看时，清除 currentRoundErrorWords，确保显示所有错题
                         if (e.target.id === 'tab-errorbook-summary') {
                             this.currentRoundErrorWords = null;
+                            // 更新总数显示
+                            const errorWords = Storage.getErrorWords();
+                            this.updateSummaryCount(errorWords);
+                        } else {
+                            // 切换到其他标签时隐藏总数
+                            const countEl = document.getElementById('errorbook-summary-count');
+                            if (countEl) countEl.classList.add('d-none');
                         }
                         this.render();
                     }, 100);
@@ -280,6 +290,11 @@
                         
                         // 绑定卡片交互事件
                         this.bindPracticeCardEvents(roundsContainer);
+                        
+                        // 调整卡片字体大小（包括拼音）
+                        setTimeout(() => {
+                            CardComponent.adjustCardFontSizes(roundsContainer);
+                        }, 100);
                     }
                 } else {
                     // 汇总查看：显示所有错题
@@ -361,8 +376,16 @@
                         
                         summaryContainer.innerHTML = `<div class="d-flex flex-wrap gap-3" style="padding-bottom: 100px;">${cards}</div>`;
                         
+                        // 更新汇总查看的总数显示
+                        this.updateSummaryCount(practiceWords);
+                        
                         // 绑定卡片交互事件
                         this.bindPracticeCardEvents(summaryContainer);
+                        
+                        // 调整卡片字体大小（包括拼音）
+                        setTimeout(() => {
+                            CardComponent.adjustCardFontSizes(summaryContainer);
+                        }, 100);
                     }
                 }
                 return;
@@ -393,6 +416,8 @@
                 summaryContainer.innerHTML = '<div class="text-muted text-center py-4">暂无错题</div>';
             } else {
                 summaryContainer.innerHTML = this.renderSummary(errorWords);
+                // 更新汇总查看的总数显示
+                this.updateSummaryCount(errorWords);
             }
 
             this.bindCardEvents(roundsContainer);
@@ -457,7 +482,14 @@
                 return map;
             }, new Map());
 
-            const sorted = Array.from(grouped.entries()).sort((a, b) => b[1].length - a[1].length);
+            // 按最新标记时间排序（最新到最旧）
+            const sorted = Array.from(grouped.entries()).sort((a, b) => {
+                const aLatest = a[1][a[1].length - 1];
+                const bLatest = b[1][b[1].length - 1];
+                const aTime = aLatest.markedAt ? new Date(aLatest.markedAt).getTime() : 0;
+                const bTime = bLatest.markedAt ? new Date(bLatest.markedAt).getTime() : 0;
+                return bTime - aTime; // 降序：最新的在前
+            });
             const filtered = this.onlyWrong ? sorted.filter(([wordId, records]) => {
                 // 检查当前状态是否为错题
                 const latest = records[records.length - 1];
@@ -1396,9 +1428,11 @@
             
             // 切换到练习模式
             this.practiceMode = true;
-            const practiceToggle = document.getElementById('errorbook-practice-toggle');
-            if (practiceToggle) {
-                practiceToggle.checked = true;
+            this.adminMode = false;
+            const practiceRadio = document.getElementById('errorbook-mode-practice');
+            if (practiceRadio) {
+                practiceRadio.checked = true;
+                practiceRadio.dispatchEvent(new Event('change'));
             }
             
             // 显示拼音（练习模式下默认显示）
@@ -1408,7 +1442,10 @@
                 hidePinyinSwitch.checked = false;
             }
             
-            // 获取该轮次的错题
+            // 清除 currentRoundErrorWords，确保汇总查看显示所有错题
+            this.currentRoundErrorWords = null;
+            
+            // 获取该轮次的错题（仅用于按轮查看时展开对应轮次）
             const logs = Storage.getPracticeLogs();
             const log = logs.find(l => l.id === roundId);
             if (!log) {
@@ -1416,40 +1453,29 @@
                 return;
             }
             
-            // 收集该轮次的错题
-            const errorWords = [];
-            log.groups.forEach(group => {
-                group.words.forEach(word => {
-                    if (word.markedWrong) {
-                        errorWords.push({
-                            id: word.id,
-                            wordId: word.id,
-                            word: word.word,
-                            pinyin: word.pinyin,
-                            unit: word.unit,
-                            markedWrong: true
-                        });
-                    }
-                });
-            });
-            
-            // 存储当前轮次的错题（临时）
-            this.currentRoundErrorWords = errorWords;
-            
             // 渲染练习模式
             this.render();
             
-            // 展开该轮次（找到对应的accordion并展开）
+            // 默认切换到"按轮查看"标签，并展开该轮次
             setTimeout(() => {
-                const roundIndex = logs.findIndex(l => l.id === roundId);
+                // 切换到"按轮查看"标签
+                const tabRounds = document.getElementById('tab-errorbook-rounds');
+                if (tabRounds) {
+                    const tab = new bootstrap.Tab(tabRounds);
+                    tab.show();
+                }
+                
+                // 展开该轮次（找到对应的accordion并展开）
+                const sortedLogs = [...logs].sort((a, b) => new Date(b.date) - new Date(a.date));
+                const roundIndex = sortedLogs.findIndex(l => l.id === roundId);
                 if (roundIndex >= 0) {
-                    const collapseId = `error-round-${roundIndex}`;
+                    const collapseId = `collapse-round-${roundIndex}`;
                     const collapseEl = document.getElementById(collapseId);
                     if (collapseEl) {
                         const bsCollapse = new bootstrap.Collapse(collapseEl, { show: true });
                     }
                 }
-            }, 100);
+            }, 200);
         },
 
         /**
@@ -1616,6 +1642,34 @@
             } else {
                 if (adminBottomBar) adminBottomBar.classList.add('d-none');
                 // practiceBottomBar 的显示由 practiceMode 控制
+            }
+        },
+        
+        /**
+         * 更新汇总查看的总数显示
+         */
+        updateSummaryCount(errorWords) {
+            const countEl = document.getElementById('errorbook-summary-count');
+            if (!countEl) return;
+            
+            // 计算去重后的错题数量
+            const uniqueWords = new Set();
+            errorWords.forEach(item => {
+                const wordId = item.wordId || item.id;
+                if (wordId) uniqueWords.add(wordId);
+            });
+            
+            const count = uniqueWords.size;
+            
+            // 只在汇总查看标签激活时显示
+            const summaryTab = document.getElementById('tab-errorbook-summary');
+            const isSummaryActive = summaryTab && summaryTab.classList.contains('active');
+            
+            if (isSummaryActive) {
+                countEl.textContent = `共 ${count} 个错题`;
+                countEl.classList.remove('d-none');
+            } else {
+                countEl.classList.add('d-none');
             }
         }
     };
