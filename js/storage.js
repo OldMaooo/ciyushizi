@@ -108,6 +108,48 @@
             if (!roundId) return;
             const others = this.getErrorWords().filter(item => item.roundId !== roundId);
             this.saveErrorWords([...others, ...(items || [])]);
+        },
+
+        // 复习计划相关方法
+        getReviewPlans() {
+            try {
+                const raw = localStorage.getItem(this._key('review_plans'));
+                return raw ? JSON.parse(raw) : [];
+            } catch (err) {
+                console.error('读取复习计划失败', err);
+                return [];
+            }
+        },
+
+        saveReviewPlans(plans) {
+            try {
+                localStorage.setItem(this._key('review_plans'), JSON.stringify(plans || []));
+            } catch (err) {
+                console.error('保存复习计划失败', err);
+            }
+        },
+
+        getReviewPlan(wordId) {
+            const plans = this.getReviewPlans();
+            return plans.find(p => p.wordId === wordId);
+        },
+
+        saveReviewPlan(plan) {
+            if (!plan || !plan.wordId) return;
+            const plans = this.getReviewPlans();
+            const idx = plans.findIndex(p => p.wordId === plan.wordId);
+            if (idx >= 0) {
+                plans[idx] = plan;
+            } else {
+                plans.push(plan);
+            }
+            this.saveReviewPlans(plans);
+        },
+
+        removeReviewPlan(wordId) {
+            if (!wordId) return;
+            const plans = this.getReviewPlans().filter(p => p.wordId !== wordId);
+            this.saveReviewPlans(plans);
         }
     };
 

@@ -37,6 +37,10 @@
         init() {
             this.bindEvents();
             this.render();
+            // 初始化复习计划模块
+            if (global.ReviewPlan) {
+                ReviewPlan.init();
+            }
         },
 
         bindEvents() {
@@ -129,6 +133,15 @@
                 });
             }
             
+            const tabReview = document.getElementById('tab-errorbook-review');
+            if (tabReview) {
+                tabReview.addEventListener('click', () => {
+                    this.currentTab = 'review';
+                    this.selectedKeys.clear();
+                    this.render();
+                });
+            }
+            
             // 监听 Bootstrap 标签切换事件，确保切换时重新渲染
             const tabList = document.querySelector('[role="tablist"]');
             if (tabList) {
@@ -137,10 +150,13 @@
                     setTimeout(() => {
                         // 切换到汇总查看时，清除 currentRoundErrorWords，确保显示所有错题
                         if (e.target.id === 'tab-errorbook-summary') {
+                            this.currentTab = 'summary';
                             this.currentRoundErrorWords = null;
                             // 更新总数显示
                             const errorWords = Storage.getErrorWords();
                             this.updateSummaryCount(errorWords);
+                        } else if (e.target.id === 'tab-errorbook-review') {
+                            this.currentTab = 'review';
                         } else {
                             // 切换到其他标签时隐藏总数
                             const countEl = document.getElementById('errorbook-summary-count');
@@ -172,6 +188,14 @@
         },
 
         render() {
+            // 如果是复习计划标签，直接渲染复习计划
+            if (this.currentTab === 'review') {
+                if (global.ReviewPlan) {
+                    ReviewPlan.render();
+                }
+                return;
+            }
+            
             // 获取调试模式状态
             const isDebugMode = typeof Debug !== 'undefined' && Debug.isEnabled;
             

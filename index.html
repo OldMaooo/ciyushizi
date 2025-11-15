@@ -94,7 +94,11 @@
                                         <div class="form-text">可直接输入或点击快捷选项</div>
                                     </div>
                                     <div class="col-12">
-                                        <button class="btn btn-primary" id="home-start-btn"><i class="bi bi-play-fill"></i> 开始练习</button>
+                                        <div class="d-flex gap-2 flex-wrap">
+                                            <button class="btn btn-primary flex-fill" id="home-preview-btn"><i class="bi bi-book"></i> 预习模式</button>
+                                            <button class="btn btn-primary flex-fill" id="home-practice-btn"><i class="bi bi-play-fill"></i> 练习模式</button>
+                                            <button class="btn btn-outline-primary flex-fill" id="home-test-btn"><i class="bi bi-clipboard-check"></i> 测试模式</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -150,14 +154,58 @@
             </div>
         </section>
 
+        <section id="preview" class="page-section container d-none">
+            <div class="card mb-3">
+                <div class="card-header d-flex justify-content-between align-items-center sticky-top border-bottom practice-header" style="z-index: 10;">
+                    <div>
+                        <span class="badge bg-success-subtle text-success" id="preview-mode-badge">预习模式</span>
+                        <span class="badge bg-primary-subtle text-primary ms-2" id="preview-progress">0/0</span>
+                        <div class="form-check form-switch d-inline-block ms-2">
+                            <input class="form-check-input" type="checkbox" id="preview-pinyin-switch" checked>
+                            <label class="form-check-label small" for="preview-pinyin-switch">显示拼音</label>
+                        </div>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-sm btn-outline-secondary" id="preview-skip-btn">跳过预习</button>
+                        <button class="btn btn-sm btn-primary" id="preview-start-practice-btn">开始练习</button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex align-items-center justify-content-center gap-2 practice-navigation-container">
+                        <div class="practice-nav-hotzone practice-nav-hotzone-left" id="preview-prev-hotzone">
+                            <button class="btn btn-outline-secondary practice-nav-btn" id="preview-prev-btn">
+                                <i class="bi bi-arrow-left"></i> 上一组
+                            </button>
+                        </div>
+                        <div id="preview-card-container" class="d-flex flex-wrap gap-3 justify-content-center" style="flex: 1; min-width: 0;">
+                            <div class="text-muted py-5" id="preview-placeholder">
+                                <i class="bi bi-hourglass-split"></i> 等待开始预习...
+                            </div>
+                        </div>
+                        <div class="practice-nav-hotzone practice-nav-hotzone-right" id="preview-next-hotzone">
+                            <button class="btn btn-outline-secondary practice-nav-btn" id="preview-next-btn">
+                                下一组 <i class="bi bi-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
         <section id="practice" class="page-section container d-none">
             <div class="card mb-3">
                 <div class="card-header d-flex justify-content-between align-items-center sticky-top border-bottom practice-header" style="z-index: 10;">
                     <div>
-                        <span class="badge bg-primary-subtle text-primary" id="practice-progress">0/0</span>
+                        <span class="badge bg-primary-subtle text-primary d-none" id="practice-mode-badge">练习模式</span>
+                        <span class="badge bg-primary-subtle text-primary ms-2" id="practice-progress">0/0</span>
                         <span class="badge bg-info-subtle text-info ms-2" id="practice-timer">0s</span>
                         <span class="badge bg-warning-subtle text-warning ms-2" id="practice-countdown">正计时: --</span>
                         <span class="badge bg-secondary-subtle text-secondary ms-2" id="practice-speed-hint">速度 3s/词</span>
+                        <div class="form-check form-switch d-inline-block ms-2">
+                            <input class="form-check-input" type="checkbox" id="practice-pinyin-switch">
+                            <label class="form-check-label small" for="practice-pinyin-switch">显示拼音</label>
+                        </div>
+                        <span class="badge bg-warning-subtle text-warning ms-2 d-none" id="practice-pinyin-lock-hint">测试模式，拼音已锁定</span>
                     </div>
                     <div class="d-flex gap-2">
                         <button class="btn btn-sm btn-outline-secondary" id="practice-pause-btn">暂停</button>
@@ -188,8 +236,12 @@
 
         <section id="results" class="page-section container d-none">
             <div class="card">
-                <div class="card-header">
-                    <span><i class="bi bi-clipboard-check"></i> 练习结果</span>
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <span><i class="bi bi-clipboard-check"></i> <span id="results-title">练习结果</span></span>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="results-filter-switch" checked>
+                        <label class="form-check-label" for="results-filter-switch">只显示错题</label>
+                    </div>
                 </div>
                 <div class="card-body" style="padding-bottom: 100px;">
                     <div class="row text-center g-3 mb-4">
@@ -268,6 +320,9 @@
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link" id="tab-errorbook-summary" data-bs-toggle="pill" data-bs-target="#errorbook-summary" type="button" role="tab">汇总查看</button>
                             </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="tab-errorbook-review" data-bs-toggle="pill" data-bs-target="#errorbook-review" type="button" role="tab">复习计划</button>
+                            </li>
                         </ul>
                         <div class="d-flex align-items-center gap-2">
                             <span class="text-muted small d-none" id="errorbook-summary-count">共 0 个错题</span>
@@ -283,6 +338,11 @@
                         </div>
                         <div class="tab-pane fade" id="errorbook-summary" role="tabpanel">
                             <div class="text-muted text-center py-4">暂无数据</div>
+                        </div>
+                        <div class="tab-pane fade" id="errorbook-review" role="tabpanel">
+                            <div id="errorbook-review-content">
+                                <div class="text-muted text-center py-4">暂无复习计划</div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -370,10 +430,10 @@
                                 <i class="bi bi-x-circle"></i> 清空
                             </button>
                             <button class="btn btn-sm btn-outline-info d-none" id="wordbank-debug-fill-btn-1" title="填入测试数据1（调试模式）">
-                                <i class="bi bi-bug"></i> 调试1
+                                <i class="bi bi-bug"></i> 词库1
                             </button>
                             <button class="btn btn-sm btn-outline-info d-none" id="wordbank-debug-fill-btn-2" title="填入测试数据2（调试模式）">
-                                <i class="bi bi-bug"></i> 调试2
+                                <i class="bi bi-bug"></i> 词库2
                             </button>
                         </div>
                     </div>
@@ -575,6 +635,7 @@
     <script src="js/cloud-sync.js"></script>
     <script src="js/wordbank.js"></script>
     <script src="js/practice-range.js"></script>
+    <script src="js/review-plan.js"></script>
     <script src="js/practice.js"></script>
     <script src="js/errorbook.js"></script>
     <script src="js/main.js"></script>

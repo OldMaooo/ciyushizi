@@ -62,6 +62,7 @@
                 console.warn('Storage 未初始化');
                 return;
             }
+            const hadData = Storage.getWordBank() && Storage.getWordBank().length > 0;
             this.data = this.prepareInitialData(Storage.getWordBank());
             this.filtered = [...this.data];
             this.renderTable();
@@ -115,7 +116,18 @@
                 });
             }
             if (textImportBtn) {
-                textImportBtn.addEventListener('click', () => this.handleTextImport());
+                // 移除旧的事件监听器（如果存在），避免重复绑定
+                const newBtn = textImportBtn.cloneNode(true);
+                textImportBtn.parentNode.replaceChild(newBtn, textImportBtn);
+                newBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log('导入按钮被点击', newBtn);
+                    this.handleTextImport();
+                });
+                console.log('导入按钮事件已绑定', newBtn);
+            } else {
+                console.warn('找不到导入按钮: wordbank-text-import-btn');
             }
             if (textClearBtn) {
                 textClearBtn.addEventListener('click', () => {
@@ -135,10 +147,26 @@
                 deleteSelectedBtn.addEventListener('click', () => this.deleteSelected());
             }
             if (debugFillBtn1) {
-                debugFillBtn1.addEventListener('click', () => this.handleDebugFill(1));
+                debugFillBtn1.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log('词库1按钮被点击');
+                    this.handleDebugFill(1).catch(err => {
+                        console.error('handleDebugFill error:', err);
+                        alert(`加载失败: ${err.message}`);
+                    });
+                });
             }
             if (debugFillBtn2) {
-                debugFillBtn2.addEventListener('click', () => this.handleDebugFill(2));
+                debugFillBtn2.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log('词库2按钮被点击');
+                    this.handleDebugFill(2).catch(err => {
+                        console.error('handleDebugFill error:', err);
+                        alert(`加载失败: ${err.message}`);
+                    });
+                });
             }
             
             // 导入预览确认按钮
@@ -180,11 +208,25 @@
         updateDebugButtonVisibility() {
             const debugFillBtn1 = document.getElementById('wordbank-debug-fill-btn-1');
             const debugFillBtn2 = document.getElementById('wordbank-debug-fill-btn-2');
-            const isDebugMode = global.Debug && Debug.isDebugMode();
+            // 检查Debug模块是否存在且已初始化
+            const isDebugMode = global.Debug && typeof Debug.isDebugMode === 'function' && Debug.isDebugMode();
             
             if (debugFillBtn1) {
                 if (isDebugMode) {
                     debugFillBtn1.classList.remove('d-none');
+                    // 确保事件已绑定（如果按钮刚显示，可能需要重新绑定）
+                    if (!debugFillBtn1.dataset.eventBound) {
+                        debugFillBtn1.addEventListener('click', (e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            console.log('词库1按钮被点击');
+                            this.handleDebugFill(1).catch(err => {
+                                console.error('handleDebugFill error:', err);
+                                alert(`加载失败: ${err.message}`);
+                            });
+                        });
+                        debugFillBtn1.dataset.eventBound = 'true';
+                    }
                 } else {
                     debugFillBtn1.classList.add('d-none');
                 }
@@ -192,6 +234,19 @@
             if (debugFillBtn2) {
                 if (isDebugMode) {
                     debugFillBtn2.classList.remove('d-none');
+                    // 确保事件已绑定
+                    if (!debugFillBtn2.dataset.eventBound) {
+                        debugFillBtn2.addEventListener('click', (e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            console.log('词库2按钮被点击');
+                            this.handleDebugFill(2).catch(err => {
+                                console.error('handleDebugFill error:', err);
+                                alert(`加载失败: ${err.message}`);
+                            });
+                        });
+                        debugFillBtn2.dataset.eventBound = 'true';
+                    }
                 } else {
                     debugFillBtn2.classList.add('d-none');
                 }
@@ -485,11 +540,17 @@
         },
 
         handleTextImport() {
+            console.log('handleTextImport 被调用');
             const textInput = document.getElementById('wordbank-text-input');
             const gradeSelect = document.getElementById('wordbank-grade-select');
             const semesterSelect = document.getElementById('wordbank-semester-select');
             
-            if (!textInput) return;
+            if (!textInput) {
+                console.error('找不到文本输入框');
+                alert('找不到文本输入框，请刷新页面重试');
+                return;
+            }
+            
             const text = textInput.value.trim();
             if (!text) {
                 alert('请输入要导入的词语');
@@ -503,6 +564,8 @@
                 alert('请先选择年级和册数');
                 return;
             }
+            
+            console.log('开始导入，文本长度:', text.length, '年级:', grade, '册数:', semester);
             
             try {
                 // 保存导入前的快照

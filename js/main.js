@@ -22,11 +22,11 @@
                     homeSection.classList.add('active');
                 }
                 this.showPage('home');
-            this.restoreStats();
-            
-            // 清除缓存按钮
-            const clearCacheBtn = document.getElementById('clear-cache-btn');
-            if (clearCacheBtn) {
+                this.restoreStats();
+                
+                // 清除缓存按钮
+                const clearCacheBtn = document.getElementById('clear-cache-btn');
+                if (clearCacheBtn) {
                 clearCacheBtn.addEventListener('click', () => {
                     if (confirm('确定要清除所有缓存数据吗？这将清除：\n- 词语库\n- 练习记录\n- 错题集\n- 用户设置\n\n此操作不可恢复！')) {
                         // 清除所有 localStorage 数据
@@ -137,11 +137,16 @@
                 this.showPage(hash);
             });
             
-            // 初始化时也检查hash
-            const hash = window.location.hash.substring(1) || 'home';
-            if (hash !== 'home') {
-                setTimeout(() => this.showPage(hash), 100);
-            }
+            // 初始化时也检查hash（延迟执行，确保所有模块已初始化）
+            setTimeout(() => {
+                const hash = window.location.hash.substring(1) || 'home';
+                if (hash !== 'home') {
+                    this.showPage(hash);
+                } else {
+                    // 如果没有hash，确保显示首页
+                    this.showPage('home');
+                }
+            }, 100);
 
             const refreshBtn = document.getElementById('refresh-stats-btn');
             if (refreshBtn) refreshBtn.addEventListener('click', () => this.restoreStats());
@@ -209,13 +214,18 @@
                 }
             } else if (pageId === 'wordbank') {
                 if (global.WordBank) {
-                    WordBank.refresh();
-                    // 更新调试按钮可见性
-                    if (WordBank.updateDebugButtonVisibility) {
-                        WordBank.updateDebugButtonVisibility();
-                    }
+                    // 延迟重新绑定事件，确保DOM已完全加载
+                    setTimeout(() => {
+                        WordBank.bindEvents();
+                        WordBank.refresh();
+                        // 更新调试按钮可见性
+                        if (WordBank.updateDebugButtonVisibility) {
+                            WordBank.updateDebugButtonVisibility();
+                        }
+                    }, 100);
                 }
             }
+            // 首页按钮使用事件委托，不需要重新绑定
         },
 
         initTheme() {
