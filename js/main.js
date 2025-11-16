@@ -6,6 +6,10 @@
                 if (global.Debug) {
                     Debug.init();
                 }
+                // 初始化默认词库（从外部文件加载）
+                if (typeof InitData !== 'undefined') {
+                    InitData.init();
+                }
                 this.bindNav();
                 this.initTheme();
                 this.bindQuickButtons();
@@ -24,38 +28,14 @@
                 this.showPage('home');
                 this.restoreStats();
                 
-                // 清除缓存按钮
-                const clearCacheBtn = document.getElementById('clear-cache-btn');
-                if (clearCacheBtn) {
-                clearCacheBtn.addEventListener('click', () => {
-                    if (confirm('确定要清除所有缓存数据吗？这将清除：\n- 词语库\n- 练习记录\n- 错题集\n- 用户设置\n\n此操作不可恢复！')) {
-                        // 清除所有 localStorage 数据
-                        const prefix = 'word_recognition_';
-                        const keysToRemove = [];
-                        for (let i = 0; i < localStorage.length; i++) {
-                            const key = localStorage.key(i);
-                            if (key && key.startsWith(prefix)) {
-                                keysToRemove.push(key);
-                            }
-                        }
-                        keysToRemove.forEach(key => localStorage.removeItem(key));
-                        
-                        // 清除 Cache API 缓存（字体缓存）
-                        if ('caches' in window) {
-                            caches.keys().then(names => {
-                                names.forEach(name => {
-                                    if (name.includes('font')) {
-                                        caches.delete(name);
-                                    }
-                                });
-                            });
-                        }
-                        
-                        alert('缓存已清除！页面将刷新。');
-                        location.reload();
-                    }
-                });
-            }
+                // 强制刷新按钮
+                const forceRefreshBtn = document.getElementById('force-refresh-btn');
+                if (forceRefreshBtn) {
+                    forceRefreshBtn.addEventListener('click', () => {
+                        // 强制刷新页面，清除浏览器缓存
+                        location.reload(true);
+                    });
+                }
         } catch (err) {
                 console.error('初始化失败', err);
                 if (global.Debug) {
@@ -151,20 +131,16 @@
             const refreshBtn = document.getElementById('refresh-stats-btn');
             if (refreshBtn) refreshBtn.addEventListener('click', () => this.restoreStats());
 
-            const confirmBtn = document.getElementById('results-confirm-btn');
-            if (confirmBtn) {
-                confirmBtn.addEventListener('click', () => {
-                    Practice.confirmResults();
-                    alert('修改已保存');
-                });
-            }
-
-            const retryBtn = document.getElementById('results-retry-btn');
-            if (retryBtn) retryBtn.addEventListener('click', () => Practice.retry());
-            
-            const practiceModeBtn = document.getElementById('results-practice-mode-btn');
-            if (practiceModeBtn) {
-                practiceModeBtn.addEventListener('click', () => {
+            // 结果页按钮事件委托（因为按钮是动态显示的）
+            document.addEventListener('click', (e) => {
+                // 练习模式按钮
+                if (e.target.closest('#results-retry-btn')) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    Practice.retry();
+                } else if (e.target.closest('#results-practice-mode-btn')) {
+                    e.preventDefault();
+                    e.stopPropagation();
                     if (global.Practice && Practice.log && Practice.log.id) {
                         if (global.ErrorBook) {
                             ErrorBook.enterPracticeModeForRound(Practice.log.id);
@@ -174,8 +150,61 @@
                     } else {
                         console.error('Practice.log不存在或未初始化');
                     }
-                });
-            }
+                } else if (e.target.closest('#results-to-test-btn-from-practice')) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    Practice.mode = 'test';
+                    Practice.start('test');
+                }
+                
+                // 测试模式按钮
+                if (e.target.closest('#results-retry-test-btn')) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    Practice.retryTest();
+                } else if (e.target.closest('#results-test-errors-btn')) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    Practice.retryTestErrors();
+                } else if (e.target.closest('#results-complete-btn')) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    Practice.showPage('home');
+                }
+                
+                // 结果页模式切换按钮
+                if (e.target.closest('#results-to-preview-btn')) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    Practice.mode = 'preview';
+                    Practice.start('preview');
+                } else if (e.target.closest('#results-mode-select-btn')) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    Practice.mode = 'practice';
+                    Practice.start('practice');
+                } else if (e.target.closest('#results-to-test-btn')) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    Practice.mode = 'test';
+                    Practice.start('test');
+                }
+                
+                // 结果页关闭按钮
+                if (e.target.closest('#results-close-btn')) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    Practice.showPage('home');
+                }
+                
+                // 确认修改按钮
+                if (e.target.closest('#results-confirm-btn')) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    Practice.confirmResults();
+                    alert('修改已保存');
+                }
+            });
         },
 
         showPage(pageId) {

@@ -20,7 +20,7 @@
             <a class="navbar-brand d-flex align-items-center" href="#home">
                 <i class="bi bi-book"></i>
                 <span class="ms-2 fw-semibold">YUWENRENZI</span>
-                <span class="ms-2 small text-muted" id="app-version">v0.4.12</span>
+                <span class="ms-2 small text-muted" id="app-version">v0.4.16</span>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -155,95 +155,155 @@
         </section>
 
         <section id="preview" class="page-section container d-none">
-            <div class="card mb-3">
-                <div class="card-header d-flex justify-content-between align-items-center sticky-top border-bottom practice-header" style="z-index: 10;">
-                    <div>
-                        <span class="badge bg-success-subtle text-success" id="preview-mode-badge">预习模式</span>
-                        <span class="badge bg-primary-subtle text-primary ms-2" id="preview-progress">0/0</span>
-                        <div class="form-check form-switch d-inline-block ms-2">
+            <div class="position-relative" style="max-width: 1200px; margin: 0 auto;">
+                <!-- 模式选择按钮 -->
+                <div class="d-flex justify-content-center align-items-center gap-2 border-bottom" style="padding-top: 0.5rem; padding-bottom: 0.5rem; margin-bottom: 0.5rem;">
+                    <button class="btn mode-select-btn active" data-mode="preview" id="preview-mode-select-btn">
+                        <i class="bi bi-book"></i> 预习模式
+                    </button>
+                    <button class="btn mode-select-btn" data-mode="practice" id="preview-to-practice-btn">
+                        <i class="bi bi-play-fill"></i> 练习模式
+                    </button>
+                    <button class="btn mode-select-btn" data-mode="test" id="preview-to-test-btn">
+                        <i class="bi bi-clipboard-check"></i> 测试模式
+                    </button>
+                </div>
+                
+                <!-- 控制栏（置顶固定） -->
+                <div class="d-flex justify-content-between align-items-center mb-3 preview-control-bar" style="padding: 0.375rem 1rem; position: sticky; top: 0; z-index: 10;">
+                    <div class="d-flex align-items-center gap-3">
+                        <!-- 关闭按钮（在1/1左边） -->
+                        <button class="btn btn-link" id="preview-close-btn" style="text-decoration: none; color: #6c757d; padding: 0.125rem 0.5rem;">
+                            <i class="bi bi-x-lg" style="font-size: 1.25rem;"></i>
+                        </button>
+                        <span id="preview-progress" style="background: transparent; border: none; padding: 0; color: inherit;">0/0</span>
+                    </div>
+                    <div class="d-flex align-items-center gap-2">
+                        <div class="form-check form-switch">
                             <input class="form-check-input" type="checkbox" id="preview-pinyin-switch" checked>
                             <label class="form-check-label small" for="preview-pinyin-switch">显示拼音</label>
                         </div>
-                    </div>
-                    <div class="d-flex gap-2">
-                        <button class="btn btn-sm btn-outline-secondary" id="preview-skip-btn">跳过预习</button>
-                        <button class="btn btn-sm btn-primary" id="preview-start-practice-btn">开始练习</button>
+                        <button class="btn btn-sm btn-primary" id="preview-to-practice-btn-bar">去练习</button>
                     </div>
                 </div>
-                <div class="card-body">
-                    <div class="d-flex align-items-center justify-content-center gap-2 practice-navigation-container">
-                        <div class="practice-nav-hotzone practice-nav-hotzone-left" id="preview-prev-hotzone">
-                            <button class="btn btn-outline-secondary practice-nav-btn" id="preview-prev-btn">
-                                <i class="bi bi-arrow-left"></i> 上一组
-                            </button>
-                        </div>
+                
+                <div>
+                    <div class="d-flex align-items-center justify-content-center gap-3 practice-navigation-container">
+                        <button class="btn btn-circle btn-outline-secondary practice-nav-btn" id="preview-prev-btn" style="width: 60px; height: 60px; border-radius: 50%; padding: 0;">
+                            <i class="bi bi-arrow-left" style="font-size: 1.5rem;"></i>
+                        </button>
                         <div id="preview-card-container" class="d-flex flex-wrap gap-3 justify-content-center" style="flex: 1; min-width: 0;">
                             <div class="text-muted py-5" id="preview-placeholder">
                                 <i class="bi bi-hourglass-split"></i> 等待开始预习...
                             </div>
                         </div>
-                        <div class="practice-nav-hotzone practice-nav-hotzone-right" id="preview-next-hotzone">
-                            <button class="btn btn-outline-secondary practice-nav-btn" id="preview-next-btn">
-                                下一组 <i class="bi bi-arrow-right"></i>
-                            </button>
-                        </div>
+                        <button class="btn btn-circle btn-outline-secondary practice-nav-btn" id="preview-next-btn" style="width: 60px; height: 60px; border-radius: 50%; padding: 0;">
+                            <i class="bi bi-arrow-right" style="font-size: 1.5rem;"></i>
+                        </button>
                     </div>
                 </div>
             </div>
         </section>
 
         <section id="practice" class="page-section container d-none">
-            <div class="card mb-3">
-                <div class="card-header d-flex justify-content-between align-items-center sticky-top border-bottom practice-header" style="z-index: 10;">
-                    <div>
-                        <span class="badge bg-primary-subtle text-primary d-none" id="practice-mode-badge">练习模式</span>
-                        <span class="badge bg-primary-subtle text-primary ms-2" id="practice-progress">0/0</span>
-                        <span class="badge bg-info-subtle text-info ms-2" id="practice-timer">0s</span>
-                        <span class="badge bg-warning-subtle text-warning ms-2" id="practice-countdown">正计时: --</span>
-                        <span class="badge bg-secondary-subtle text-secondary ms-2" id="practice-speed-hint">速度 3s/词</span>
-                        <div class="form-check form-switch d-inline-block ms-2">
+            <div class="position-relative" style="max-width: 1200px; margin: 0 auto;">
+                <!-- 模式选择按钮 -->
+                <div class="d-flex justify-content-center align-items-center gap-2 border-bottom" style="padding-top: 0.5rem; padding-bottom: 0.5rem; margin-bottom: 0.5rem;">
+                    <button class="btn mode-select-btn" data-mode="preview" id="practice-to-preview-btn">
+                        <i class="bi bi-book"></i> 预习模式
+                    </button>
+                    <button class="btn mode-select-btn active" data-mode="practice" id="practice-mode-select-btn">
+                        <i class="bi bi-play-fill"></i> 练习模式
+                    </button>
+                    <button class="btn mode-select-btn" data-mode="test" id="practice-to-test-btn">
+                        <i class="bi bi-clipboard-check"></i> 测试模式
+                    </button>
+                </div>
+                
+                <!-- 控制栏（置顶固定） -->
+                <div class="d-flex justify-content-between align-items-center mb-3 practice-control-bar" style="padding: 0.375rem 1rem; position: sticky; top: 0; z-index: 10;">
+                    <div class="d-flex align-items-center gap-3">
+                        <!-- 关闭按钮（在1/1左边） -->
+                        <button class="btn btn-link" id="practice-close-btn" style="text-decoration: none; color: #6c757d; padding: 0.125rem 0.5rem;">
+                            <i class="bi bi-x-lg" style="font-size: 1.25rem;"></i>
+                        </button>
+                        <span id="practice-progress" style="background: transparent; border: none; padding: 0; color: inherit;">0/0</span>
+                        <span id="practice-timer" style="background: transparent; border: none; padding: 0; color: inherit; font-size: 0.875rem;">0s</span>
+                        <span id="practice-speed-hint" style="background: transparent; border: none; padding: 0; color: inherit; font-size: 0.875rem;">速度 3s/词</span>
+                    </div>
+                    <div class="d-flex align-items-center gap-2">
+                        <div class="form-check form-switch" id="practice-pinyin-switch-container">
                             <input class="form-check-input" type="checkbox" id="practice-pinyin-switch">
                             <label class="form-check-label small" for="practice-pinyin-switch">显示拼音</label>
                         </div>
-                        <span class="badge bg-warning-subtle text-warning ms-2 d-none" id="practice-pinyin-lock-hint">测试模式，拼音已锁定</span>
-                    </div>
-                    <div class="d-flex gap-2">
                         <button class="btn btn-sm btn-outline-secondary" id="practice-pause-btn">暂停</button>
                         <button class="btn btn-sm btn-primary" id="practice-end-btn">结束练习</button>
                     </div>
                 </div>
-                <div class="card-body">
-                    <div class="d-flex align-items-center justify-content-center gap-2 practice-navigation-container">
-                        <div class="practice-nav-hotzone practice-nav-hotzone-left" id="practice-prev-hotzone">
-                            <button class="btn btn-outline-secondary practice-nav-btn" id="practice-prev-btn">
-                                <i class="bi bi-arrow-left"></i> 上一组
-                            </button>
-                        </div>
+                
+                <div>
+                    <div class="d-flex align-items-center justify-content-center gap-3 practice-navigation-container">
+                        <button class="btn btn-circle btn-outline-secondary practice-nav-btn" id="practice-prev-btn" style="width: 60px; height: 60px; border-radius: 50%; padding: 0;">
+                            <i class="bi bi-arrow-left" style="font-size: 1.5rem;"></i>
+                        </button>
                         <div id="practice-card-container" class="d-flex flex-wrap gap-3 justify-content-center" style="flex: 1; min-width: 0;">
                             <div class="text-muted py-5" id="practice-placeholder">
                                 <i class="bi bi-hourglass-split"></i> 等待开始练习...
                             </div>
                         </div>
-                        <div class="practice-nav-hotzone practice-nav-hotzone-right" id="practice-next-hotzone">
-                            <button class="btn btn-outline-secondary practice-nav-btn" id="practice-next-btn">
-                                下一组 <i class="bi bi-arrow-right"></i>
-                            </button>
-                        </div>
+                        <button class="btn btn-circle btn-outline-secondary practice-nav-btn" id="practice-next-btn" style="width: 60px; height: 60px; border-radius: 50%; padding: 0;">
+                            <i class="bi bi-arrow-right" style="font-size: 1.5rem;"></i>
+                        </button>
                     </div>
                 </div>
             </div>
         </section>
 
         <section id="results" class="page-section container d-none">
-            <div class="card">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <span><i class="bi bi-clipboard-check"></i> <span id="results-title">练习结果</span></span>
-                    <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" id="results-filter-switch" checked>
-                        <label class="form-check-label" for="results-filter-switch">只显示错题</label>
+            <div class="position-relative" style="max-width: 1200px; margin: 0 auto;">
+                <!-- 模式选择按钮 -->
+                <div class="d-flex justify-content-center align-items-center gap-2 border-bottom" style="padding-top: 0.5rem; padding-bottom: 0.5rem; margin-bottom: 0.5rem;">
+                    <button class="btn mode-select-btn" data-mode="preview" id="results-to-preview-btn">
+                        <i class="bi bi-book"></i> 预习模式
+                    </button>
+                    <button class="btn mode-select-btn active" data-mode="practice" id="results-mode-select-btn">
+                        <i class="bi bi-play-fill"></i> 练习模式
+                    </button>
+                    <button class="btn mode-select-btn" data-mode="test" id="results-to-test-btn">
+                        <i class="bi bi-clipboard-check"></i> 测试模式
+                    </button>
+                </div>
+                
+                <!-- 控制栏（置顶固定） -->
+                <div class="d-flex justify-content-between align-items-center mb-3 results-control-bar" style="padding: 0.375rem 1rem; position: sticky; top: 0; z-index: 10;">
+                    <div class="d-flex align-items-center gap-3">
+                        <!-- 关闭按钮（在1/1左边） -->
+                        <button class="btn btn-link" id="results-close-btn" style="text-decoration: none; color: #6c757d; padding: 0.125rem 0.5rem;">
+                            <i class="bi bi-x-lg" style="font-size: 1.25rem;"></i>
+                        </button>
+                        <span id="results-title" style="background: transparent; border: none; padding: 0; color: inherit;">练习结果</span>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="results-filter-switch" checked>
+                            <label class="form-check-label small" for="results-filter-switch">只显示错题</label>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center gap-2">
+                        <!-- 练习模式按钮 -->
+                        <div id="results-practice-mode-buttons">
+                            <button class="btn btn-sm btn-outline-secondary" id="results-retry-btn">再练一次</button>
+                            <button class="btn btn-sm btn-outline-secondary" id="results-practice-mode-btn">只练错题</button>
+                            <button class="btn btn-sm btn-primary" id="results-to-test-btn-from-practice">去测试</button>
+                        </div>
+                        <!-- 测试模式按钮 -->
+                        <div id="results-test-mode-buttons" class="d-none">
+                            <button class="btn btn-sm btn-outline-secondary" id="results-retry-test-btn">再测一次</button>
+                            <button class="btn btn-sm btn-outline-secondary" id="results-test-errors-btn">只测错题</button>
+                            <button class="btn btn-sm btn-primary" id="results-complete-btn">完成</button>
+                        </div>
                     </div>
                 </div>
-                <div class="card-body" style="padding-bottom: 100px;">
+                
+                <div>
                     <div class="row text-center g-3 mb-4">
                         <div class="col-6 col-md-3">
                             <div class="stat-item">
@@ -273,15 +333,13 @@
                     <div class="alert alert-info text-center mb-4" id="result-comment" role="alert">
                         <span id="result-comment-text" style="font-size: 1.25rem; font-weight: 500;">正在计算...</span>
                     </div>
-                    <div id="results-card-container" class="d-flex flex-wrap gap-3 justify-content-center"></div>
+                    <div id="results-card-container" class="d-flex flex-wrap gap-3 justify-content-center" style="padding-bottom: 80px;"></div>
                 </div>
             </div>
-            <!-- 置底按钮栏 -->
-            <div class="position-fixed bottom-0 start-0 end-0 border-top shadow-sm p-3" style="z-index: 1050;" id="results-bottom-bar">
-                <div class="container d-flex justify-content-between align-items-center gap-2">
-                    <button class="btn btn-outline-secondary" id="results-retry-btn">重新练习</button>
-                    <button class="btn btn-primary" id="results-practice-mode-btn">进入错题练习模式</button>
-                    <button class="btn btn-primary d-none" id="results-confirm-btn">确认修改</button>
+            <!-- 确认修改按钮（置底悬浮） -->
+            <div class="position-fixed bottom-0 start-0 end-0 border-top shadow-sm p-3 d-none" style="z-index: 1050; background-color: var(--bs-body-bg, #fff);" id="results-confirm-bar">
+                <div class="container d-flex justify-content-center">
+                    <button class="btn btn-primary" id="results-confirm-btn">确认修改</button>
                 </div>
             </div>
         </section>
@@ -340,6 +398,35 @@
                             <div class="text-muted text-center py-4">暂无数据</div>
                         </div>
                         <div class="tab-pane fade" id="errorbook-review" role="tabpanel">
+                            <div class="mb-3 d-flex justify-content-between align-items-center">
+                                <div class="dropdown">
+                                    <button class="btn btn-sm btn-outline-primary dropdown-toggle" type="button" id="review-calendar-dropdown-btn" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="bi bi-calendar"></i> 日历
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="review-calendar-dropdown-btn" id="review-calendar-dropdown-menu" style="min-width: 280px;">
+                                        <li class="px-3 py-2 border-bottom">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <button class="btn btn-sm btn-outline-secondary" id="calendar-prev-month">
+                                                    <i class="bi bi-chevron-left"></i>
+                                                </button>
+                                                <h6 class="mb-0" id="calendar-month-title">2025年1月</h6>
+                                                <button class="btn btn-sm btn-outline-secondary" id="calendar-next-month">
+                                                    <i class="bi bi-chevron-right"></i>
+                                                </button>
+                                            </div>
+                                        </li>
+                                        <li><div id="calendar-dropdown-content" class="p-3"></div></li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <button class="btn btn-sm btn-primary" id="review-start-practice-all-btn">
+                                        <i class="bi bi-play-fill"></i> 开始练习
+                                    </button>
+                                    <button class="btn btn-sm btn-success" id="review-start-test-all-btn">
+                                        <i class="bi bi-clipboard-check"></i> 开始测试
+                                    </button>
+                                </div>
+                            </div>
                             <div id="errorbook-review-content">
                                 <div class="text-muted text-center py-4">暂无复习计划</div>
                             </div>
@@ -398,30 +485,53 @@
                 </div>
                 <div class="card-body">
                     <div class="mb-3">
-                        <div class="row g-3 mb-3">
+                        <div class="row g-3">
                             <div class="col-md-6">
-                                <label class="form-label">年级</label>
-                                <select class="form-select" id="wordbank-grade-select">
-                                    <option value="">请选择年级</option>
-                                    <option value="一年级">一年级</option>
-                                    <option value="二年级">二年级</option>
-                                    <option value="三年级">三年级</option>
-                                    <option value="四年级">四年级</option>
-                                    <option value="五年级">五年级</option>
-                                    <option value="六年级">六年级</option>
-                                </select>
+                                <label class="form-label fw-semibold">年级</label>
+                                <div class="d-flex flex-wrap gap-2">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="wordbank-grade" id="wordbank-grade-1" value="一年级">
+                                        <label class="form-check-label" for="wordbank-grade-1">一年级</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="wordbank-grade" id="wordbank-grade-2" value="二年级">
+                                        <label class="form-check-label" for="wordbank-grade-2">二年级</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="wordbank-grade" id="wordbank-grade-3" value="三年级">
+                                        <label class="form-check-label" for="wordbank-grade-3">三年级</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="wordbank-grade" id="wordbank-grade-4" value="四年级">
+                                        <label class="form-check-label" for="wordbank-grade-4">四年级</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="wordbank-grade" id="wordbank-grade-5" value="五年级">
+                                        <label class="form-check-label" for="wordbank-grade-5">五年级</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="wordbank-grade" id="wordbank-grade-6" value="六年级">
+                                        <label class="form-check-label" for="wordbank-grade-6">六年级</label>
+                                    </div>
+                                </div>
                             </div>
                             <div class="col-md-6">
-                                <label class="form-label">册数</label>
-                                <select class="form-select" id="wordbank-semester-select">
-                                    <option value="">请选择册数</option>
-                                    <option value="上册">上册</option>
-                                    <option value="下册">下册</option>
-                                </select>
+                                <label class="form-label fw-semibold">册数</label>
+                                <div class="d-flex flex-wrap gap-2">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="wordbank-semester" id="wordbank-semester-1" value="上册">
+                                        <label class="form-check-label" for="wordbank-semester-1">上册</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="wordbank-semester" id="wordbank-semester-2" value="下册">
+                                        <label class="form-check-label" for="wordbank-semester-2">下册</label>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <label class="form-label">快速导入（粘贴词语，每行一个，支持"词语|拼音"格式）</label>
-                        <textarea class="form-control" id="wordbank-text-input" rows="5" placeholder="春风&#10;柳絮|liǔ xù&#10;晨露|chén lù&#10;或者：&#10;# 第一单元&#10;春风|chūn fēng&#10;柳絮|liǔ xù"></textarea>
+                    </div>
+                        <label class="form-label">快速导入</label>
+                        <textarea class="form-control" id="wordbank-text-input" rows="5" placeholder="方式一：每行一个词语&#10;春风&#10;柳絮&#10;晨露&#10;&#10;方式二：词语|拼音格式（拼音可选）&#10;春风|chūn fēng&#10;柳絮|liǔ xù&#10;晨露&#10;&#10;方式三：按单元分组（使用 # 标记单元）&#10;# 第一单元&#10;春风|chūn fēng&#10;柳絮|liǔ xù&#10;# 第二单元&#10;晨露|chén lù&#10;朝阳|zhāo yáng"></textarea>
                         <div class="d-flex gap-2 mt-2">
                             <button class="btn btn-sm btn-primary" id="wordbank-text-import-btn">
                                 <i class="bi bi-check-circle"></i> 导入
@@ -546,6 +656,73 @@
         </div>
     </div>
 
+    <!-- 导入词语模态框 -->
+    <div class="modal fade" id="wordbank-import-modal" tabindex="-1" aria-labelledby="wordbank-import-modal-label" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="wordbank-import-modal-label">导入词语</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">年级</label>
+                        <div class="d-flex flex-wrap gap-2">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="import-grade" id="import-grade-1" value="一年级">
+                                <label class="form-check-label" for="import-grade-1">一年级</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="import-grade" id="import-grade-2" value="二年级">
+                                <label class="form-check-label" for="import-grade-2">二年级</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="import-grade" id="import-grade-3" value="三年级">
+                                <label class="form-check-label" for="import-grade-3">三年级</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="import-grade" id="import-grade-4" value="四年级">
+                                <label class="form-check-label" for="import-grade-4">四年级</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="import-grade" id="import-grade-5" value="五年级">
+                                <label class="form-check-label" for="import-grade-5">五年级</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="import-grade" id="import-grade-6" value="六年级">
+                                <label class="form-check-label" for="import-grade-6">六年级</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">册数</label>
+                        <div class="d-flex flex-wrap gap-2">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="import-semester" id="import-semester-1" value="上册">
+                                <label class="form-check-label" for="import-semester-1">上册</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="import-semester" id="import-semester-2" value="下册">
+                                <label class="form-check-label" for="import-semester-2">下册</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">选择文件</label>
+                        <input type="file" class="form-control" id="wordbank-file-input" accept=".txt,.json">
+                        <small class="form-text text-muted">支持 .txt 或 .json 格式文件</small>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" id="wordbank-import-upload-btn">
+                        <i class="bi bi-upload"></i> 上传
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- 导入预览模态框（词语库） -->
     <div class="modal fade" id="import-preview-modal" tabindex="-1" aria-labelledby="import-preview-modal-label" aria-hidden="true">
         <div class="modal-dialog modal-xl">
@@ -555,9 +732,6 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body" style="max-height: 70vh; overflow-y: auto;">
-                    <div class="alert alert-info mb-3">
-                        <i class="bi bi-info-circle"></i> 请检查以下内容，确认无误后点击"确认导入"。您可以在下方编辑词语。
-                    </div>
                     <div id="import-preview-content"></div>
                 </div>
                 <div class="modal-footer">
@@ -633,6 +807,7 @@
     <script src="js/debug.js"></script>
     <script src="js/card-component.js"></script>
     <script src="js/cloud-sync.js"></script>
+    <script src="js/init-data.js"></script>
     <script src="js/wordbank.js"></script>
     <script src="js/practice-range.js"></script>
     <script src="js/review-plan.js"></script>
@@ -640,10 +815,10 @@
     <script src="js/errorbook.js"></script>
     <script src="js/main.js"></script>
     
-    <!-- 清除缓存按钮 -->
+    <!-- 强制刷新按钮 -->
     <div class="container py-3 text-center" style="margin-bottom: 100px;">
-        <button type="button" class="btn btn-link text-muted text-decoration-none p-0" id="clear-cache-btn" style="font-size: 0.85rem; opacity: 0.6;">
-            清除缓存
+        <button type="button" class="btn btn-link text-muted text-decoration-none p-0" id="force-refresh-btn" style="font-size: 0.85rem; opacity: 0.6;">
+            强制刷新
         </button>
     </div>
 </body>

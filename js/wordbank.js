@@ -307,13 +307,14 @@
                 textInput.value = testData;
                 
                 // 自动选择年级和册数（如果未选择）
-                const gradeSelect = document.getElementById('wordbank-grade-select');
-                const semesterSelect = document.getElementById('wordbank-semester-select');
-                if (gradeSelect && !gradeSelect.value) {
-                    gradeSelect.value = '三年级';
+                // 设置默认选中（三年级上册）
+                const gradeRadio = document.querySelector('input[name="wordbank-grade"][value="三年级"]');
+                const semesterRadio = document.querySelector('input[name="wordbank-semester"][value="上册"]');
+                if (gradeRadio && !document.querySelector('input[name="wordbank-grade"]:checked')) {
+                    gradeRadio.checked = true;
                 }
-                if (semesterSelect && !semesterSelect.value) {
-                    semesterSelect.value = '上册';
+                if (semesterRadio && !document.querySelector('input[name="wordbank-semester"]:checked')) {
+                    semesterRadio.checked = true;
                 }
                 
                 if (global.Debug && Debug.isDebugMode()) {
@@ -542,8 +543,8 @@
         handleTextImport() {
             console.log('handleTextImport 被调用');
             const textInput = document.getElementById('wordbank-text-input');
-            const gradeSelect = document.getElementById('wordbank-grade-select');
-            const semesterSelect = document.getElementById('wordbank-semester-select');
+            const gradeRadio = document.querySelector('input[name="wordbank-grade"]:checked');
+            const semesterRadio = document.querySelector('input[name="wordbank-semester"]:checked');
             
             if (!textInput) {
                 console.error('找不到文本输入框');
@@ -558,8 +559,8 @@
             }
             
             // 检查年级和册数
-            const grade = gradeSelect?.value;
-            const semester = semesterSelect?.value;
+            const grade = gradeRadio?.value;
+            const semester = semesterRadio?.value;
             if (!grade || !semester) {
                 alert('请先选择年级和册数');
                 return;
@@ -649,24 +650,76 @@
         },
 
         handleImport() {
-            // 检查年级和册数
-            const gradeSelect = document.getElementById('wordbank-grade-select');
-            const semesterSelect = document.getElementById('wordbank-semester-select');
-            const grade = gradeSelect?.value;
-            const semester = semesterSelect?.value;
-            if (!grade || !semester) {
-                alert('请先选择年级和册数');
+            // 显示导入模态框
+            const modalEl = document.getElementById('wordbank-import-modal');
+            if (!modalEl) {
+                alert('导入模态框未找到');
                 return;
             }
             
-            const input = document.createElement('input');
-            input.type = 'file';
-            input.accept = '.txt,.json';
-            input.onchange = async () => {
-                const file = input.files?.[0];
-                if (!file) return;
-                const text = await file.text();
+            // 重置表单
+            document.querySelectorAll('input[name="import-grade"]').forEach(radio => radio.checked = false);
+            document.querySelectorAll('input[name="import-semester"]').forEach(radio => radio.checked = false);
+            const fileInput = document.getElementById('wordbank-file-input');
+            if (fileInput) fileInput.value = '';
+            
+            const modal = new bootstrap.Modal(modalEl);
+            
+            // 确保关闭时移除backdrop
+            modalEl.addEventListener('hidden.bs.modal', () => {
+                // 移除backdrop
+                const backdrop = document.querySelector('.modal-backdrop');
+                if (backdrop) {
+                    backdrop.remove();
+                }
+                // 移除body的modal-open类
+                document.body.classList.remove('modal-open');
+                document.body.style.overflow = '';
+                document.body.style.paddingRight = '';
+            }, { once: true });
+            
+            modal.show();
+            
+            // 绑定上传按钮事件（在模态框显示后）
+            modalEl.addEventListener('shown.bs.modal', () => {
+                const uploadBtn = document.getElementById('wordbank-import-upload-btn');
+                if (uploadBtn) {
+                    // 移除旧的事件监听器（如果有）
+                    const newUploadBtn = uploadBtn.cloneNode(true);
+                    uploadBtn.parentNode.replaceChild(newUploadBtn, uploadBtn);
+                    
+                    newUploadBtn.addEventListener('click', () => {
+                        this.handleImportUpload();
+                    });
+                }
+            }, { once: true });
+        },
+        
+        handleImportUpload() {
+            // 获取选中的年级和册数
+            const gradeRadio = document.querySelector('input[name="import-grade"]:checked');
+            const semesterRadio = document.querySelector('input[name="import-semester"]:checked');
+            const fileInput = document.getElementById('wordbank-file-input');
+            
+            if (!gradeRadio || !semesterRadio) {
+                alert('请选择年级和册数');
+                return;
+            }
+            
+            if (!fileInput || !fileInput.files || fileInput.files.length === 0) {
+                alert('请选择要导入的文件');
+                return;
+            }
+            
+            const grade = gradeRadio.value;
+            const semester = semesterRadio.value;
+            const file = fileInput.files[0];
+            
+            // 读取文件并处理
+            const reader = new FileReader();
+            reader.onload = async (e) => {
                 try {
+                    const text = e.target.result;
                     const parsed = this.parseImport(text, grade, semester);
                     if (!parsed || parsed.length === 0) {
                         alert('导入失败：文件中没有有效词语');
@@ -684,13 +737,22 @@
                         source: 'file'
                     };
                     
+                    // 关闭导入模态框
+                    const modalEl = document.getElementById('wordbank-import-modal');
+                    const modal = bootstrap.Modal.getInstance(modalEl);
+                    if (modal) modal.hide();
+                    
+                    // 显示预览模态框
                     this.showImportPreview(parsed, grade, semester);
                 } catch (err) {
                     console.error('导入失败', err);
                     alert('导入失败：' + (err.message || '请检查文件格式'));
                 }
             };
-            input.click();
+            reader.onerror = () => {
+                alert('文件读取失败');
+            };
+            reader.readAsText(file);
         },
 
         handleExport() {
@@ -1029,28 +1091,19 @@
                 
                 unitWords.forEach((word, idx) => {
                     const wordText = String(word.word || '').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
-                    const pinyinText = String(word.pinyin || '').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
-                    html += `<div class="col-md-4 col-lg-3 word-item" 
+                    html += `<div class="col-6 col-md-4 col-lg-3 col-xl-2 word-item word-preview-card" 
                                  data-word-id="word-${unit}-${idx}"
                                  data-unit="${unit}"
-                                 data-index="${idx}"
-                                 draggable="true">
-                            <div class="input-group input-group-sm mb-1">
-                                <input type="checkbox" class="form-check-input word-select-checkbox" 
-                                       data-unit="${unit}" 
-                                       data-index="${idx}">
-                                <input type="text" class="form-control word-input" 
-                                       data-field="word" 
+                                 data-index="${idx}">
+                            <div class="d-flex align-items-center gap-1 p-1 border rounded">
+                                <input type="checkbox" class="form-check-input word-select-checkbox flex-shrink-0" 
                                        data-unit="${unit}" 
                                        data-index="${idx}"
-                                       value="${wordText}" 
-                                       placeholder="词语">
-                                <button class="btn btn-outline-danger btn-sm" type="button" 
-                                        onclick="WordBank.removeWordFromPreview('${unit}', ${idx})">
-                                    <i class="bi bi-x"></i>
-                                </button>
+                                       checked />
+                                <div class="flex-grow-1 text-truncate" style="min-width: 0;">
+                                    <div class="fw-semibold text-truncate" title="${wordText}">${wordText}</div>
+                                </div>
                             </div>
-                            ${pinyinText ? `<small class="text-muted d-block ms-4">${pinyinText}</small>` : '<small class="text-muted d-block ms-4">（自动生成拼音）</small>'}
                         </div>`;
                 });
                 
@@ -1088,6 +1141,22 @@
             // 绑定拖拽和选择事件
             this.bindPreviewEvents();
             
+            // 绑定卡片点击事件（切换选中状态）
+            setTimeout(() => {
+                document.querySelectorAll('.word-preview-card').forEach(card => {
+                    card.addEventListener('click', (e) => {
+                        // 如果点击的是checkbox，不处理（checkbox自己的事件会处理）
+                        if (e.target.type === 'checkbox' || e.target.closest('input[type="checkbox"]')) return;
+                        const checkbox = card.querySelector('.word-select-checkbox');
+                        if (checkbox) {
+                            checkbox.checked = !checkbox.checked;
+                            // 触发change事件以更新样式
+                            checkbox.dispatchEvent(new Event('change'));
+                        }
+                    });
+                });
+            }, 100);
+            
             const modal = new bootstrap.Modal(document.getElementById('import-preview-modal'));
             modal.show();
         },
@@ -1102,9 +1171,18 @@
             selectAllCheckbox.className = 'form-check-input';
             selectAllCheckbox.id = 'preview-select-all';
             selectAllCheckbox.style.marginRight = '8px';
+            selectAllCheckbox.checked = true; // 默认全选
             selectAllCheckbox.addEventListener('change', (e) => {
                 document.querySelectorAll('.word-select-checkbox').forEach(cb => {
                     cb.checked = e.target.checked;
+                    const card = cb.closest('.word-preview-card');
+                    if (card) {
+                        if (cb.checked) {
+                            card.classList.add('selected');
+                        } else {
+                            card.classList.remove('selected');
+                        }
+                    }
                 });
             });
             
@@ -1113,9 +1191,36 @@
             if (firstUnit) {
                 const header = firstUnit.querySelector('.card-header');
                 if (header && !header.querySelector('#preview-select-all')) {
+                    const label = document.createElement('label');
+                    label.className = 'form-check-label';
+                    label.setAttribute('for', 'preview-select-all');
+                    label.textContent = '全选';
+                    label.style.marginLeft = '4px';
                     header.insertBefore(selectAllCheckbox, header.firstChild);
+                    header.insertBefore(label, header.firstChild.nextSibling);
                 }
             }
+            
+            // 绑定checkbox变化事件，更新卡片样式（使用词语库的selected样式）
+            document.querySelectorAll('.word-select-checkbox').forEach(checkbox => {
+                checkbox.addEventListener('change', (e) => {
+                    const card = e.target.closest('.word-preview-card');
+                    if (card) {
+                        if (e.target.checked) {
+                            card.classList.add('selected');
+                        } else {
+                            card.classList.remove('selected');
+                        }
+                    }
+                });
+                // 初始化选中状态
+                if (checkbox.checked) {
+                    const card = checkbox.closest('.word-preview-card');
+                    if (card) {
+                        card.classList.add('selected');
+                    }
+                }
+            });
             
             // 单元卡片hover显示删除按钮
             document.querySelectorAll('.unit-preview-card').forEach(card => {
@@ -1366,11 +1471,11 @@
                 : document.querySelectorAll('.word-item');
             
             itemsToProcess.forEach(item => {
-                const wordInput = item.querySelector('[data-field="word"]');
-                const unit = wordInput?.dataset.unit;
+                const unit = item.dataset.unit;
+                const label = item.querySelector('label');
+                const word = label ? label.textContent.trim() : '';
                 
-                if (wordInput && wordInput.value.trim()) {
-                    const word = wordInput.value.trim();
+                if (word) {
                     // 自动生成拼音
                     const autoPinyin = generatePinyin(word);
                     editedWords.push({
@@ -1389,9 +1494,10 @@
                 return;
             }
             
-            // 合并到现有数据
+            // 合并到现有数据，去重：如果和之前已存在的记录重复，只取一条
             const existing = new Map(this.data.map(item => [item.word + '|' + (item.unit != null ? item.unit : ''), item]));
             const newWords = [];
+            const seenWords = new Set(); // 用于去重本次导入的词语
             
             editedWords.forEach(item => {
                 if (!item.word) return;
@@ -1401,15 +1507,17 @@
                 }
                 
                 const key = item.word + '|' + (item.unit != null ? item.unit : '');
+                
+                // 如果本次导入中已经出现过，跳过（去重）
+                if (seenWords.has(key)) {
+                    return;
+                }
+                seenWords.add(key);
+                
                 const existingItem = existing.get(key);
                 if (existingItem) {
-                    // 更新现有词语（如果新词语有拼音，则更新；如果现有词语没有拼音，也自动生成）
-                    if (item.pinyin) {
-                        existingItem.pinyin = item.pinyin;
-                    } else if (!existingItem.pinyin || !existingItem.pinyin.trim()) {
-                        existingItem.pinyin = generatePinyin(existingItem.word);
-                    }
-                    if (item.unit != null) existingItem.unit = item.unit;
+                    // 已存在，跳过（不更新，只取一条）
+                    return;
                 } else {
                     // 添加新词语
                     newWords.push(item);

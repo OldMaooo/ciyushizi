@@ -59,8 +59,9 @@
             const wordLength = word.length;
             const fontSize = this.calculateFontSize(wordLength);
             const markedClass = markedWrong ? 'marked-wrong' : '';
-            // 如果有拼音数据，总是创建拼音元素，通过 d-none 控制显示/隐藏
-            const pinyinHtml = pinyin ? `<div class="practice-pinyin ${showPinyin ? '' : 'd-none'}">${pinyin}</div>` : '';
+            // 如果有word，总是创建拼音元素（即使pinyin为空），通过 d-none 控制显示/隐藏
+            // 这样点击时可以动态生成拼音
+            const pinyinHtml = word ? `<div class="practice-pinyin ${showPinyin && pinyin ? '' : 'd-none'}" ${!pinyin ? 'data-needs-pinyin="true"' : ''}>${pinyin || ''}</div>` : '';
             
             // 复选框HTML
             // 如果 showCheckbox 为 true，且 additionalClasses 包含 'admin-mode'，使用常规复选框

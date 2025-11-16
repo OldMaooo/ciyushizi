@@ -6,6 +6,9 @@
 (function (global) {
     // 艾宾浩斯曲线时间节点（小时）
     const REVIEW_INTERVALS = [1, 24, 72, 168, 336, 720]; // 1小时、1天、3天、1周、2周、1个月
+    
+    // 周期名称映射
+    const STAGE_NAMES = ['1小时', '1天', '3天', '1周', '2周', '1个月'];
 
     /**
      * 计算复习时间点
@@ -219,12 +222,17 @@
                     // 如果所有阶段都完成，标记为已掌握
                     const updatedPlan = updateReviewPlanStatus(plan);
                     if (updatedPlan.mastered) {
-                        // 已掌握，可以移除或保留记录
+                        // 已掌握，从汇总题库中删除
+                        if (typeof Storage !== 'undefined') {
+                            Storage.removeFromSummaryErrorWords(wordId);
+                        }
                     }
                 } else {
-                    // 测试未通过，保持当前阶段，重新安排时间
+                    // 测试未通过，标记为未通过状态
+                    plan.currentRoundTestCompleted = false;
+                    plan.currentRoundTestDate = new Date().toISOString();
                     // 根据需求：只有当最后一次仍然为错时才需要计入新的复习周期
-                    // 这里先不重新计算，保持原计划
+                    // 这里先不重新计算，保持原计划，但标记为未通过
                 }
                 Storage.saveReviewPlan(plan);
             }
@@ -259,97 +267,86 @@
         },
 
         /**
-         * 渲染复习计划页面
+         * 渲染复习计划页面（按周期组织，最近的周期在最上面）
          */
         render() {
             const container = document.getElementById('errorbook-review-content');
             if (!container) return;
 
-            const plansByStatus = this.getPlansByStatus();
-            const hasPlans = plansByStatus.today.length > 0 || 
-                           plansByStatus.upcoming.length > 0 || 
-                           plansByStatus.overdue.length > 0 || 
-                           plansByStatus.future.length > 0;
-
-            if (!hasPlans) {
+            const allPlans = this.getAllPlans().filter(plan => !plan.mastered);
+            
+            if (allPlans.length === 0) {
                 container.innerHTML = '<div class="text-muted text-center py-4">暂无复习计划</div>';
                 return;
             }
 
+            // 按周期分组：以当前阶段为周期
+            const plansByStage = {};
+            allPlans.forEach(plan => {
+                const stage = plan.currentStage || 1;
+                if (!plansByStage[stage]) {
+                    plansByStage[stage] = [];
+                }
+                plansByStage[stage].push(plan);
+            });
+
+            // 按周期排序：最近的周期（阶段号小的）在最上面
+            const sortedStages = Object.keys(plansByStage).sort((a, b) => parseInt(a) - parseInt(b));
+
             let html = '';
-
-            // 今日待复习
-            if (plansByStatus.today.length > 0) {
-                html += this.renderPlanGroup('今日待复习', plansByStatus.today, 'danger');
-            }
-
-            // 已逾期
-            if (plansByStatus.overdue.length > 0) {
-                html += this.renderPlanGroup('已逾期', plansByStatus.overdue, 'danger');
-            }
-
-            // 即将到期
-            if (plansByStatus.upcoming.length > 0) {
-                html += this.renderPlanGroup('即将到期（1-2天内）', plansByStatus.upcoming, 'warning');
-            }
-
-            // 未来计划
-            if (plansByStatus.future.length > 0) {
-                html += this.renderPlanGroup('未来计划', plansByStatus.future, 'secondary', true);
-            }
+            sortedStages.forEach(stage => {
+                const plans = plansByStage[stage];
+                // 按首次标记时间排序，最新的在最上面
+                plans.sort((a, b) => {
+                    const aTime = new Date(a.firstMarkedAt || 0).getTime();
+                    const bTime = new Date(b.firstMarkedAt || 0).getTime();
+                    return bTime - aTime;
+                });
+                
+                html += this.renderPlanGroupByStage(parseInt(stage), plans);
+            });
 
             container.innerHTML = html;
             this.bindReviewPlanEvents();
         },
 
         /**
-         * 渲染一组复习计划
+         * 渲染一组复习计划（按周期）
          */
-        renderPlanGroup(title, plans, badgeClass, showFutureOnly = false) {
+        renderPlanGroupByStage(stage, plans) {
             let html = `<div class="mb-4">
                 <h6 class="mb-3">
-                    <span class="badge bg-${badgeClass}">${title}</span>
+                    <span class="badge bg-primary">第${stage}次复习周期</span>
                     <span class="text-muted small ms-2">(${plans.length}个)</span>
                 </h6>
-                <div class="row g-3">`;
+                <div class="d-flex flex-wrap gap-3" style="padding-bottom: 20px;">`;
 
             plans.forEach(plan => {
-                const currentStage = plan.stages.find(s => s.stage === plan.currentStage);
-                const scheduledDate = currentStage ? new Date(currentStage.scheduledAt) : null;
-                const progress = getProgressVisualization(plan);
+                const currentStageObj = plan.stages.find(s => s.stage === plan.currentStage);
+                const scheduledDate = currentStageObj ? new Date(currentStageObj.scheduledAt) : null;
+                const now = new Date();
+                const canTest = scheduledDate && scheduledDate <= now; // 是否到了测试时间
                 
-                html += `
-                    <div class="col-md-6 col-lg-4">
-                        <div class="card review-plan-card" data-word-id="${plan.wordId}">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between align-items-start mb-2">
-                                    <div>
-                                        <h6 class="mb-1">${plan.word}</h6>
-                                        <div class="text-muted small">${plan.pinyin || ''}</div>
-                                        <div class="text-muted small">${plan.unit || ''}</div>
-                                    </div>
-                                    <div class="text-end">
-                                        <div class="mb-1" style="font-size: 1.2rem; letter-spacing: 2px;">${progress}</div>
-                                        <div class="text-muted small">第${plan.currentStage}次复习</div>
-                                    </div>
-                                </div>
-                                ${scheduledDate ? `<div class="text-muted small mb-2">到期时间: ${scheduledDate.toLocaleString('zh-CN')}</div>` : ''}
-                                <div class="mb-2">
-                                    <div class="small">
-                                        <span class="badge ${plan.currentRoundPracticeCompleted ? 'bg-success' : 'bg-secondary'}">练习: ${plan.currentRoundPracticeCompleted ? '已完成' : '未完成'}</span>
-                                        <span class="badge ${plan.currentRoundTestCompleted ? 'bg-success' : 'bg-danger'} ms-1">测试: ${plan.currentRoundTestCompleted ? '已完成' : '未完成'}</span>
-                                    </div>
-                                </div>
-                                ${!showFutureOnly ? `
-                                    <div class="d-flex gap-2">
-                                        <button class="btn btn-sm btn-outline-primary flex-fill review-start-practice-btn" data-word-id="${plan.wordId}">开始练习</button>
-                                        <button class="btn btn-sm ${plan.currentRoundTestCompleted ? 'btn-secondary' : 'btn-primary'} flex-fill review-start-test-btn" data-word-id="${plan.wordId}" ${plan.currentRoundTestCompleted ? 'disabled' : ''}>开始测试</button>
-                                    </div>
-                                ` : ''}
-                            </div>
+                // 生成进度圆圈HTML（带tooltip）
+                const progressCircles = this.renderProgressCircles(plan);
+                
+                // 使用CardComponent渲染卡片（参考汇总查看的练习模式）
+                const cardHTML = CardComponent.render({
+                    word: plan.word || '',
+                    pinyin: plan.pinyin || '',
+                    showPinyin: false, // 默认隐藏，点击后显示
+                    markedWrong: false,
+                    dataWordId: plan.wordId,
+                    dataPinyin: plan.pinyin || '',
+                    additionalClasses: 'review-plan-card',
+                    extraHtml: `
+                        <div class="review-plan-progress mt-2" style="display: flex; align-items: center; justify-content: center; gap: 4px; flex-wrap: wrap;">
+                            ${progressCircles}
                         </div>
-                    </div>
-                `;
+                    `
+                });
+                
+                html += `<div style="position: relative;">${cardHTML}</div>`;
             });
 
             html += '</div></div>';
@@ -357,28 +354,472 @@
         },
 
         /**
+         * 渲染进度圆圈（带tooltip）
+         */
+        renderProgressCircles(plan) {
+            if (!plan || !plan.stages) return '';
+            
+            let html = '';
+            plan.stages.forEach((stage, idx) => {
+                const isCompleted = stage.status === 'completed';
+                const isCurrent = stage.stage === plan.currentStage;
+                const scheduledDate = new Date(stage.scheduledAt);
+                const completedDate = stage.completedAt ? new Date(stage.completedAt) : null;
+                
+                // 圆圈颜色：通过的绿色实心，未通过的红色实心，待完成的灰色
+                let circleColor = '#6c757d'; // gray
+                let circleClass = 'review-circle-pending';
+                let tooltipText = '';
+                
+                const stageIndex = stage.stage - 1;
+                const stageName = STAGE_NAMES[stageIndex] || `第${stage.stage}周期`;
+                const dateStr = scheduledDate.toISOString().split('T')[0];
+                
+                if (isCompleted) {
+                    circleColor = '#28a745'; // green
+                    circleClass = 'review-circle-completed';
+                    const completedDateStr = completedDate.toISOString().split('T')[0];
+                    tooltipText = `${stage.stage}/${plan.stages.length} ${stageName} ${completedDateStr}`;
+                } else if (isCurrent) {
+                    // 检查当前周期是否测试失败（未通过）
+                    if (plan.currentRoundTestCompleted === false && plan.currentRoundTestDate) {
+                        // 测试未通过，显示红色
+                        circleColor = '#dc3545'; // red
+                        circleClass = 'review-circle-failed';
+                        tooltipText = `${stage.stage}/${plan.stages.length} ${stageName} ${dateStr}`;
+                    } else {
+                        // 进行中，显示橙色
+                        circleColor = '#ffc107'; // orange
+                        circleClass = 'review-circle-current';
+                        tooltipText = `${stage.stage}/${plan.stages.length} ${stageName} ${dateStr}`;
+                    }
+                } else {
+                    circleColor = '#6c757d'; // gray
+                    circleClass = 'review-circle-pending';
+                    tooltipText = `${stage.stage}/${plan.stages.length} ${stageName} ${dateStr}`;
+                }
+                
+                html += `
+                    <span class="review-progress-circle ${circleClass}" 
+                          style="width: 12px; height: 12px; border-radius: 50%; background-color: ${circleColor}; display: inline-block; cursor: help;"
+                          data-bs-toggle="tooltip" 
+                          data-bs-placement="top"
+                          title="${tooltipText}">
+                    </span>
+                `;
+            });
+            
+            return html;
+        },
+
+        /**
+         * 当前显示的月份（用于日历视图）
+         */
+        currentCalendarMonth: new Date().getMonth(),
+        currentCalendarYear: new Date().getFullYear(),
+        
+        /**
+         * 存储当前日历的日期计划数据（用于事件处理）
+         */
+        currentCalendarDatesWithPlans: null,
+        
+        /**
+         * 渲染日历视图（下拉面板）
+         */
+        renderCalendar() {
+            const container = document.getElementById('calendar-dropdown-content');
+            if (!container) return;
+            
+            const allPlans = this.getAllPlans().filter(plan => !plan.mastered);
+            
+            // 收集所有有复习计划的日期
+            const datesWithPlans = new Map(); // key: date string (YYYY-MM-DD), value: array of {plan, stage}
+            allPlans.forEach(plan => {
+                plan.stages.forEach(stage => {
+                    if (stage.status === 'pending' || stage.status === 'overdue') {
+                        const scheduledDate = new Date(stage.scheduledAt);
+                        const dateKey = scheduledDate.toISOString().split('T')[0];
+                        if (!datesWithPlans.has(dateKey)) {
+                            datesWithPlans.set(dateKey, []);
+                        }
+                        datesWithPlans.get(dateKey).push({
+                            plan: plan,
+                            stage: stage
+                        });
+                    }
+                });
+            });
+            
+            // 保存到实例变量，供事件处理使用
+            this.currentCalendarDatesWithPlans = datesWithPlans;
+            
+            // 生成日历（当前显示的月份）
+            const currentYear = this.currentCalendarYear;
+            const currentMonth = this.currentCalendarMonth;
+            const firstDay = new Date(currentYear, currentMonth, 1);
+            const lastDay = new Date(currentYear, currentMonth + 1, 0);
+            const daysInMonth = lastDay.getDate();
+            const startDayOfWeek = firstDay.getDay(); // 0 = Sunday
+            
+            // 更新月份标题
+            const monthTitleEl = document.getElementById('calendar-month-title');
+            if (monthTitleEl) {
+                monthTitleEl.textContent = `${currentYear}年${currentMonth + 1}月`;
+            }
+            
+            let html = `
+                <div class="calendar-grid-small">
+                    <div class="calendar-weekdays d-flex">
+                        <div class="calendar-weekday">日</div>
+                        <div class="calendar-weekday">一</div>
+                        <div class="calendar-weekday">二</div>
+                        <div class="calendar-weekday">三</div>
+                        <div class="calendar-weekday">四</div>
+                        <div class="calendar-weekday">五</div>
+                        <div class="calendar-weekday">六</div>
+                    </div>
+                    <div class="calendar-days d-flex flex-wrap">
+            `;
+            
+            // 填充空白（上个月的日期）
+            for (let i = 0; i < startDayOfWeek; i++) {
+                html += '<div class="calendar-day empty"></div>';
+            }
+            
+            // 填充当前月的日期
+            const today = new Date();
+            const todayKey = today.toISOString().split('T')[0];
+            
+            for (let day = 1; day <= daysInMonth; day++) {
+                const date = new Date(currentYear, currentMonth, day);
+                const dateKey = date.toISOString().split('T')[0];
+                const plansForDate = datesWithPlans.get(dateKey) || [];
+                const hasPlans = plansForDate.length > 0;
+                const isToday = dateKey === todayKey;
+                
+                // 生成tooltip文本（如果有计划）
+                let tooltipText = '';
+                if (hasPlans) {
+                    const tooltips = plansForDate.map(({ plan, stage }) => {
+                        const stageIndex = stage.stage - 1;
+                        const stageName = STAGE_NAMES[stageIndex] || `第${stage.stage}周期`;
+                        const scheduledDate = new Date(stage.scheduledAt);
+                        const dateStr = scheduledDate.toISOString().split('T')[0];
+                        return `${stage.stage}/${plan.stages.length} ${stageName} ${dateStr}`;
+                    });
+                    tooltipText = tooltips.join('\\n');
+                }
+                
+                html += `
+                    <div class="calendar-day ${hasPlans ? 'has-plans' : ''} ${isToday ? 'today' : ''} ${hasPlans ? 'clickable' : ''}" 
+                         data-date="${dateKey}"
+                         ${hasPlans ? `data-bs-toggle="tooltip" data-bs-placement="top" title="${tooltipText.replace(/"/g, '&quot;')}" style="cursor: pointer;"` : ''}>
+                        <div class="day-number">${day}</div>
+                        ${hasPlans ? '<div class="plan-dot"></div>' : ''}
+                    </div>
+                `;
+            }
+            
+            html += `
+                    </div>
+                </div>
+            `;
+            
+            container.innerHTML = html;
+            
+            // 绑定日历事件（使用事件委托）
+            this.bindCalendarEvents();
+        },
+        
+        /**
+         * 绑定日历事件（使用事件委托）
+         */
+        bindCalendarEvents() {
+            const calendarContainer = document.getElementById('calendar-dropdown-content');
+            if (!calendarContainer) return;
+            
+            // 移除旧的事件监听器（如果存在）
+            if (this._calendarClickHandler) {
+                calendarContainer.removeEventListener('click', this._calendarClickHandler);
+            }
+            
+            // 创建新的事件处理器
+            this._calendarClickHandler = (e) => {
+                // 检查点击的是否是日期元素或其子元素
+                let dayEl = e.target.closest('.calendar-day.has-plans');
+                
+                // 如果点击的是.day-number或.plan-dot，需要找到父元素
+                if (!dayEl && (e.target.classList.contains('day-number') || e.target.classList.contains('plan-dot'))) {
+                    dayEl = e.target.closest('.calendar-day');
+                }
+                
+                if (dayEl && dayEl.classList.contains('has-plans')) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const dateKey = dayEl.dataset.date;
+                    console.log('日历点击事件触发:', { dateKey, hasPlans: !!this.currentCalendarDatesWithPlans });
+                    
+                    if (dateKey && this.currentCalendarDatesWithPlans) {
+                        const plansForDate = this.currentCalendarDatesWithPlans.get(dateKey) || [];
+                        console.log('点击日期:', dateKey, '计划数量:', plansForDate.length);
+                        if (plansForDate.length > 0) {
+                            this.showPlansForDate(dateKey, plansForDate);
+                        } else {
+                            alert('该日期没有复习计划');
+                        }
+                    } else {
+                        console.error('日期点击失败:', { 
+                            dateKey, 
+                            hasPlans: !!this.currentCalendarDatesWithPlans,
+                            dayEl: !!dayEl
+                        });
+                    }
+                }
+            };
+            
+            // 使用事件委托处理日期点击
+            calendarContainer.addEventListener('click', this._calendarClickHandler);
+            
+            // 月份切换按钮（使用事件委托，避免重复绑定）
+            if (calendarContainer) {
+                // 移除旧的月份切换事件监听器
+                if (this._monthNavHandler) {
+                    calendarContainer.removeEventListener('click', this._monthNavHandler);
+                }
+                
+                this._monthNavHandler = (e) => {
+                    const prevBtn = e.target.closest('#calendar-prev-month');
+                    const nextBtn = e.target.closest('#calendar-next-month');
+                    
+                    if (prevBtn) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        this.currentCalendarMonth--;
+                        if (this.currentCalendarMonth < 0) {
+                            this.currentCalendarMonth = 11;
+                            this.currentCalendarYear--;
+                        }
+                        this.renderCalendar();
+                    } else if (nextBtn) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        this.currentCalendarMonth++;
+                        if (this.currentCalendarMonth > 11) {
+                            this.currentCalendarMonth = 0;
+                            this.currentCalendarYear++;
+                        }
+                        this.renderCalendar();
+                    }
+                };
+                
+                // 在下拉菜单容器上绑定事件（因为按钮在dropdown-menu中）
+                const dropdownMenu = document.getElementById('review-calendar-dropdown-menu');
+                if (dropdownMenu) {
+                    dropdownMenu.addEventListener('click', this._monthNavHandler);
+                }
+            }
+            
+            // 初始化tooltip
+            if (typeof bootstrap !== 'undefined' && bootstrap.Tooltip) {
+                // 先销毁旧的tooltip
+                document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(el => {
+                    const existingTooltip = bootstrap.Tooltip.getInstance(el);
+                    if (existingTooltip) {
+                        existingTooltip.dispose();
+                    }
+                });
+                // 创建新的tooltip
+                document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(el => {
+                    new bootstrap.Tooltip(el);
+                });
+            }
+        },
+        
+        /**
+         * 显示指定日期的复习计划（在列表视图中显示）
+         */
+        showPlansForDate(dateKey, plansForDate) {
+            if (plansForDate.length === 0) {
+                alert('该日期没有复习计划');
+                return;
+            }
+            
+            // 切换到列表视图并显示该日期的计划
+            const contentContainer = document.getElementById('errorbook-review-content');
+            if (!contentContainer) return;
+            
+            const date = new Date(dateKey);
+            const dateStr = `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日`;
+            
+            // 按周期分组
+            const plansByStage = {};
+            plansForDate.forEach(({ plan, stage }) => {
+                const stageNum = stage.stage;
+                if (!plansByStage[stageNum]) {
+                    plansByStage[stageNum] = [];
+                }
+                plansByStage[stageNum].push({ plan, stage });
+            });
+            
+            let html = `<div class="mb-3"><h6>${dateStr} 的复习计划</h6></div>`;
+            
+            // 按周期排序显示
+            const sortedStages = Object.keys(plansByStage).sort((a, b) => parseInt(a) - parseInt(b));
+            sortedStages.forEach(stageNum => {
+                const plans = plansByStage[stageNum];
+                const stageIndex = parseInt(stageNum) - 1;
+                const stageName = STAGE_NAMES[stageIndex] || `第${stageNum}周期`;
+                
+                html += `<div class="mb-3">
+                    <span class="badge bg-primary">${stageName}</span>
+                    <span class="text-muted small ms-2">(${plans.length}个)</span>
+                </div>`;
+                html += '<div class="d-flex flex-wrap gap-3 mb-4">';
+                
+                plans.forEach(({ plan, stage }) => {
+                    const progressCircles = this.renderProgressCircles(plan);
+                    const cardHTML = CardComponent.render({
+                        word: plan.word || '',
+                        pinyin: plan.pinyin || '',
+                        showPinyin: false,
+                        markedWrong: false,
+                        dataWordId: plan.wordId,
+                        dataPinyin: plan.pinyin || '',
+                        additionalClasses: 'review-plan-card',
+                        extraHtml: `
+                            <div class="review-plan-progress mt-2" style="display: flex; align-items: center; justify-content: center; gap: 4px; flex-wrap: wrap;">
+                                ${progressCircles}
+                            </div>
+                        `
+                    });
+                    html += `<div style="position: relative;">${cardHTML}</div>`;
+                });
+                
+                html += '</div>';
+            });
+            
+            contentContainer.innerHTML = html;
+            
+            // 初始化tooltip
+            if (typeof bootstrap !== 'undefined' && bootstrap.Tooltip) {
+                document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(el => {
+                    new bootstrap.Tooltip(el);
+                });
+            }
+            
+            // 关闭日历下拉面板
+            const calendarDropdown = document.getElementById('review-calendar-dropdown');
+            if (calendarDropdown) {
+                calendarDropdown.style.display = 'none';
+            }
+        },
+        
+        /**
+         * 开始当前周期的练习（所有待复习的词语）
+         */
+        startPracticeForCurrentStage() {
+            const words = this.getWordsForCurrentStage();
+            if (words.length === 0) {
+                alert('当前没有需要复习的词语');
+                return;
+            }
+            
+            // 转换为Practice模块需要的格式
+            const practiceWords = words.map(wordData => ({
+                id: wordData.id,
+                word: wordData.word,
+                pinyin: wordData.pinyin,
+                unit: wordData.unit
+            }));
+            
+            if (global.Practice) {
+                Practice.startWithWords(practiceWords, 3, 1);
+                Practice.start('error-practice');
+            }
+        },
+        
+        /**
+         * 开始当前周期的测试（所有待测试的词语）
+         */
+        startTestForCurrentStage() {
+            const words = this.getWordsForCurrentStage();
+            if (words.length === 0) {
+                alert('当前没有需要测试的词语');
+                return;
+            }
+            
+            // 检查是否都到了测试时间
+            const now = new Date();
+            const wordsReadyForTest = words.filter(wordData => {
+                const plan = wordData.reviewPlan;
+                const currentStage = plan.stages.find(s => s.stage === plan.currentStage);
+                if (!currentStage) return false;
+                const scheduledDate = new Date(currentStage.scheduledAt);
+                return scheduledDate <= now;
+            });
+            
+            if (wordsReadyForTest.length === 0) {
+                alert('当前没有到测试时间的词语，请先完成练习');
+                return;
+            }
+            
+            // 转换为Practice模块需要的格式
+            const testWords = wordsReadyForTest.map(wordData => ({
+                id: wordData.id,
+                word: wordData.word,
+                pinyin: wordData.pinyin,
+                unit: wordData.unit
+            }));
+            
+            if (global.Practice) {
+                Practice.startWithWords(testWords, 3, 1);
+                Practice.start('test');
+            }
+        },
+        
+        /**
          * 绑定复习计划相关事件
          */
         bindReviewPlanEvents() {
-            // 开始练习按钮
-            document.querySelectorAll('.review-start-practice-btn').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    const wordId = btn.dataset.wordId;
-                    this.startReviewPractice(wordId);
+            // 初始化tooltip
+            if (typeof bootstrap !== 'undefined' && bootstrap.Tooltip) {
+                document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(el => {
+                    new bootstrap.Tooltip(el);
                 });
-            });
-
-            // 开始测试按钮
-            document.querySelectorAll('.review-start-test-btn').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    const wordId = btn.dataset.wordId;
-                    this.startReviewTest(wordId);
+            }
+            
+            // 日历下拉菜单（使用Bootstrap dropdown）
+            const calendarDropdownBtn = document.getElementById('review-calendar-dropdown-btn');
+            const calendarDropdownMenu = document.getElementById('review-calendar-dropdown-menu');
+            
+            if (calendarDropdownBtn && calendarDropdownMenu) {
+                // 监听下拉菜单显示事件
+                calendarDropdownMenu.addEventListener('shown.bs.dropdown', () => {
+                    console.log('日历下拉菜单已显示');
+                    this.renderCalendar();
                 });
-            });
+            } else {
+                console.warn('日历下拉菜单元素未找到:', { 
+                    calendarDropdownBtn: !!calendarDropdownBtn, 
+                    calendarDropdownMenu: !!calendarDropdownMenu 
+                });
+            }
+            
+            // 整个周期的开始练习按钮
+            const startPracticeAllBtn = document.getElementById('review-start-practice-all-btn');
+            if (startPracticeAllBtn) {
+                startPracticeAllBtn.addEventListener('click', () => {
+                    this.startPracticeForCurrentStage();
+                });
+            }
+            
+            // 整个周期的开始测试按钮
+            const startTestAllBtn = document.getElementById('review-start-test-all-btn');
+            if (startTestAllBtn) {
+                startTestAllBtn.addEventListener('click', () => {
+                    this.startTestForCurrentStage();
+                });
+            }
         },
 
         /**

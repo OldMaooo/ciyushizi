@@ -1,0 +1,3256 @@
+{
+  "version": "1.0",
+  "buildDate": "2025-11-16T17:29:03.591657.000Z",
+  "gradeSemester": "二年级下册",
+  "count": 464,
+  "wordBank": [
+    {
+      "word": "莺",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 1
+    },
+    {
+      "word": "拂",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 1
+    },
+    {
+      "word": "堤",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 1
+    },
+    {
+      "word": "醉",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 1
+    },
+    {
+      "word": "咏",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 1
+    },
+    {
+      "word": "妆",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 1
+    },
+    {
+      "word": "丝",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 1
+    },
+    {
+      "word": "绦",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 1
+    },
+    {
+      "word": "裁",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 1
+    },
+    {
+      "word": "剪",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 1
+    },
+    {
+      "word": "脱",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 1
+    },
+    {
+      "word": "袄",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 1
+    },
+    {
+      "word": "寻",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 1
+    },
+    {
+      "word": "羞",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 1
+    },
+    {
+      "word": "姑",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 1
+    },
+    {
+      "word": "遮",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 1
+    },
+    {
+      "word": "掩",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 1
+    },
+    {
+      "word": "探",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 1
+    },
+    {
+      "word": "嫩",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 1
+    },
+    {
+      "word": "符",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 1
+    },
+    {
+      "word": "解",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 1
+    },
+    {
+      "word": "触",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 1
+    },
+    {
+      "word": "杜",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 1
+    },
+    {
+      "word": "鹃",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 1
+    },
+    {
+      "word": "邮",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 1
+    },
+    {
+      "word": "递",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 1
+    },
+    {
+      "word": "裹",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 1
+    },
+    {
+      "word": "颈",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 1
+    },
+    {
+      "word": "寄",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 1
+    },
+    {
+      "word": "局",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 1
+    },
+    {
+      "word": "堆",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 1
+    },
+    {
+      "word": "认",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 1
+    },
+    {
+      "word": "破",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 1
+    },
+    {
+      "word": "漏",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 1
+    },
+    {
+      "word": "懊",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 1
+    },
+    {
+      "word": "丧",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 1
+    },
+    {
+      "word": "啊",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 1
+    },
+    {
+      "word": "猬",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 1
+    },
+    {
+      "word": "绚",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 1
+    },
+    {
+      "word": "礼",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 1
+    },
+    {
+      "word": "邓",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 1
+    },
+    {
+      "word": "坛",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 1
+    },
+    {
+      "word": "龄",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 1
+    },
+    {
+      "word": "格",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 1
+    },
+    {
+      "word": "致",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 1
+    },
+    {
+      "word": "勃",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 1
+    },
+    {
+      "word": "挖",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 1
+    },
+    {
+      "word": "选",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 1
+    },
+    {
+      "word": "茁",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 1
+    },
+    {
+      "word": "移",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 1
+    },
+    {
+      "word": "挥",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 1
+    },
+    {
+      "word": "填",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 1
+    },
+    {
+      "word": "扶",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 1
+    },
+    {
+      "word": "亭",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "咨",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "询",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "剧",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "管",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "理",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "宝",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "塔",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "餐",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "厅",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "曾",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 2
+    },
+    {
+      "word": "蒙",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 2
+    },
+    {
+      "word": "泞",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 2
+    },
+    {
+      "word": "顺",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 2
+    },
+    {
+      "word": "迈",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 2
+    },
+    {
+      "word": "踏",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 2
+    },
+    {
+      "word": "荆",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 2
+    },
+    {
+      "word": "棘",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 2
+    },
+    {
+      "word": "瓣",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 2
+    },
+    {
+      "word": "莹",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 2
+    },
+    {
+      "word": "觅",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 2
+    },
+    {
+      "word": "需",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 2
+    },
+    {
+      "word": "献",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 2
+    },
+    {
+      "word": "糕",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 2
+    },
+    {
+      "word": "特",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 2
+    },
+    {
+      "word": "嘛",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 2
+    },
+    {
+      "word": "买",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 2
+    },
+    {
+      "word": "粉",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 2
+    },
+    {
+      "word": "糖",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 2
+    },
+    {
+      "word": "蔗",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 2
+    },
+    {
+      "word": "汁",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 2
+    },
+    {
+      "word": "菜",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 2
+    },
+    {
+      "word": "熬",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 2
+    },
+    {
+      "word": "算",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 2
+    },
+    {
+      "word": "销",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 2
+    },
+    {
+      "word": "劳",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 2
+    },
+    {
+      "word": "的",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 2
+    },
+    {
+      "word": "确",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 2
+    },
+    {
+      "word": "应",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 2
+    },
+    {
+      "word": "郊",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 2
+    },
+    {
+      "word": "泛",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 2
+    },
+    {
+      "word": "波",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 2
+    },
+    {
+      "word": "纹",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 2
+    },
+    {
+      "word": "葱",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 2
+    },
+    {
+      "word": "软",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 2
+    },
+    {
+      "word": "毯",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 2
+    },
+    {
+      "word": "异",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 2
+    },
+    {
+      "word": "恋",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 2
+    },
+    {
+      "word": "舍",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 2
+    },
+    {
+      "word": "求",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 2
+    },
+    {
+      "word": "株",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 2
+    },
+    {
+      "word": "拾",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 2
+    },
+    {
+      "word": "骑",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 2
+    },
+    {
+      "word": "跨",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 2
+    },
+    {
+      "word": "程",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "魔",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "术",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "建",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "筑",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "演",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "营",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "务",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "判",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "饲",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "养",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "州",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 3
+    },
+    {
+      "word": "华",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 3
+    },
+    {
+      "word": "涌",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 3
+    },
+    {
+      "word": "峰",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 3
+    },
+    {
+      "word": "耸",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 3
+    },
+    {
+      "word": "隔",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 3
+    },
+    {
+      "word": "峡",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 3
+    },
+    {
+      "word": "与",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 3
+    },
+    {
+      "word": "陆",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 3
+    },
+    {
+      "word": "各",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 3
+    },
+    {
+      "word": "谊",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 3
+    },
+    {
+      "word": "浓",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 3
+    },
+    {
+      "word": "齐",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 3
+    },
+    {
+      "word": "奋",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 3
+    },
+    {
+      "word": "繁",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 3
+    },
+    {
+      "word": "统",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 3
+    },
+    {
+      "word": "贴",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 3
+    },
+    {
+      "word": "宵",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 3
+    },
+    {
+      "word": "巷",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 3
+    },
+    {
+      "word": "祭",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 3
+    },
+    {
+      "word": "舟",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 3
+    },
+    {
+      "word": "艾",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 3
+    },
+    {
+      "word": "堂",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 3
+    },
+    {
+      "word": "乞",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 3
+    },
+    {
+      "word": "巧",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 3
+    },
+    {
+      "word": "郎",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 3
+    },
+    {
+      "word": "饼",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 3
+    },
+    {
+      "word": "赏",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 3
+    },
+    {
+      "word": "菊",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 3
+    },
+    {
+      "word": "甲",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 3
+    },
+    {
+      "word": "骨",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 3
+    },
+    {
+      "word": "漂",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 3
+    },
+    {
+      "word": "珍",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 3
+    },
+    {
+      "word": "饰",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 3
+    },
+    {
+      "word": "品",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 3
+    },
+    {
+      "word": "随",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 3
+    },
+    {
+      "word": "易",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 3
+    },
+    {
+      "word": "损",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 3
+    },
+    {
+      "word": "币",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 3
+    },
+    {
+      "word": "财",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 3
+    },
+    {
+      "word": "赚",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 3
+    },
+    {
+      "word": "赔",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 3
+    },
+    {
+      "word": "购",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 3
+    },
+    {
+      "word": "贫",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 3
+    },
+    {
+      "word": "菠",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 3
+    },
+    {
+      "word": "煎",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 3
+    },
+    {
+      "word": "腐",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 3
+    },
+    {
+      "word": "茄",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 3
+    },
+    {
+      "word": "烤",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 3
+    },
+    {
+      "word": "煮",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 3
+    },
+    {
+      "word": "爆",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 3
+    },
+    {
+      "word": "炖",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 3
+    },
+    {
+      "word": "蘑",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 3
+    },
+    {
+      "word": "菇",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 3
+    },
+    {
+      "word": "蒸",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 3
+    },
+    {
+      "word": "饺",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 3
+    },
+    {
+      "word": "炸",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 3
+    },
+    {
+      "word": "酱",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 3
+    },
+    {
+      "word": "粥",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 3
+    },
+    {
+      "word": "蛋",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 3
+    },
+    {
+      "word": "津",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "溜",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "辣",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "乎",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "喷",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "腻",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "绵",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "脆",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "邦",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "盒",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 4
+    },
+    {
+      "word": "聊",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 4
+    },
+    {
+      "word": "坪",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 4
+    },
+    {
+      "word": "郁",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 4
+    },
+    {
+      "word": "囱",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 4
+    },
+    {
+      "word": "般",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 4
+    },
+    {
+      "word": "精",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 4
+    },
+    {
+      "word": "叮",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 4
+    },
+    {
+      "word": "咛",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 4
+    },
+    {
+      "word": "渡",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 4
+    },
+    {
+      "word": "荫",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 4
+    },
+    {
+      "word": "蔽",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 4
+    },
+    {
+      "word": "撑",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 4
+    },
+    {
+      "word": "便",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 4
+    },
+    {
+      "word": "拼",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 4
+    },
+    {
+      "word": "母",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 4
+    },
+    {
+      "word": "冈",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 4
+    },
+    {
+      "word": "懂",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 4
+    },
+    {
+      "word": "案",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 4
+    },
+    {
+      "word": "堡",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 4
+    },
+    {
+      "word": "插",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 4
+    },
+    {
+      "word": "凶",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 4
+    },
+    {
+      "word": "狠",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 4
+    },
+    {
+      "word": "补",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 4
+    },
+    {
+      "word": "充",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 4
+    },
+    {
+      "word": "商",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 4
+    },
+    {
+      "word": "量",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 4
+    },
+    {
+      "word": "驾",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 4
+    },
+    {
+      "word": "驳",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 4
+    },
+    {
+      "word": "药",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 4
+    },
+    {
+      "word": "赞",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 4
+    },
+    {
+      "word": "合",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 4
+    },
+    {
+      "word": "坚",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 4
+    },
+    {
+      "word": "持",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 4
+    },
+    {
+      "word": "记",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 4
+    },
+    {
+      "word": "屁",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 4
+    },
+    {
+      "word": "股",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 4
+    },
+    {
+      "word": "昏",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 4
+    },
+    {
+      "word": "泡",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 4
+    },
+    {
+      "word": "茸",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 4
+    },
+    {
+      "word": "醒",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 4
+    },
+    {
+      "word": "晃",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 4
+    },
+    {
+      "word": "须",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 4
+    },
+    {
+      "word": "免",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 4
+    },
+    {
+      "word": "费",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 4
+    },
+    {
+      "word": "列",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 4
+    },
+    {
+      "word": "撞",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 4
+    },
+    {
+      "word": "贪",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 4
+    },
+    {
+      "word": "脾",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 4
+    },
+    {
+      "word": "婶",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 4
+    },
+    {
+      "word": "陀",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "螺",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "毽",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "倒",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "翁",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "枪",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "橡",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "板",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "控",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "坦",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "克",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "寓",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 5
+    },
+    {
+      "word": "则",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 5
+    },
+    {
+      "word": "亡",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 5
+    },
+    {
+      "word": "牢",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 5
+    },
+    {
+      "word": "圈",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 5
+    },
+    {
+      "word": "钻",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 5
+    },
+    {
+      "word": "叼",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 5
+    },
+    {
+      "word": "坊",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 5
+    },
+    {
+      "word": "悔",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 5
+    },
+    {
+      "word": "此",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 5
+    },
+    {
+      "word": "焦",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 5
+    },
+    {
+      "word": "筋",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 5
+    },
+    {
+      "word": "疲",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 5
+    },
+    {
+      "word": "喘",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 5
+    },
+    {
+      "word": "截",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 5
+    },
+    {
+      "word": "室",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 5
+    },
+    {
+      "word": "靠",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 5
+    },
+    {
+      "word": "而",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 5
+    },
+    {
+      "word": "班",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 5
+    },
+    {
+      "word": "哈",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 5
+    },
+    {
+      "word": "倒",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 5
+    },
+    {
+      "word": "审",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 5
+    },
+    {
+      "word": "页",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 5
+    },
+    {
+      "word": "肃",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 5
+    },
+    {
+      "word": "晌",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 5
+    },
+    {
+      "word": "抢",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 5
+    },
+    {
+      "word": "嘻",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 5
+    },
+    {
+      "word": "悦",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 5
+    },
+    {
+      "word": "诲",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 5
+    },
+    {
+      "word": "棚",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 5
+    },
+    {
+      "word": "驮",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 5
+    },
+    {
+      "word": "磨",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 5
+    },
+    {
+      "word": "坊",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 5
+    },
+    {
+      "word": "挡",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 5
+    },
+    {
+      "word": "伯",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 5
+    },
+    {
+      "word": "浅",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 5
+    },
+    {
+      "word": "刻",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 5
+    },
+    {
+      "word": "突",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 5
+    },
+    {
+      "word": "叹",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 5
+    },
+    {
+      "word": "唉",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 5
+    },
+    {
+      "word": "试",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 5
+    },
+    {
+      "word": "蹄",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 5
+    },
+    {
+      "word": "既",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 5
+    },
+    {
+      "word": "厨",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "厕",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "厢",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "厦",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "穴",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "窟",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "窿",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "窑",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "窄",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "晓",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 6
+    },
+    {
+      "word": "慈",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 6
+    },
+    {
+      "word": "毕",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 6
+    },
+    {
+      "word": "竟",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 6
+    },
+    {
+      "word": "映",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 6
+    },
+    {
+      "word": "绝",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 6
+    },
+    {
+      "word": "鹂",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 6
+    },
+    {
+      "word": "鸣",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 6
+    },
+    {
+      "word": "行",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 6
+    },
+    {
+      "word": "含",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 6
+    },
+    {
+      "word": "岭",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 6
+    },
+    {
+      "word": "泊",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 6
+    },
+    {
+      "word": "压",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 6
+    },
+    {
+      "word": "蝉",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 6
+    },
+    {
+      "word": "垂",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 6
+    },
+    {
+      "word": "哗",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 6
+    },
+    {
+      "word": "户",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 6
+    },
+    {
+      "word": "扑",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 6
+    },
+    {
+      "word": "慌",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 6
+    },
+    {
+      "word": "辨",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 6
+    },
+    {
+      "word": "忠",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 6
+    },
+    {
+      "word": "导",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 6
+    },
+    {
+      "word": "盏",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 6
+    },
+    {
+      "word": "永",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 6
+    },
+    {
+      "word": "闯",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 6
+    },
+    {
+      "word": "碰",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 6
+    },
+    {
+      "word": "稠",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 6
+    },
+    {
+      "word": "稀",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 6
+    },
+    {
+      "word": "渠",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 6
+    },
+    {
+      "word": "积",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 6
+    },
+    {
+      "word": "趣",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 6
+    },
+    {
+      "word": "航",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 6
+    },
+    {
+      "word": "宇",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 6
+    },
+    {
+      "word": "宙",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 6
+    },
+    {
+      "word": "稳",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 6
+    },
+    {
+      "word": "必",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 6
+    },
+    {
+      "word": "固",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 6
+    },
+    {
+      "word": "舱",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 6
+    },
+    {
+      "word": "杯",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 6
+    },
+    {
+      "word": "饮",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 6
+    },
+    {
+      "word": "件",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 6
+    },
+    {
+      "word": "题",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 6
+    },
+    {
+      "word": "密",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 6
+    },
+    {
+      "word": "浴",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 6
+    },
+    {
+      "word": "桶",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 6
+    },
+    {
+      "word": "博",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "馆",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "览",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "技",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "育",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "研",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "究",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "哨",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "诊",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "似",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 7
+    },
+    {
+      "word": "耷",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 7
+    },
+    {
+      "word": "咦",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 7
+    },
+    {
+      "word": "竖",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 7
+    },
+    {
+      "word": "竿",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 7
+    },
+    {
+      "word": "舞",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 7
+    },
+    {
+      "word": "痛",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 7
+    },
+    {
+      "word": "烦",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 7
+    },
+    {
+      "word": "扇",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 7
+    },
+    {
+      "word": "店",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 7
+    },
+    {
+      "word": "蹲",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 7
+    },
+    {
+      "word": "寂",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 7
+    },
+    {
+      "word": "寞",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 7
+    },
+    {
+      "word": "罩",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 7
+    },
+    {
+      "word": "编",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 7
+    },
+    {
+      "word": "顾",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 7
+    },
+    {
+      "word": "付",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 7
+    },
+    {
+      "word": "夫",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 7
+    },
+    {
+      "word": "换",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 7
+    },
+    {
+      "word": "袜",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 7
+    },
+    {
+      "word": "匆",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 7
+    },
+    {
+      "word": "蜈",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 7
+    },
+    {
+      "word": "蚣",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 7
+    },
+    {
+      "word": "卖",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 7
+    },
+    {
+      "word": "烂",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 7
+    },
+    {
+      "word": "牌",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 7
+    },
+    {
+      "word": "喝",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 7
+    },
+    {
+      "word": "坑",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 7
+    },
+    {
+      "word": "舒",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 7
+    },
+    {
+      "word": "集",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 7
+    },
+    {
+      "word": "籽",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 7
+    },
+    {
+      "word": "播",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 7
+    },
+    {
+      "word": "撒",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 7
+    },
+    {
+      "word": "茵",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 7
+    },
+    {
+      "word": "灌",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 7
+    },
+    {
+      "word": "缺",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 7
+    },
+    {
+      "word": "泳",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 7
+    },
+    {
+      "word": "愣",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 7
+    },
+    {
+      "word": "昆",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 7
+    },
+    {
+      "word": "怜",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 7
+    },
+    {
+      "word": "挪",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 7
+    },
+    {
+      "word": "仿",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 7
+    },
+    {
+      "word": "佛",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 7
+    },
+    {
+      "word": "尽",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 7
+    },
+    {
+      "word": "任",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 7
+    },
+    {
+      "word": "何",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 7
+    },
+    {
+      "word": "纺",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 7
+    },
+    {
+      "word": "竭",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 7
+    },
+    {
+      "word": "规",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 7
+    },
+    {
+      "word": "律",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 7
+    },
+    {
+      "word": "待",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 7
+    },
+    {
+      "word": "挣",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 7
+    },
+    {
+      "word": "愉",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 7
+    },
+    {
+      "word": "绒",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 7
+    },
+    {
+      "word": "扫",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "帚",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "抹",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "拖",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "簸",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "箕",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "玻",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "璃",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "垃",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "圾",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "祖",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 8
+    },
+    {
+      "word": "掏",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 8
+    },
+    {
+      "word": "逗",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 8
+    },
+    {
+      "word": "蔷",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 8
+    },
+    {
+      "word": "薇",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 8
+    },
+    {
+      "word": "逮",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 8
+    },
+    {
+      "word": "忆",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 8
+    },
+    {
+      "word": "射",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 8
+    },
+    {
+      "word": "值",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 8
+    },
+    {
+      "word": "熔",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 8
+    },
+    {
+      "word": "类",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 8
+    },
+    {
+      "word": "艰",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 8
+    },
+    {
+      "word": "箭",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 8
+    },
+    {
+      "word": "裂",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 8
+    },
+    {
+      "word": "炎",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 8
+    },
+    {
+      "word": "退",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 8
+    },
+    {
+      "word": "庄",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 8
+    },
+    {
+      "word": "稼",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 8
+    },
+    {
+      "word": "滋",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 8
+    },
+    {
+      "word": "腾",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 8
+    },
+    {
+      "word": "帝",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 8
+    },
+    {
+      "word": "创",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 8
+    },
+    {
+      "word": "推",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 8
+    },
+    {
+      "word": "联",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 8
+    },
+    {
+      "word": "盟",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 8
+    },
+    {
+      "word": "尊",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 8
+    },
+    {
+      "word": "启",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 8
+    },
+    {
+      "word": "召",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 8
+    },
+    {
+      "word": "按",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 8
+    },
+    {
+      "word": "设",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 8
+    },
+    {
+      "word": "材",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 8
+    },
+    {
+      "word": "改",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 8
+    },
+    {
+      "word": "替",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 8
+    },
+    {
+      "word": "待",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 8
+    },
+    {
+      "word": "段",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 8
+    },
+    {
+      "word": "供",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": 8
+    },
+    {
+      "word": "钩",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "铲",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "梅",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "柿",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "源",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "涨",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "炬",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "灿",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "垮",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "坟",
+      "pinyin": "",
+      "grade": "二年级",
+      "semester": "下册",
+      "unit": "语文园地"
+    }
+  ]
+}

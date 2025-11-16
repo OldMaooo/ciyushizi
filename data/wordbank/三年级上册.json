@@ -1,0 +1,1759 @@
+{
+  "version": "1.0",
+  "buildDate": "2025-01-20T00:00:00.000Z",
+  "gradeSemester": "三年级上册",
+  "count": 250,
+  "wordBank": [
+    {
+      "word": "山坡",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 1
+    },
+    {
+      "word": "学校",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 1
+    },
+    {
+      "word": "飘扬",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 1
+    },
+    {
+      "word": "课文",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 1
+    },
+    {
+      "word": "声音",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 1
+    },
+    {
+      "word": "招引",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 1
+    },
+    {
+      "word": "热闹",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 1
+    },
+    {
+      "word": "古老",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 1
+    },
+    {
+      "word": "粗壮",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 1
+    },
+    {
+      "word": "枝干",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 1
+    },
+    {
+      "word": "洁白",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 1
+    },
+    {
+      "word": "轰响",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 2
+    },
+    {
+      "word": "阵雨",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 2
+    },
+    {
+      "word": "湿润",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 2
+    },
+    {
+      "word": "风笛",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 2
+    },
+    {
+      "word": "狂欢",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 2
+    },
+    {
+      "word": "觉得",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 2
+    },
+    {
+      "word": "功课",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 2
+    },
+    {
+      "word": "放学",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 2
+    },
+    {
+      "word": "老师",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 2
+    },
+    {
+      "word": "急急忙忙",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 2
+    },
+    {
+      "word": "秋风",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 5
+    },
+    {
+      "word": "放晴",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 5
+    },
+    {
+      "word": "明朗",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 5
+    },
+    {
+      "word": "地面",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 5
+    },
+    {
+      "word": "亮晶晶",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 5
+    },
+    {
+      "word": "落叶",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 5
+    },
+    {
+      "word": "图案",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 5
+    },
+    {
+      "word": "闪闪发光",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 5
+    },
+    {
+      "word": "尽头",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 5
+    },
+    {
+      "word": "排列",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 5
+    },
+    {
+      "word": "规则",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 5
+    },
+    {
+      "word": "凌乱",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 5
+    },
+    {
+      "word": "歌唱",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 5
+    },
+    {
+      "word": "迟到",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 5
+    },
+    {
+      "word": "秋天",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 6
+    },
+    {
+      "word": "清凉",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 6
+    },
+    {
+      "word": "炎热",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 6
+    },
+    {
+      "word": "枫树",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 6
+    },
+    {
+      "word": "邮票",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 6
+    },
+    {
+      "word": "凉爽",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 6
+    },
+    {
+      "word": "果树",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 6
+    },
+    {
+      "word": "菊花",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 6
+    },
+    {
+      "word": "仙子",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 6
+    },
+    {
+      "word": "频频",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 6
+    },
+    {
+      "word": "气味",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 6
+    },
+    {
+      "word": "香甜",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 6
+    },
+    {
+      "word": "松果",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 6
+    },
+    {
+      "word": "丰收",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 6
+    },
+    {
+      "word": "门板",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 8
+    },
+    {
+      "word": "准备",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 8
+    },
+    {
+      "word": "旁边",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 8
+    },
+    {
+      "word": "暴风雨",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 8
+    },
+    {
+      "word": "安心",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 8
+    },
+    {
+      "word": "低头",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 8
+    },
+    {
+      "word": "吃力",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 8
+    },
+    {
+      "word": "再见",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 8
+    },
+    {
+      "word": "母鸡",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 8
+    },
+    {
+      "word": "注意",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 8
+    },
+    {
+      "word": "屋子",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 8
+    },
+    {
+      "word": "漂亮",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 8
+    },
+    {
+      "word": "意思",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 8
+    },
+    {
+      "word": "因此",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 8
+    },
+    {
+      "word": "恒心",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "神圣",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "萌发",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "妥当",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "车轴",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "阁楼",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "培植",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "厘米",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "声明",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 11
+    },
+    {
+      "word": "神仙",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 11
+    },
+    {
+      "word": "普通",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 11
+    },
+    {
+      "word": "让步",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 11
+    },
+    {
+      "word": "条件",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 11
+    },
+    {
+      "word": "指甲",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 11
+    },
+    {
+      "word": "得到",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 11
+    },
+    {
+      "word": "衣服",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 11
+    },
+    {
+      "word": "所以",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 11
+    },
+    {
+      "word": "要是",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 11
+    },
+    {
+      "word": "同学",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 11
+    },
+    {
+      "word": "可怜",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 11
+    },
+    {
+      "word": "最好",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 11
+    },
+    {
+      "word": "科学",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 11
+    },
+    {
+      "word": "旅行",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 12
+    },
+    {
+      "word": "要好",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 12
+    },
+    {
+      "word": "答应",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 12
+    },
+    {
+      "word": "做梦",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 12
+    },
+    {
+      "word": "来得及",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 12
+    },
+    {
+      "word": "救命",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 12
+    },
+    {
+      "word": "大吃一惊",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 12
+    },
+    {
+      "word": "尾巴",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 12
+    },
+    {
+      "word": "牙齿",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 12
+    },
+    {
+      "word": "肚皮",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 12
+    },
+    {
+      "word": "食物",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 12
+    },
+    {
+      "word": "消化",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 12
+    },
+    {
+      "word": "当然",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 12
+    },
+    {
+      "word": "刚才",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 12
+    },
+    {
+      "word": "知觉",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 12
+    },
+    {
+      "word": "光亮",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 12
+    },
+    {
+      "word": "申请",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "介绍",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "主旨",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "占领",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "乏力",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "母亲",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 14
+    },
+    {
+      "word": "外祖父",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 14
+    },
+    {
+      "word": "船夫",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 14
+    },
+    {
+      "word": "羽毛",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 14
+    },
+    {
+      "word": "翠绿",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 14
+    },
+    {
+      "word": "静悄悄",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 14
+    },
+    {
+      "word": "翠鸟",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 14
+    },
+    {
+      "word": "捕鱼",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 14
+    },
+    {
+      "word": "草地",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 15
+    },
+    {
+      "word": "蒲公英",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 15
+    },
+    {
+      "word": "盛开",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 15
+    },
+    {
+      "word": "玩耍",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 15
+    },
+    {
+      "word": "一本正经",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 15
+    },
+    {
+      "word": "使劲",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 15
+    },
+    {
+      "word": "钓鱼",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 15
+    },
+    {
+      "word": "观察",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 15
+    },
+    {
+      "word": "合拢",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 15
+    },
+    {
+      "word": "张开",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 15
+    },
+    {
+      "word": "喜爱",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 15
+    },
+    {
+      "word": "风景",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 16
+    },
+    {
+      "word": "优美",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 16
+    },
+    {
+      "word": "物产",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 16
+    },
+    {
+      "word": "交错",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 16
+    },
+    {
+      "word": "岩石",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 16
+    },
+    {
+      "word": "鹿角",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 16
+    },
+    {
+      "word": "成群结队",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 16
+    },
+    {
+      "word": "布满",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 16
+    },
+    {
+      "word": "条纹",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 16
+    },
+    {
+      "word": "周身",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 16
+    },
+    {
+      "word": "皮球",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 16
+    },
+    {
+      "word": "茂密",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 16
+    },
+    {
+      "word": "肥料",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 16
+    },
+    {
+      "word": "祖国",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 16
+    },
+    {
+      "word": "事业",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 16
+    },
+    {
+      "word": "发展",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 16
+    },
+    {
+      "word": "海滨",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 17
+    },
+    {
+      "word": "街道",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 17
+    },
+    {
+      "word": "交界",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 17
+    },
+    {
+      "word": "水平线",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 17
+    },
+    {
+      "word": "机帆船",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 17
+    },
+    {
+      "word": "来来往往",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 17
+    },
+    {
+      "word": "朝阳",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 17
+    },
+    {
+      "word": "渔民",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 17
+    },
+    {
+      "word": "贝壳",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 17
+    },
+    {
+      "word": "汽笛",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 17
+    },
+    {
+      "word": "出海",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 17
+    },
+    {
+      "word": "银光闪闪",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 17
+    },
+    {
+      "word": "庭院",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 17
+    },
+    {
+      "word": "亚热带",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 17
+    },
+    {
+      "word": "散发",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 17
+    },
+    {
+      "word": "打扫",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 17
+    },
+    {
+      "word": "干净",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 17
+    },
+    {
+      "word": "东北",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 18
+    },
+    {
+      "word": "密密层层",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 18
+    },
+    {
+      "word": "严严实实",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 18
+    },
+    {
+      "word": "视线",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 18
+    },
+    {
+      "word": "山谷",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 18
+    },
+    {
+      "word": "起来",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 18
+    },
+    {
+      "word": "照射",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 18
+    },
+    {
+      "word": "各种各样",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 18
+    },
+    {
+      "word": "花坛",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 18
+    },
+    {
+      "word": "显得",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 18
+    },
+    {
+      "word": "苍翠",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 18
+    },
+    {
+      "word": "药材",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 18
+    },
+    {
+      "word": "捕捉",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 18
+    },
+    {
+      "word": "野兔",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 18
+    },
+    {
+      "word": "景色",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 18
+    },
+    {
+      "word": "宝库",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 18
+    },
+    {
+      "word": "大自然",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 21
+    },
+    {
+      "word": "美妙",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 21
+    },
+    {
+      "word": "音乐家",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 21
+    },
+    {
+      "word": "手风琴",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 21
+    },
+    {
+      "word": "歌手",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 21
+    },
+    {
+      "word": "感受",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 21
+    },
+    {
+      "word": "温柔",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 21
+    },
+    {
+      "word": "合奏",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 21
+    },
+    {
+      "word": "充满",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 21
+    },
+    {
+      "word": "威力",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 21
+    },
+    {
+      "word": "乐器",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 21
+    },
+    {
+      "word": "屋顶",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 21
+    },
+    {
+      "word": "河流",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 21
+    },
+    {
+      "word": "轻快",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 21
+    },
+    {
+      "word": "合唱",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 21
+    },
+    {
+      "word": "水塘",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 21
+    },
+    {
+      "word": "昆虫",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 22
+    },
+    {
+      "word": "万物",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 22
+    },
+    {
+      "word": "沉思",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 22
+    },
+    {
+      "word": "搬家",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 22
+    },
+    {
+      "word": "井然有序",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 22
+    },
+    {
+      "word": "精神",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 22
+    },
+    {
+      "word": "植物",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 22
+    },
+    {
+      "word": "千姿百态",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 22
+    },
+    {
+      "word": "鲜美",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 22
+    },
+    {
+      "word": "池塘",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 22
+    },
+    {
+      "word": "秋高气爽",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 22
+    },
+    {
+      "word": "倒映",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 22
+    },
+    {
+      "word": "游玩",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 22
+    },
+    {
+      "word": "画册",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 22
+    },
+    {
+      "word": "无穷",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 22
+    },
+    {
+      "word": "奥秘",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 22
+    },
+    {
+      "word": "无尽",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 22
+    },
+    {
+      "word": "田螺",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "螃蟹",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "鲤鱼",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "鲫鱼",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "鲨鱼",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "生物",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 24
+    },
+    {
+      "word": "从事",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 24
+    },
+    {
+      "word": "成就",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 24
+    },
+    {
+      "word": "学期",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 24
+    },
+    {
+      "word": "考试",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 24
+    },
+    {
+      "word": "再三",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 24
+    },
+    {
+      "word": "同意",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 24
+    },
+    {
+      "word": "难得",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 24
+    },
+    {
+      "word": "值班",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 24
+    },
+    {
+      "word": "努力",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 24
+    },
+    {
+      "word": "留学",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 24
+    },
+    {
+      "word": "国家",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 24
+    },
+    {
+      "word": "落后",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 24
+    },
+    {
+      "word": "地位",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 24
+    },
+    {
+      "word": "环节",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 24
+    },
+    {
+      "word": "难度",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 24
+    },
+    {
+      "word": "刻苦",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 24
+    },
+    {
+      "word": "兴奋",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 24
+    },
+    {
+      "word": "手术台",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 25
+    },
+    {
+      "word": "阵地",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 25
+    },
+    {
+      "word": "战斗",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 25
+    },
+    {
+      "word": "打响",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 25
+    },
+    {
+      "word": "消灭",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 25
+    },
+    {
+      "word": "伤员",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 25
+    },
+    {
+      "word": "陆续",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 25
+    },
+    {
+      "word": "血丝",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 25
+    },
+    {
+      "word": "匆匆",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 25
+    },
+    {
+      "word": "医生",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 25
+    },
+    {
+      "word": "转告",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 25
+    },
+    {
+      "word": "赶忙",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 25
+    },
+    {
+      "word": "迅速",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 25
+    },
+    {
+      "word": "争分夺秒",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 25
+    },
+    {
+      "word": "连续",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": 25
+    },
+    {
+      "word": "怒目圆睁",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "眨眼",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "眼眶",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "目瞪口呆",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": "语文园地"
+    },
+    {
+      "word": "耳闻目睹",
+      "pinyin": "",
+      "grade": "三年级",
+      "semester": "上册",
+      "unit": "语文园地"
+    }
+  ]
+}
+

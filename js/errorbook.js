@@ -1,4 +1,65 @@
 (function (global) {
+    /**
+     * 使用 pinyin-pro 生成拼音
+     * @param {string} text - 中文文本
+     * @returns {string} - 拼音（带声调）
+     */
+    function generatePinyin(text) {
+        if (!text || typeof text !== 'string') return '';
+        
+        // 检查 pinyin-pro 是否已加载
+        // pinyin-pro 可能通过不同的方式暴露：pinyinPro.pinyin 或 pinyinPro
+        let pinyinFunc = null;
+        if (typeof pinyinPro !== 'undefined') {
+            if (typeof pinyinPro.pinyin === 'function') {
+                pinyinFunc = pinyinPro.pinyin;
+            } else if (typeof pinyinPro === 'function') {
+                pinyinFunc = pinyinPro;
+            } else if (pinyinPro.default && typeof pinyinPro.default === 'function') {
+                pinyinFunc = pinyinPro.default;
+            }
+        }
+        
+        if (pinyinFunc) {
+            try {
+                // 使用 pinyin-pro 生成拼音，带声调
+                // 尝试不同的参数格式
+                let result = null;
+                try {
+                    result = pinyinFunc(text, { toneType: 'symbol', type: 'all' });
+                } catch (e1) {
+                    try {
+                        result = pinyinFunc(text, { toneType: 'symbol' });
+                    } catch (e2) {
+                        try {
+                            result = pinyinFunc(text);
+                        } catch (e3) {
+                            console.warn('pinyin-pro调用失败', e3);
+                            return '';
+                        }
+                    }
+                }
+                
+                // 如果返回的是数组，提取拼音字符串
+                if (Array.isArray(result)) {
+                    return result.map(item => {
+                        // 如果item是对象，取pinyin字段；如果是字符串，直接使用
+                        return typeof item === 'object' && item !== null && item.pinyin 
+                            ? item.pinyin 
+                            : String(item || '');
+                    }).join(' ');
+                }
+                
+                // 如果返回的是字符串，直接返回
+                return String(result || '').trim();
+            } catch (err) {
+                console.warn('生成拼音失败', err);
+                return '';
+            }
+        }
+        return '';
+    }
+
     function collectErrorRecordsFromLog(log) {
         const records = [];
         if (!log?.groups) return records;
@@ -251,7 +312,9 @@
                         const sortedLogs = [...logs].sort((a, b) => new Date(b.date) - new Date(a.date));
                         
                         roundsContainer.innerHTML = sortedLogs.map((log, idx) => {
-                            const expanded = idx < 5; // 前5轮展开
+                            // 练习模式下，默认只展开第一轮（最近的）
+                            // 非练习模式下，展开前5轮
+                            const expanded = this.practiceMode ? (idx === 0) : (idx < 5);
                             const collapseId = `collapse-round-${idx}`;
                             
                             // 获取该轮的错题
@@ -300,7 +363,7 @@
                                                 第 ${idx + 1} 轮 · ${new Date(log.date).toLocaleString('zh-CN')} · 总题 ${log.totalWords} · 错题 ${roundErrorWords.length}
                                             </button>
                                         </h2>
-                                        <div id="${collapseId}" class="accordion-collapse collapse ${expanded ? 'show' : ''}" data-bs-parent="#round-${idx}">
+                                        <div id="${collapseId}" class="accordion-collapse collapse ${expanded ? 'show' : ''}" data-bs-parent="#round-${idx}" data-round-id="${log.id}">
                                             <div class="accordion-body">
                                                 <div class="d-flex flex-wrap gap-3">
                                                     ${cards}
@@ -321,12 +384,13 @@
                         }, 100);
                     }
                 } else {
-                    // 汇总查看：显示所有错题
-                    if (!errorWords.length) {
+                    // 汇总查看：显示汇总题库（以每个单元首次测试/练习的结果作为汇总）
+                    const summaryErrorWords = Storage.getSummaryErrorWords();
+                    if (!summaryErrorWords.length) {
                         summaryContainer.innerHTML = '<div class="text-muted text-center py-4">暂无错题</div>';
                     } else {
-                        // 汇总查看：始终显示所有错题（不使用 currentRoundErrorWords）
-                        let practiceWords = errorWords;
+                        // 汇总查看：使用汇总题库
+                        let practiceWords = summaryErrorWords;
                         
                         // 根据"隐藏拼音"开关决定初始显示状态
                         const initialShowPinyin = !this.hidePinyin;
@@ -436,12 +500,14 @@
                 }
             }
 
-            if (!errorWords.length) {
+            // 汇总查看：使用汇总题库（以每个单元首次测试/练习的结果作为汇总）
+            const summaryErrorWords = Storage.getSummaryErrorWords();
+            if (!summaryErrorWords.length) {
                 summaryContainer.innerHTML = '<div class="text-muted text-center py-4">暂无错题</div>';
             } else {
-                summaryContainer.innerHTML = this.renderSummary(errorWords);
+                summaryContainer.innerHTML = this.renderSummary(summaryErrorWords);
                 // 更新汇总查看的总数显示
-                this.updateSummaryCount(errorWords);
+                this.updateSummaryCount(summaryErrorWords);
             }
 
             this.bindCardEvents(roundsContainer);
@@ -602,7 +668,16 @@
             const perPageEl = document.getElementById('words-per-page-input-modal');
             
             // 优先使用首页的值，其次使用存储的值
-            if (countEl) countEl.value = homeCountEl?.value || settings.total || 20;
+            if (countEl) {
+                countEl.value = homeCountEl?.value || settings.total || 20;
+                // 练习模式下，隐藏题目数量输入框
+                const countContainer = countEl.closest('.col-12');
+                if (countContainer && this.practiceMode) {
+                    countContainer.style.display = 'none';
+                } else if (countContainer) {
+                    countContainer.style.display = 'block';
+                }
+            }
             if (speedEl) speedEl.value = homeSpeedEl?.value || settings.speed || 3;
             if (perPageEl) perPageEl.value = homePerPageEl?.value || settings.perPage || 1;
 
@@ -655,22 +730,33 @@
                 confirmBtn.parentNode.replaceChild(newConfirmBtn, confirmBtn);
                 
                 newConfirmBtn.addEventListener('click', () => {
-                    const total = parseInt(countEl?.value || 20);
                     const speed = parseInt(speedEl?.value || 3);
                     const perPage = parseInt(perPageEl?.value || 1);
                     
-                    // 保存设置
-                    Storage.saveSettings({ total, speed, perPage });
+                    // 保存设置（练习模式下不保存total，因为使用展开轮次的所有错题）
+                    if (this.practiceMode) {
+                        Storage.saveSettings({ speed, perPage });
+                    } else {
+                        const total = parseInt(countEl?.value || 20);
+                        Storage.saveSettings({ total, speed, perPage });
+                        // 同步到首页
+                        if (homeCountEl) homeCountEl.value = total;
+                    }
                     
                     // 同步到首页
-                    if (homeCountEl) homeCountEl.value = total;
                     if (homeSpeedEl) homeSpeedEl.value = speed;
                     if (homePerPageEl) homePerPageEl.value = perPage;
                     
                     modal.hide();
                     
                     // 开始练习
-                    this.startPracticeFromErrorBook(total, speed, perPage);
+                    if (this.practiceMode) {
+                        // 练习模式下，只收集展开轮次中的错题
+                        this.startPracticeFromExpandedRounds(speed, perPage);
+                    } else {
+                        const total = parseInt(countEl?.value || 20);
+                        this.startPracticeFromErrorBook(total, speed, perPage);
+                    }
                 });
             }
         },
@@ -708,9 +794,21 @@
                             if (wordId) {
                                 const errorWords = Storage.getErrorWords();
                                 const wordData = errorWords.find(w => w.id === wordId || w.wordId === wordId);
-                                if (wordData && wordData.pinyin) {
-                                    pinyin = wordData.pinyin;
+                                if (wordData) {
+                                    pinyin = wordData.pinyin || '';
+                                    // 如果pinyin为空，尝试从word生成
+                                    if (!pinyin && wordData.word) {
+                                        pinyin = generatePinyin(wordData.word);
+                                    }
                                 }
+                            }
+                        }
+                        
+                        // 如果还是没有，尝试从卡片中的汉字生成
+                        if (!pinyin) {
+                            const wordEl = card.querySelector('.practice-word');
+                            if (wordEl && wordEl.textContent) {
+                                pinyin = generatePinyin(wordEl.textContent.trim());
                             }
                         }
                         
@@ -784,6 +882,55 @@
             // 调用练习模块开始练习
             if (global.Practice) {
                 Practice.startWithWords(limitedWords, speed, perPage);
+            }
+        },
+        
+        startPracticeFromExpandedRounds(speed, perPage) {
+            // 获取所有展开的轮次
+            const expandedRounds = [];
+            document.querySelectorAll('.accordion-collapse.show').forEach(collapse => {
+                const roundId = collapse.dataset.roundId;
+                if (roundId) {
+                    expandedRounds.push(roundId);
+                }
+            });
+            
+            if (expandedRounds.length === 0) {
+                alert('请至少展开一个轮次进行练习');
+                return;
+            }
+            
+            // 获取错题集中的所有错题
+            const errorWords = Storage.getErrorWords();
+            if (!errorWords || errorWords.length === 0) {
+                alert('错题集中没有错题，无法开始练习');
+                return;
+            }
+            
+            // 只收集展开轮次中的错题
+            const words = errorWords
+                .filter(item => expandedRounds.includes(item.roundId))
+                .map(item => ({
+                    id: item.wordId || item.id,
+                    word: item.word,
+                    pinyin: item.pinyin,
+                    unit: item.unit
+                }));
+            
+            if (words.length === 0) {
+                alert('展开的轮次中没有错题，无法开始练习');
+                return;
+            }
+            
+            // 随机打乱
+            for (let i = words.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [words[i], words[j]] = [words[j], words[i]];
+            }
+            
+            // 调用练习模块开始练习
+            if (global.Practice) {
+                Practice.startWithWords(words, speed, perPage);
             }
         },
 
@@ -964,6 +1111,11 @@
             if (action === 'delete' || action === 'correct') {
                 word.markedWrong = false;
                 word.markedAt = null;
+                // 删除对应的复习计划
+                const wordId = word.id || word.wordId;
+                if (wordId && Storage.removeReviewPlan) {
+                    Storage.removeReviewPlan(wordId);
+                }
             } else if (action === 'wrong') {
                 word.markedWrong = true;
                 word.markedAt = timestamp;
@@ -1075,97 +1227,26 @@
                 return;
             }
 
-            // 使用更可靠的下载方法
+            // 直接下载
             const fileName = `yuwenrenzi_errorbook_${new Date().toISOString().split('T')[0]}.json`;
-            
-            // 直接显示下载按钮，因为自动下载经常被浏览器阻止
-            this.fallbackDownload(blob, fileName, url);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = fileName;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
             
             // 记录成功日志
             if (typeof Debug !== 'undefined' && Debug.isEnabled) {
                 Debug.log('ErrorBook.handleExport - 导出成功', {
                     count: errorWords.length,
                     fileName: fileName,
-                    dataSize: blob.size,
-                    url: url
+                    dataSize: blob.size
                 });
             }
             
-            // 显示成功提示
             console.log('[ErrorBook.handleExport] 导出流程完成');
-            alert(`导出成功！文件名：${fileName}\n\n请点击页面右上角的蓝色下载按钮下载文件。`);
-        },
-
-        /**
-         * 备用下载方法（当主方法失败时使用）
-         */
-        fallbackDownload(blob, fileName, url) {
-            try {
-                // 移除可能存在的旧按钮
-                const oldBtn = document.getElementById('errorbook-download-btn');
-                if (oldBtn) {
-                    oldBtn.remove();
-                }
-                
-                // 创建一个明显的下载按钮
-                const link = document.createElement('a');
-                link.id = 'errorbook-download-btn';
-                link.href = url;
-                link.download = fileName;
-                link.setAttribute('download', fileName);
-                link.style.display = 'block';
-                link.style.position = 'fixed';
-                link.style.top = '20px';
-                link.style.right = '20px';
-                link.style.zIndex = '10000';
-                link.style.padding = '15px 20px';
-                link.style.backgroundColor = '#007bff';
-                link.style.color = 'white';
-                link.style.borderRadius = '8px';
-                link.style.textDecoration = 'none';
-                link.style.fontSize = '16px';
-                link.style.fontWeight = 'bold';
-                link.style.boxShadow = '0 4px 12px rgba(0,0,0,0.3)';
-                link.style.cursor = 'pointer';
-                link.style.transition = 'all 0.3s ease';
-                link.innerHTML = `📥 点击下载<br><small style="font-size: 12px; opacity: 0.9;">${fileName}</small>`;
-                
-                // 悬停效果
-                link.onmouseenter = () => {
-                    link.style.backgroundColor = '#0056b3';
-                    link.style.transform = 'scale(1.05)';
-                };
-                link.onmouseleave = () => {
-                    link.style.backgroundColor = '#007bff';
-                    link.style.transform = 'scale(1)';
-                };
-                
-                document.body.appendChild(link);
-                
-                // 点击后移除
-                link.onclick = () => {
-                    setTimeout(() => {
-                        if (link.parentNode) {
-                            document.body.removeChild(link);
-                        }
-                        URL.revokeObjectURL(url);
-                    }, 1000);
-                };
-                
-                // 30秒后自动移除
-                setTimeout(() => {
-                    if (link.parentNode) {
-                        document.body.removeChild(link);
-                    }
-                    URL.revokeObjectURL(url);
-                }, 30000);
-                
-                console.log('[ErrorBook.fallbackDownload] 备用下载按钮已显示');
-            } catch (e) {
-                console.error('[ErrorBook.fallbackDownload] 备用方法也失败:', e);
-                alert('下载失败，请检查浏览器设置或尝试使用其他浏览器。\n错误：' + e.message);
-                URL.revokeObjectURL(url);
-            }
         },
 
         /**
@@ -1190,13 +1271,20 @@
                 }
             });
             
-            // 生成预览HTML
+            // 生成预览HTML（使用词语库的卡片样式）
             let html = '<div class="errorbook-import-preview">';
             
-            html += `<div class="alert alert-success mb-3">
-                <strong>共 ${errorWords.length} 条错题记录</strong>
-                ${Object.keys(groupedByRound).length > 0 ? `，分布在 <strong>${Object.keys(groupedByRound).length}</strong> 个练习轮次中` : ''}
+            html += `<div class="mb-3">
+                共 <strong>${errorWords.length}</strong> 条错题记录，分布在 <strong>${Object.keys(groupedByRound).length}</strong> 个练习轮次中
                 ${noRoundWords.length > 0 ? `，<strong>${noRoundWords.length}</strong> 条未分类记录` : ''}
+            </div>`;
+            
+            // 全选复选框
+            html += `<div class="mb-2">
+                <label class="form-check-label d-flex align-items-center">
+                    <input type="checkbox" class="form-check-input me-2" id="errorbook-preview-select-all" checked>
+                    <span>全选</span>
+                </label>
             </div>`;
             
             // 显示有轮次的错题
@@ -1208,13 +1296,24 @@
                         <span class="badge bg-primary ms-2">${words.length} 条错题</span>
                     </div>
                     <div class="card-body">
-                        <div class="d-flex flex-wrap gap-2">`;
+                        <div class="row g-2">`;
                 
                 words.forEach((item, idx) => {
-                    html += `<div class="badge bg-danger" style="font-size: 0.9rem; padding: 0.5rem;">
-                        ${item.word || '未知词语'}
-                        ${item.pinyin ? `<small class="d-block text-muted">${item.pinyin}</small>` : ''}
-                    </div>`;
+                    const wordText = String(item.word || '未知词语').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+                    html += `<div class="col-6 col-md-4 col-lg-3 col-xl-2 word-item word-preview-card selected" 
+                                 data-word-id="errorbook-${roundId}-${idx}"
+                                 data-round-id="${roundId}"
+                                 data-index="${idx}">
+                            <div class="d-flex align-items-center gap-1 p-1 border rounded">
+                                <input type="checkbox" class="form-check-input word-select-checkbox flex-shrink-0" 
+                                       data-round-id="${roundId}" 
+                                       data-index="${idx}"
+                                       checked />
+                                <div class="flex-grow-1 text-truncate" style="min-width: 0;">
+                                    <div class="fw-semibold text-truncate" title="${wordText}">${wordText}</div>
+                                </div>
+                            </div>
+                        </div>`;
                 });
                 
                 html += `</div>
@@ -1230,13 +1329,24 @@
                         <span class="badge bg-warning ms-2">${noRoundWords.length} 条</span>
                     </div>
                     <div class="card-body">
-                        <div class="d-flex flex-wrap gap-2">`;
+                        <div class="row g-2">`;
                 
                 noRoundWords.forEach((item, idx) => {
-                    html += `<div class="badge bg-danger" style="font-size: 0.9rem; padding: 0.5rem;">
-                        ${item.word || '未知词语'}
-                        ${item.pinyin ? `<small class="d-block text-muted">${item.pinyin}</small>` : ''}
-                    </div>`;
+                    const wordText = String(item.word || '未知词语').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+                    html += `<div class="col-6 col-md-4 col-lg-3 col-xl-2 word-item word-preview-card selected" 
+                                 data-word-id="errorbook-no-round-${idx}"
+                                 data-round-id="未分类"
+                                 data-index="${idx}">
+                            <div class="d-flex align-items-center gap-1 p-1 border rounded">
+                                <input type="checkbox" class="form-check-input word-select-checkbox flex-shrink-0" 
+                                       data-round-id="未分类" 
+                                       data-index="${idx}"
+                                       checked />
+                                <div class="flex-grow-1 text-truncate" style="min-width: 0;">
+                                    <div class="fw-semibold text-truncate" title="${wordText}">${wordText}</div>
+                                </div>
+                            </div>
+                        </div>`;
                 });
                 
                 html += `</div>
@@ -1252,10 +1362,59 @@
                 contentEl.innerHTML = html;
             }
             
-            // 存储待导入数据
+            // 绑定checkbox事件（复用词语库的样式逻辑）
+            setTimeout(() => {
+                // 全选复选框
+                const selectAllCheckbox = document.getElementById('errorbook-preview-select-all');
+                if (selectAllCheckbox) {
+                    selectAllCheckbox.addEventListener('change', (e) => {
+                        document.querySelectorAll('#errorbook-import-preview-content .word-select-checkbox').forEach(cb => {
+                            cb.checked = e.target.checked;
+                            const card = cb.closest('.word-preview-card');
+                            if (card) {
+                                if (cb.checked) {
+                                    card.classList.add('selected');
+                                } else {
+                                    card.classList.remove('selected');
+                                }
+                            }
+                        });
+                    });
+                }
+                
+                // 单个checkbox变化事件
+                document.querySelectorAll('#errorbook-import-preview-content .word-select-checkbox').forEach(checkbox => {
+                    checkbox.addEventListener('change', (e) => {
+                        const card = e.target.closest('.word-preview-card');
+                        if (card) {
+                            if (e.target.checked) {
+                                card.classList.add('selected');
+                            } else {
+                                card.classList.remove('selected');
+                            }
+                        }
+                    });
+                });
+                
+                // 卡片点击事件（切换选中状态）
+                document.querySelectorAll('#errorbook-import-preview-content .word-preview-card').forEach(card => {
+                    card.addEventListener('click', (e) => {
+                        if (e.target.type === 'checkbox' || e.target.closest('input[type="checkbox"]')) return;
+                        const checkbox = card.querySelector('.word-select-checkbox');
+                        if (checkbox) {
+                            checkbox.checked = !checkbox.checked;
+                            checkbox.dispatchEvent(new Event('change'));
+                        }
+                    });
+                });
+            }, 100);
+            
+            // 存储待导入数据（包括分组信息，用于确认导入时查找选中的错题）
             this.pendingImportData = {
                 errorWords: errorWords,
-                merge: merge
+                merge: merge,
+                groupedByRound: groupedByRound,
+                noRoundWords: noRoundWords
             };
             
             // 显示模态框
@@ -1296,7 +1455,37 @@
                 return;
             }
             
-            const { errorWords, merge } = this.pendingImportData;
+            const { errorWords, merge, groupedByRound, noRoundWords } = this.pendingImportData;
+            
+            // 只获取选中的错题
+            const selectedCheckboxes = document.querySelectorAll('#errorbook-import-preview-content .word-select-checkbox:checked');
+            const selectedWords = [];
+            if (selectedCheckboxes.length > 0) {
+                selectedCheckboxes.forEach(checkbox => {
+                    const card = checkbox.closest('.word-preview-card');
+                    if (card) {
+                        const roundId = card.dataset.roundId;
+                        const index = parseInt(card.dataset.index);
+                        // 根据roundId和index找到对应的错题
+                        let wordItem = null;
+                        if (roundId === '未分类') {
+                            if (noRoundWords && noRoundWords[index]) {
+                                wordItem = noRoundWords[index];
+                            }
+                        } else {
+                            if (groupedByRound && groupedByRound[roundId] && groupedByRound[roundId][index]) {
+                                wordItem = groupedByRound[roundId][index];
+                            }
+                        }
+                        if (wordItem) {
+                            selectedWords.push(wordItem);
+                        }
+                    }
+                });
+            } else {
+                // 如果没有选中的，使用所有错题
+                selectedWords.push(...errorWords);
+            }
             
             let finalErrorWords = [];
             if (merge) {
@@ -1304,7 +1493,7 @@
                 const existing = Storage.getErrorWords();
                 const existingMap = new Map(existing.map(item => [item.id || `${item.wordId}_${item.word}`, item]));
                 
-                errorWords.forEach(item => {
+                selectedWords.forEach(item => {
                     const key = item.id || `${item.wordId}_${item.word}`;
                     if (!existingMap.has(key)) {
                         existingMap.set(key, item);
@@ -1313,8 +1502,8 @@
                 
                 finalErrorWords = Array.from(existingMap.values());
             } else {
-                // 替换模式：清空现有，使用导入的数据
-                finalErrorWords = errorWords;
+                // 替换模式：清空现有，使用选中的错题
+                finalErrorWords = selectedWords;
             }
 
             // 保存错题记录
@@ -1322,13 +1511,13 @@
             
             // 如果导入的错题有 roundId，需要更新对应的练习记录
             const logs = Storage.getPracticeLogs();
-            const roundIds = new Set(errorWords.map(item => item.roundId).filter(id => id && id !== '未分类'));
+            const roundIds = new Set(selectedWords.map(item => item.roundId).filter(id => id && id !== '未分类'));
             
             roundIds.forEach(roundId => {
                 const log = logs.find(l => l.id === roundId);
                 if (log) {
                     // 更新练习记录中的错题标记
-                    const roundErrors = errorWords.filter(item => item.roundId === roundId);
+                    const roundErrors = selectedWords.filter(item => item.roundId === roundId);
                     roundErrors.forEach(errorItem => {
                         // 在 log.groups 中找到对应的 word 并标记为错题
                         if (log.groups) {
@@ -1480,7 +1669,7 @@
             // 渲染练习模式
             this.render();
             
-            // 默认切换到"按轮查看"标签，并展开该轮次
+            // 默认切换到"按轮查看"标签，并展开该轮次，缩起其他所有轮
             setTimeout(() => {
                 // 切换到"按轮查看"标签
                 const tabRounds = document.getElementById('tab-errorbook-rounds');
@@ -1489,17 +1678,43 @@
                     tab.show();
                 }
                 
-                // 展开该轮次（找到对应的accordion并展开）
+                // 先缩起所有轮次
                 const sortedLogs = [...logs].sort((a, b) => new Date(b.date) - new Date(a.date));
+                sortedLogs.forEach((log, index) => {
+                    const collapseId = `collapse-round-${index}`;
+                    const collapseEl = document.getElementById(collapseId);
+                    if (collapseEl) {
+                        const bsCollapse = bootstrap.Collapse.getInstance(collapseEl);
+                        if (bsCollapse && bsCollapse._isShown()) {
+                            bsCollapse.hide();
+                        }
+                        // 如果元素已经显示，强制隐藏
+                        if (collapseEl.classList.contains('show')) {
+                            collapseEl.classList.remove('show');
+                            const button = document.querySelector(`[data-bs-target="#${collapseId}"]`);
+                            if (button) {
+                                button.classList.add('collapsed');
+                            }
+                        }
+                    }
+                });
+                
+                // 展开该轮次（最近的这一轮）
                 const roundIndex = sortedLogs.findIndex(l => l.id === roundId);
                 if (roundIndex >= 0) {
                     const collapseId = `collapse-round-${roundIndex}`;
                     const collapseEl = document.getElementById(collapseId);
                     if (collapseEl) {
+                        // 确保按钮状态正确
+                        const button = document.querySelector(`[data-bs-target="#${collapseId}"]`);
+                        if (button) {
+                            button.classList.remove('collapsed');
+                        }
+                        // 展开
                         const bsCollapse = new bootstrap.Collapse(collapseEl, { show: true });
                     }
                 }
-            }, 200);
+            }, 300);
         },
 
         /**
@@ -1601,6 +1816,25 @@
             // 重新从练习日志生成错题集（因为错题集是从练习日志中生成的）
             const allErrorWords = logs.flatMap(collectErrorRecordsFromLog);
             Storage.saveErrorWords(allErrorWords);
+            
+            // 删除对应的复习计划
+            const deletedWordIds = new Set();
+            keysToDelete.forEach(key => {
+                if (key.startsWith('round::')) {
+                    const [, roundId, groupIndex, wordId] = key.split('::');
+                    deletedWordIds.add(wordId);
+                } else if (key.startsWith('summary::')) {
+                    const wordId = key.split('::')[1];
+                    deletedWordIds.add(wordId);
+                }
+            });
+            
+            // 从复习计划中删除这些词语
+            deletedWordIds.forEach(wordId => {
+                if (Storage.removeReviewPlan) {
+                    Storage.removeReviewPlan(wordId);
+                }
+            });
             
             // 清空选择并重新渲染
             this.selectedKeys.clear();
