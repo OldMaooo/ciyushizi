@@ -31,6 +31,56 @@
                 console.error('保存词语库失败', err);
             }
         },
+        
+        /**
+         * 清理重复的词语（基于word + grade + semester + unit）
+         * 保留最早添加的词语
+         */
+        removeDuplicates() {
+            const wordBank = this.getWordBank();
+            if (wordBank.length === 0) {
+                return { removed: 0, remaining: 0 };
+            }
+            
+            // 标准化unit值
+            const normalizeUnit = (unit) => {
+                if (unit == null || unit === '') return '未分类';
+                return String(unit);
+            };
+            
+            const seen = new Map();
+            const uniqueWords = [];
+            let removedCount = 0;
+            
+            // 按添加时间排序，保留最早的
+            const sortedWords = [...wordBank].sort((a, b) => {
+                const dateA = a.addedDate ? new Date(a.addedDate).getTime() : 0;
+                const dateB = b.addedDate ? new Date(b.addedDate).getTime() : 0;
+                return dateA - dateB;
+            });
+            
+            sortedWords.forEach(word => {
+                const key = `${word.word}|${word.grade}|${word.semester}|${normalizeUnit(word.unit)}`;
+                
+                if (!seen.has(key)) {
+                    seen.set(key, true);
+                    uniqueWords.push(word);
+                } else {
+                    removedCount++;
+                }
+            });
+            
+            if (removedCount > 0) {
+                this.saveWordBank(uniqueWords);
+                console.log(`✅ 已清理 ${removedCount} 个重复词语，剩余 ${uniqueWords.length} 个`);
+            }
+            
+            return {
+                removed: removedCount,
+                remaining: uniqueWords.length,
+                before: wordBank.length
+            };
+        },
 
         addWord(word) {
             if (!word || !word.word) {
@@ -40,26 +90,34 @@
             
             const wordBank = this.getWordBank();
             
-            // 检查是否已存在（基于word + grade + semester + unit）
+            // 标准化unit值（统一转换为字符串，但保留数字的语义）
+            const normalizeUnit = (unit) => {
+                if (unit == null || unit === '') return '未分类';
+                return String(unit);
+            };
+            
+            const normalizedUnit = normalizeUnit(word.unit);
+            
+            // 检查是否已存在（基于word + grade + semester + unit，unit统一转换为字符串比较）
             const existing = wordBank.find(w => 
                 w.word === word.word &&
                 w.grade === word.grade &&
                 w.semester === word.semester &&
-                w.unit === word.unit
+                normalizeUnit(w.unit) === normalizedUnit
             );
             
             if (existing) {
                 return existing; // 已存在，返回现有词语
             }
             
-            // 创建新词语
+            // 创建新词语（unit保持原类型，但比较时统一转换为字符串）
             const newWord = {
                 id: `word_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
                 word: word.word,
                 pinyin: word.pinyin || '',
                 grade: word.grade || '',
                 semester: word.semester || '',
-                unit: word.unit || 1,
+                unit: word.unit != null ? word.unit : 1,
                 addedDate: new Date().toISOString()
             };
             

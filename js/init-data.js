@@ -55,14 +55,21 @@ const InitData = {
                             wordSemester = wordSemester === '上' ? '上册' : '下册';
                         }
                         
-                        // 检查是否已存在（基于word + grade + semester + unit）
+                        // 标准化unit值（统一转换为字符串比较）
+                        const normalizeUnit = (unit) => {
+                            if (unit == null || unit === '') return '未分类';
+                            return String(unit);
+                        };
+                        
+                        // 检查是否已存在（基于word + grade + semester + unit，unit统一转换为字符串比较）
                         const wordText = word.word || word.text || '';
-                        const wordUnit = word.unit || 1;
+                        const wordUnit = word.unit != null ? word.unit : 1;
+                        const normalizedWordUnit = normalizeUnit(wordUnit);
                         const existing = existingWords.find(w => 
                             w.word === wordText &&
                             w.grade === wordGrade &&
                             w.semester === wordSemester &&
-                            w.unit === wordUnit
+                            normalizeUnit(w.unit) === normalizedWordUnit
                         );
                         
                         // 如果是固定词库的词，且不存在，则添加（即使已有其他数据）

@@ -6,6 +6,15 @@
                 if (global.Debug) {
                     Debug.init();
                 }
+                
+                // 清理重复数据（在加载新数据之前）
+                if (Storage && Storage.removeDuplicates) {
+                    const result = Storage.removeDuplicates();
+                    if (result.removed > 0) {
+                        console.log(`🧹 启动时清理了 ${result.removed} 个重复词语`);
+                    }
+                }
+                
                 // 初始化默认词库（从外部文件加载）
                 if (typeof InitData !== 'undefined') {
                     InitData.init();
