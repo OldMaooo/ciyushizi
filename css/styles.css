@@ -346,21 +346,30 @@
     transform: translateY(-1px);
 }
 
-/* 做题页面和结果页容器自适应宽度 */
+/* 所有页面容器自适应宽度，统一1300px */
+#home,
 #practice.container,
 #results.container,
-#preview.container {
-    max-width: 1200px;
+#preview.container,
+#errorbook.container,
+#wordbank.container {
+    max-width: 1300px;
     margin: 0 auto;
     padding-left: 1rem;
     padding-right: 1rem;
+}
+
+/* 首页特殊处理 */
+#home .container-fluid {
+    max-width: 1300px;
+    margin: 0 auto;
 }
 
 /* 页面内容包装器 */
 .practice-page-wrapper,
 .results-page-wrapper,
 .preview-page-wrapper {
-    max-width: 1200px;
+    max-width: 1300px;
     margin: 0 auto;
     width: 100%;
 }
@@ -381,7 +390,7 @@
 }
 
 /* iPad横屏优化：让卡片更紧凑，一行显示更多 */
-@media (min-width: 768px) and (max-width: 1200px) {
+@media (min-width: 768px) and (max-width: 1300px) {
     #practice-card-container,
     #results-card-container,
     #preview-card-container {
@@ -406,8 +415,8 @@
     }
 }
 
-/* 大屏幕优化：充分利用1200px宽度 */
-@media (min-width: 1200px) {
+/* 大屏幕优化：充分利用1300px宽度 */
+@media (min-width: 1300px) {
     #practice-card-container,
     #results-card-container,
     #preview-card-container {
@@ -475,6 +484,78 @@
 /* 练习页导航按钮样式 */
 .practice-navigation-container {
     position: relative;
+}
+
+/* 翻页箭头固定悬浮在页面中间 */
+#preview-prev-btn,
+#preview-next-btn,
+#practice-prev-btn,
+#practice-next-btn {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1000;
+    background-color: var(--bs-body-bg, #fff);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    border: 1px solid var(--bs-border-color, #dee2e6);
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+/* 默认隐藏，由JavaScript控制显示 */
+#preview-prev-btn,
+#preview-next-btn,
+#practice-prev-btn,
+#practice-next-btn {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+/* 显示状态 */
+#preview-prev-btn.show,
+#preview-next-btn.show,
+#practice-prev-btn.show,
+#practice-next-btn.show {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+#preview-prev-btn,
+#practice-prev-btn {
+    left: 1rem;
+}
+
+#preview-next-btn,
+#practice-next-btn {
+    right: 1rem;
+}
+
+/* 暗色主题下的翻页箭头 */
+[data-bs-theme="dark"] #preview-prev-btn,
+[data-bs-theme="dark"] #preview-next-btn,
+[data-bs-theme="dark"] #practice-prev-btn,
+[data-bs-theme="dark"] #practice-next-btn {
+    background-color: var(--bs-body-bg, #212529);
+    border-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* 小屏幕时调整箭头位置 */
+@media (max-width: 768px) {
+    #preview-prev-btn,
+    #practice-prev-btn {
+        left: 0.5rem;
+        width: 50px !important;
+        height: 50px !important;
+    }
+    
+    #preview-next-btn,
+    #practice-next-btn {
+        right: 0.5rem;
+        width: 50px !important;
+        height: 50px !important;
+    }
 }
 
 .practice-nav-hotzone {

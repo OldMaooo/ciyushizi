@@ -217,6 +217,8 @@
         },
 
         showPage(pageId) {
+            // 控制翻页箭头的显示/隐藏
+            this.updateNavButtonsVisibility(pageId);
             // 如果从结果页离开，自动保存
             const resultsPage = document.getElementById('results');
             if (resultsPage && resultsPage.classList.contains('active')) {
@@ -264,6 +266,60 @@
                 }
             }
             // 首页按钮使用事件委托，不需要重新绑定
+        },
+        
+        /**
+         * 更新翻页箭头按钮的显示/隐藏
+         */
+        updateNavButtonsVisibility(pageId) {
+            // 获取所有翻页箭头按钮
+            const previewPrevBtn = document.getElementById('preview-prev-btn');
+            const previewNextBtn = document.getElementById('preview-next-btn');
+            const practicePrevBtn = document.getElementById('practice-prev-btn');
+            const practiceNextBtn = document.getElementById('practice-next-btn');
+            
+            // 根据当前页面显示/隐藏对应的箭头
+            if (pageId === 'preview') {
+                if (previewPrevBtn) {
+                    previewPrevBtn.classList.add('show');
+                }
+                if (previewNextBtn) {
+                    previewNextBtn.classList.add('show');
+                }
+                if (practicePrevBtn) {
+                    practicePrevBtn.classList.remove('show');
+                }
+                if (practiceNextBtn) {
+                    practiceNextBtn.classList.remove('show');
+                }
+            } else if (pageId === 'practice') {
+                if (previewPrevBtn) {
+                    previewPrevBtn.classList.remove('show');
+                }
+                if (previewNextBtn) {
+                    previewNextBtn.classList.remove('show');
+                }
+                if (practicePrevBtn) {
+                    practicePrevBtn.classList.add('show');
+                }
+                if (practiceNextBtn) {
+                    practiceNextBtn.classList.add('show');
+                }
+            } else {
+                // 其他页面隐藏所有箭头
+                if (previewPrevBtn) {
+                    previewPrevBtn.classList.remove('show');
+                }
+                if (previewNextBtn) {
+                    previewNextBtn.classList.remove('show');
+                }
+                if (practicePrevBtn) {
+                    practicePrevBtn.classList.remove('show');
+                }
+                if (practiceNextBtn) {
+                    practiceNextBtn.classList.remove('show');
+                }
+            }
         },
 
         initTheme() {
