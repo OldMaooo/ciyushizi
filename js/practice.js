@@ -442,6 +442,10 @@
             // 根据模式显示不同页面
             const pageId = this.mode === 'preview' ? 'preview' : 'practice';
             this.showPage(pageId);
+            // 确保箭头按钮显示
+            if (global.Main && global.Main.updateNavButtonsVisibility) {
+                global.Main.updateNavButtonsVisibility(pageId);
+            }
             this.renderGroup();
             this.updateBadges();
             this.updateModeBadge();

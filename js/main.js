@@ -35,6 +35,8 @@
                     homeSection.classList.add('active');
                 }
                 this.showPage('home');
+                // 初始化时确保箭头状态正确
+                this.updateNavButtonsVisibility('home');
                 this.restoreStats();
                 
                 // 强制刷新按钮
