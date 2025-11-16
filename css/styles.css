@@ -346,6 +346,75 @@
     transform: translateY(-1px);
 }
 
+/* 做题页面和结果页容器自适应宽度 */
+#practice.container,
+#results.container,
+#preview.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+/* 页面内容包装器 */
+.practice-page-wrapper,
+.results-page-wrapper,
+.preview-page-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+/* 卡片容器优化，让iPad上能显示更多卡片 */
+#practice-card-container,
+#results-card-container,
+#preview-card-container,
+.practice-cards-wrapper,
+.results-cards-wrapper {
+    max-width: 100%;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+/* iPad横屏优化：让卡片更紧凑，一行显示更多 */
+@media (min-width: 768px) and (max-width: 1200px) {
+    #practice-card-container,
+    #results-card-container,
+    #preview-card-container {
+        gap: 0.5rem;
+        justify-content: flex-start;
+    }
+    
+    .practice-card {
+        width: clamp(130px, 14vw, 170px);
+        min-height: 130px;
+        max-width: clamp(130px, 14vw, 170px);
+        max-height: clamp(130px, 14vw, 170px);
+    }
+    
+    /* iPad上卡片字体稍微小一点，以便显示更多 */
+    .practice-word {
+        font-size: clamp(2rem, 4vw, 3rem);
+    }
+    
+    .practice-pinyin {
+        font-size: 1.8rem;
+    }
+}
+
+/* 大屏幕优化：充分利用1200px宽度 */
+@media (min-width: 1200px) {
+    #practice-card-container,
+    #results-card-container,
+    #preview-card-container {
+        gap: 1rem;
+    }
+}
+
 /* 响应式优化 */
 @media (max-width: 768px) {
     .stat-value {
@@ -354,6 +423,12 @@
     
     .stat-number {
         font-size: 2rem;
+    }
+    
+    #practice-card-container,
+    #results-card-container,
+    #preview-card-container {
+        justify-content: center;
     }
 }
 
